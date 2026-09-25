@@ -69,5 +69,11 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
 
+## Public draft link
+The page is online at **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/** (free GitHub Pages, account patrickgammelmark). Anyone with the link can see it, no login needed.
+- A dark banner at the top says "Designforslag – ikke den rigtige hejoscar.dk", and search engines are told not to index the page.
+- The `references/` folder is not uploaded.
+- To update the online version after changes, ask Claude to "push the changes to the draft link". To take it offline, ask Claude to delete the GitHub repository.
+
 ## Costs
 None. Everything runs locally in your browser.
