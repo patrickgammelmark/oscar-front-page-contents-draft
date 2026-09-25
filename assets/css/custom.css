@@ -1,0 +1,1603 @@
+/* Our own design changes, on top of the live site's styling. */
+
+/* Brand colours (from references/Oscar-Brand-Colors-Guide.pdf) */
+:root {
+  --oscar-orange: #FE660C;        /* Main Orange */
+  --oscar-orange-02: #FE7C2F;     /* brand-orange-02, slightly softer orange (used behind the hero USPs) */
+  --oscar-blue-tint: #F1F3FA;     /* tinted light-blue background */
+  --oscar-blue-accent: #CFDFFC;   /* Subtle blue accent (stronger light blue) */
+  --oscar-blue-600: #2949A3;      /* brand-blue-600, mid blue */
+  --oscar-blue-800: 23, 39, 91;   /* brand-blue-800 #17275B, "Deep blue" (RGB, so it can be used with transparency) */
+}
+
+/* Quicksand (free, SIL Open Font License), saved locally so the page works offline.
+   Rounded, geometric letters, close to the OSCAR logo wordmark. */
+@font-face {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(../fonts/quicksand-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Quicksand";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url(../fonts/quicksand-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* IBM Plex Sans (free, SIL Open Font License) for body text: tight, sober and serious, easy to
+   read at small sizes, and a clear contrast to the rounded headings. Saved locally.
+   (Tried and dropped: Figtree, because the competitor GoMore uses it; DM Sans, too playful.) */
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(../fonts/ibmplexsans-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(../fonts/ibmplexsans-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Fonts are switchable (button in the "Kontakt & FAQ" menu):
+   - default: the site's own fonts, Silka for headings and Inter for body text
+   - alternative: Quicksand for headings and IBM Plex Sans for body text (class fonts-alt on html) */
+/* Set on body, because the site defines --font-silka and --font-inter there */
+body {
+  --heading-font: var(--font-silka), sans-serif;
+  --heading-weight: 600;
+  --body-font: var(--font-inter), sans-serif;
+}
+html.fonts-alt body {
+  --heading-font: "Quicksand", var(--font-silka), sans-serif;
+  --heading-weight: 700;
+  --body-font: "IBM Plex Sans", var(--font-inter), sans-serif;
+}
+body, .font-inter {
+  font-family: var(--body-font);
+}
+
+/* Headings: the hero headline, all section headings and the newsletter heading.
+   Small headings (card titles, FAQ questions, city links) use the body font. */
+:is(h1, h2, .font-silka) {
+  font-family: var(--heading-font);
+  font-weight: var(--heading-weight);
+}
+
+/* Hero: gently curved (convex) bottom edge instead of a straight one.
+   A very wide ellipse keeps the curve even across the whole width, like a slice of a big circle.
+   The edges sit about 24px (mobile) / 48px (desktop) higher than the middle. */
+.hero-curve {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: ellipse(150% 420px at 50% calc(100% - 420px));
+}
+@media (min-width: 768px) {
+  .hero-curve {
+    clip-path: ellipse(150% 840px at 50% calc(100% - 840px));
+  }
+}
+
+/* Search form: make the main booking box stand out from the rest of the page.
+   - Layered shadow tinted with brand-blue-800 lifts the card off the page
+   - A thin ring separates the card from the white background below the hero
+   - Fields get a visible edge (and an orange focus ring) so it's clear where to type */
+[data-testid="rental-search-form"] {
+  box-shadow:
+    0 0 0 1px rgba(var(--oscar-blue-800), 0.08),
+    0 2px 4px rgba(var(--oscar-blue-800), 0.06),
+    0 12px 24px -6px rgba(var(--oscar-blue-800), 0.18),
+    0 32px 64px -16px rgba(var(--oscar-blue-800), 0.22);
+}
+/* The "Biludlejning" tab sits on top of the card's ring, so the two look joined */
+:has(+ [data-testid="rental-search-form"]) > div:first-child {
+  position: relative;
+}
+
+/* Location field */
+[data-testid="rental-search-input"] {
+  border-color: rgba(var(--oscar-blue-800), 0.14);
+}
+[data-testid="rental-search-input"]:hover {
+  border-color: rgba(var(--oscar-blue-800), 0.32);
+}
+/* Date fields (Fra / Til share one box): the edge is drawn as a layer on top of the fields */
+[data-testid="rental-search-form"] .\@container {
+  position: relative;
+}
+[data-testid="rental-search-form"] .\@container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.14);
+  border-radius: 0.5rem;
+  pointer-events: none;
+}
+[data-testid="rental-search-form"] .\@container:hover::after {
+  border-color: rgba(var(--oscar-blue-800), 0.32);
+}
+/* Orange focus ring on all fields */
+[data-testid="rental-search-input"]:focus-visible {
+  outline: 2px solid var(--oscar-orange);
+  outline-offset: -1px;
+  border-color: transparent;
+}
+[data-testid="rental-search-form"] .\@container:focus-within::after {
+  border: 2px solid var(--oscar-orange);
+}
+
+/* Hero photo (oscar-hero.jpg) is bright, so the white text needs a darker backdrop.
+   Darken the left side where the text sits, keep the people and car on the right bright,
+   and keep a light shade at the top behind the menu. Colour: brand-blue-800. */
+@media (min-width: 768px) {
+  .hero-curve > div {
+    height: 100%;
+    background-image:
+      linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.9) 0%, rgba(var(--oscar-blue-800), 0.7) 35%, rgba(var(--oscar-blue-800), 0.22) 65%, rgba(var(--oscar-blue-800), 0) 80%),
+      linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.72) 0%, rgba(var(--oscar-blue-800), 0) 25%);
+  }
+}
+/* On narrow screens the photo is cropped: keep the couple and the car in view */
+@media (max-width: 767px) {
+  .hero-curve > img {
+    object-position: 72% center;
+  }
+  /* Same brand blue on mobile, where the text sits at the top */
+  .hero-curve > div {
+    background-image: linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.95) 20%, rgba(var(--oscar-blue-800), 0.7) 60%, rgba(var(--oscar-blue-800), 0) 100%);
+  }
+}
+
+/* Hero: USPs under the headline. Each sits on a brush stroke of solid brand-orange-02 (#FE7C2F, a touch softer than Main Orange):
+   a solid core with frayed, tapered ends and broken dry-brush streaks along the top and bottom.
+   Each USP has its own stroke so they look hand-made, not copied. */
+.hero-usps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.hero-usps li {
+  display: flex;
+  align-items: center;
+  gap: 0.3125rem;
+  padding: 0.375rem 0.875rem;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik03LjMgOC40IEwxMS45IDUuOCBMMTYuNSA0LjQgTDIxLjIgNS4xIEwyNS44IDQuOSBMMzAuNSA0LjcgTDM1LjEgMy41IEwzOS43IDQuOCBMNDQuNCA0LjcgTDQ5LjAgNS42IEw1My42IDQuNCBMNTguMyA1LjggTDYyLjkgMy45IEw2Ny42IDYuMyBMNzIuMiA1LjkgTDc2LjggNi41IEw4MS41IDQuNSBMODYuMSA1LjcgTDkwLjggNC44IEw5NS40IDUuMSBMMTAwLjAgNS40IEwxMDQuNyA2LjkgTDEwOS4zIDUuNCBMMTEzLjkgNS43IEwxMTguNiA1LjcgTDEyMy4yIDcuNiBMMTI3LjkgNS44IEwxMzIuNSA2LjEgTDEzNy4xIDYuMCBMMTQxLjggNi43IEwxNDYuNCA2LjMgTDE1MS4xIDcuMyBMMTU1LjcgNi4xIEwxNjAuMyA3LjUgTDE2NS4wIDYuMSBMMTY5LjYgNi41IEwxNzQuMiA3LjAgTDE3OC45IDguMSBMMTgzLjUgOC4wIEwxODguMiA4LjggTDE5Mi44IDEyLjAgTDE5NC45IDE2LjQgTDIwMC4wIDE3LjAgTDE5My42IDE4LjAgTDE5NS40IDI0LjkgTDE5OC43IDI1LjEgTDE5My42IDI2LjMgTDE5NC42IDI1LjcgTDE5Ni4yIDI1LjkgTDE5NC44IDI3LjQgTDE5NS4wIDI1LjcgTDE5Ny43IDI2LjEgTDE5NC4wIDI2LjkgTDE5NS4zIDI3LjAgTDE5Ni4yIDI3LjQgTDE5Mi45IDI4LjQgTDE5NC4yIDI5LjYgTDE5Ni45IDI5LjkgTDE5My44IDMxLjAgTDE5NS42IDMwLjAgTDE5Ny4xIDI5LjIgTDE5My40IDMxLjQgTDE5Mi44IDI4LjkgTDE4OC4yIDMwLjMgTDE4My41IDMxLjcgTDE3OC45IDMyLjEgTDE3NC4yIDM0LjEgTDE2OS42IDMzLjEgTDE2NS4wIDMyLjggTDE2MC4zIDMzLjkgTDE1NS43IDMzLjAgTDE1MS4xIDMyLjEgTDE0Ni40IDMyLjIgTDE0MS44IDMxLjcgTDEzNy4xIDMzLjcgTDEzMi41IDMzLjQgTDEyNy45IDMzLjggTDEyMy4yIDMzLjAgTDExOC42IDMyLjUgTDExMy45IDMxLjkgTDEwOS4zIDMzLjUgTDEwNC43IDMxLjkgTDEwMC4wIDMyLjIgTDk1LjQgMzQuMSBMOTAuOCAzMi4wIEw4Ni4xIDMyLjMgTDgxLjUgMzMuOCBMNzYuOCAzMi4yIEw3Mi4yIDMyLjEgTDY3LjYgMzIuMiBMNjIuOSAzNC4yIEw1OC4zIDM0LjQgTDUzLjYgMzQuMCBMNDkuMCAzMy4wIEw0NC40IDM0LjcgTDM5LjcgMzMuNSBMMzUuMSAzMy40IEwzMC41IDMyLjkgTDI1LjggMzIuOSBMMjEuMiAzNC42IEwxNi41IDMxLjMgTDExLjkgMzEuNCBMNy4zIDMwLjcgTDUuMyAyOS43IEwzLjMgMjkuNiBMNS42IDMxLjUgTDQuNiAyOS40IEwyLjMgMjkuNSBMNi42IDMwLjMgTDUuOCAyMy44IEwwLjEgMjQuNCBMNS44IDI1LjYgTDYuNCAxOC42IEwzLjQgMTguNSBMNi43IDE5LjYgTDYuMCAxNS44IEwxLjEgMTUuOCBMNi42IDE3LjUgTDQuMyAxMi45IEwyLjAgMTIuMiBMNy4yIDE0LjUgTDcuMSAxMi4xIEwwLjcgMTIuMiBMNi42IDEzLjcgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIj48bGluZSB4MT0iODAuNCIgeTE9IjIuMSIgeDI9IjkxLjkiIHkyPSIyLjIiIHN0cm9rZS13aWR0aD0iMS40MSIgc3Ryb2tlLWRhc2hhcnJheT0iOC4wIDEuMSIvPjxsaW5lIHgxPSIxMTQuMyIgeTE9IjM2LjUiIHgyPSIxNzIuOCIgeTI9IjM2LjEiIHN0cm9rZS13aWR0aD0iMS41NSIvPjxsaW5lIHgxPSI1LjEiIHkxPSIzMy42IiB4Mj0iNDMuNCIgeTI9IjMzLjkiIHN0cm9rZS13aWR0aD0iMS4yOSIgc3Ryb2tlLWRhc2hhcnJheT0iOS44IDIuMCIvPjxsaW5lIHgxPSIxMzEuNSIgeTE9IjM2LjQiIHgyPSIxNjUuMSIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMS4zNyIvPjxsaW5lIHgxPSI1LjEiIHkxPSIyNS4zIiB4Mj0iMTUuNCIgeTI9IjI1LjciIHN0cm9rZS13aWR0aD0iMS41MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMCAzLjYiLz48bGluZSB4MT0iMTc5LjkiIHkxPSIxOS4xIiB4Mj0iMTkxLjEiIHkyPSIxOS40IiBzdHJva2Utd2lkdGg9IjEuNDAiLz48bGluZSB4MT0iMTY5LjUiIHkxPSI2LjkiIHgyPSIyMDAuMCIgeTI9IjYuNyIgc3Ryb2tlLXdpZHRoPSIxLjA5Ii8+PGxpbmUgeDE9IjAuOSIgeTE9IjI4LjUiIHgyPSI5LjMiIHkyPSIyOC41IiBzdHJva2Utd2lkdGg9IjEuMTEiLz48bGluZSB4MT0iMTQuMSIgeTE9IjYuMyIgeDI9IjcyLjEiIHkyPSI1LjkiIHN0cm9rZS13aWR0aD0iMC42OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMCAxLjQiLz48bGluZSB4MT0iMTQ1LjciIHkxPSIzNy4xIiB4Mj0iMTk3LjAiIHkyPSIzNi43IiBzdHJva2Utd2lkdGg9IjEuNTQiIHN0cm9rZS1kYXNoYXJyYXk9IjE5LjMgMS4zIi8+PGxpbmUgeDE9IjEyNi44IiB5MT0iMzQuMyIgeDI9IjE3NS4yIiB5Mj0iMzQuNCIgc3Ryb2tlLXdpZHRoPSIxLjA4Ii8+PGxpbmUgeDE9IjE0Ni42IiB5MT0iMy42IiB4Mj0iMjAwLjAiIHkyPSI0LjIiIHN0cm9rZS13aWR0aD0iMC43MyIvPjxsaW5lIHgxPSIzNy4zIiB5MT0iMzYuMSIgeDI9Ijc5LjUiIHkyPSIzNS41IiBzdHJva2Utd2lkdGg9IjEuMDUiLz48bGluZSB4MT0iOS4wIiB5MT0iMjAuNCIgeDI9IjE4LjciIHkyPSIxOS45IiBzdHJva2Utd2lkdGg9IjEuMDQiLz48bGluZSB4MT0iMTY1LjUiIHkxPSIzNS4xIiB4Mj0iMjAwLjAiIHkyPSIzNS41IiBzdHJva2Utd2lkdGg9IjAuODAiIHN0cm9rZS1kYXNoYXJyYXk9IjcuOCAyLjMiLz48bGluZSB4MT0iMi4yIiB5MT0iMTkuNCIgeDI9IjEyLjMiIHkyPSIxOS4xIiBzdHJva2Utd2lkdGg9IjEuNTIiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjkgMS4xIi8+PGxpbmUgeDE9IjU3LjkiIHkxPSI1LjUiIHgyPSI4OS4yIiB5Mj0iNS41IiBzdHJva2Utd2lkdGg9IjEuMTgiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjIgMS40Ii8+PGxpbmUgeDE9IjkzLjIiIHkxPSIyLjQiIHgyPSIxMjkuNCIgeTI9IjIuMSIgc3Ryb2tlLXdpZHRoPSIwLjkxIiBzdHJva2UtZGFzaGFycmF5PSIxMy40IDEuNSIvPjxsaW5lIHgxPSI5My4xIiB5MT0iMzYuNSIgeDI9IjE1NC4xIiB5Mj0iMzYuMiIgc3Ryb2tlLXdpZHRoPSIxLjE3Ii8+PGxpbmUgeDE9IjE1Ni4zIiB5MT0iMzcuNiIgeDI9IjE4NS4zIiB5Mj0iMzcuMyIgc3Ryb2tlLXdpZHRoPSIwLjg1Ii8+PGxpbmUgeDE9IjIuNyIgeTE9IjI5LjMiIHgyPSIxNC4wIiB5Mj0iMjkuNiIgc3Ryb2tlLXdpZHRoPSIwLjc5IiBzdHJva2UtZGFzaGFycmF5PSIxNy43IDIuMyIvPjxsaW5lIHgxPSIxMTkuNCIgeTE9IjMuNyIgeDI9IjEzMC41IiB5Mj0iNC4yIiBzdHJva2Utd2lkdGg9IjAuNzIiLz48bGluZSB4MT0iMTg4LjMiIHkxPSIxMC44IiB4Mj0iMTk3LjMiIHkyPSIxMC4yIiBzdHJva2Utd2lkdGg9IjEuMjUiIHN0cm9rZS1kYXNoYXJyYXk9IjcuMCAxLjMiLz48bGluZSB4MT0iOTkuNyIgeTE9IjM1LjciIHgyPSIxMTguNSIgeTI9IjM2LjMiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuOCA0LjAiLz48bGluZSB4MT0iMTY0LjYiIHkxPSIxLjYiIHgyPSIyMDAuMCIgeTI9IjEuNSIgc3Ryb2tlLXdpZHRoPSIxLjM0IiBzdHJva2UtZGFzaGFycmF5PSIxMi41IDIuNSIvPjxsaW5lIHgxPSIxMjIuMSIgeTE9IjMyLjYiIHgyPSIxODIuOCIgeTI9IjMyLjIiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTYuNCAyLjIiLz48bGluZSB4MT0iNS45IiB5MT0iNC40IiB4Mj0iNjkuNSIgeTI9IjQuOSIgc3Ryb2tlLXdpZHRoPSIxLjM4Ii8+PGxpbmUgeDE9IjEwNC45IiB5MT0iMzUuMCIgeDI9IjE0NS4yIiB5Mj0iMzQuOCIgc3Ryb2tlLXdpZHRoPSIxLjU4Ii8+PGxpbmUgeDE9IjE4OS45IiB5MT0iMjUuOSIgeDI9IjE5Ny45IiB5Mj0iMjYuMSIgc3Ryb2tlLXdpZHRoPSIxLjQ5Ii8+PGxpbmUgeDE9IjcyLjEiIHkxPSIzNy4zIiB4Mj0iMTI1LjQiIHkyPSIzNy4xIiBzdHJva2Utd2lkdGg9IjAuNTgiIHN0cm9rZS1kYXNoYXJyYXk9IjEyLjYgMS4wIi8+PGxpbmUgeDE9IjQyLjYiIHkxPSIzNi40IiB4Mj0iMTA5LjMiIHkyPSIzNi41IiBzdHJva2Utd2lkdGg9IjEuMjMiIHN0cm9rZS1kYXNoYXJyYXk9IjE1LjIgMi43Ii8+PGxpbmUgeDE9IjExMi4xIiB5MT0iNy41IiB4Mj0iMTY0LjIiIHkyPSI2LjkiIHN0cm9rZS13aWR0aD0iMS4zNCIvPjxsaW5lIHgxPSI0Ni44IiB5MT0iMzcuMiIgeDI9IjgwLjkiIHkyPSIzNi45IiBzdHJva2Utd2lkdGg9IjAuNTYiIHN0cm9rZS1kYXNoYXJyYXk9IjExLjMgMS4zIi8+PGxpbmUgeDE9IjE5MC4wIiB5MT0iMjEuMiIgeDI9IjE5OS42IiB5Mj0iMjEuNiIgc3Ryb2tlLXdpZHRoPSIxLjU5Ii8+PC9nPjwvc3ZnPg==") center / 100% 100% no-repeat;
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.hero-usps li:nth-child(2) {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik03LjQgNy4yIEwxMi4wIDcuNyBMMTYuNyA2LjkgTDIxLjMgNS4wIEwyNi4wIDQuNiBMMzAuNiA2LjUgTDM1LjMgNS44IEwzOS45IDUuMCBMNDQuNiA2LjMgTDQ5LjIgNS40IEw1My45IDYuNSBMNTguNSA2LjkgTDYzLjEgNi4xIEw2Ny44IDUuNyBMNzIuNCA3LjQgTDc3LjEgNi42IEw4MS43IDYuNiBMODYuNCA2LjIgTDkxLjAgNi43IEw5NS43IDYuNCBMMTAwLjMgNy4yIEwxMDUuMCA2LjkgTDEwOS42IDYuMSBMMTE0LjMgNi44IEwxMTguOSA4LjYgTDEyMy42IDcuMCBMMTI4LjIgNi44IEwxMzIuOSA2LjkgTDEzNy41IDcuMCBMMTQyLjIgNy41IEwxNDYuOCA3LjAgTDE1MS41IDYuNiBMMTU2LjEgNy4zIEwxNjAuOCA4LjQgTDE2NS40IDcuNiBMMTcwLjAgNy4wIEwxNzQuNyA2LjEgTDE3OS4zIDguNCBMMTg0LjAgNy40IEwxODguNiAxMC43IEwxOTMuMyA5LjIgTDE5NS40IDEwLjIgTDIwMC4wIDEwLjQgTDE5NS4yIDExLjMgTDE5My40IDExLjQgTDE5OC43IDExLjMgTDE5My42IDEyLjkgTDE5NC4zIDEzLjkgTDE5Ny41IDEzLjYgTDE5NS4yIDE0LjcgTDE5NC40IDE1LjUgTDE5Ny43IDE1LjAgTDE5NC4yIDE2LjUgTDE5Ni4wIDE1LjggTDE5OC44IDE2LjEgTDE5My42IDE3LjAgTDE5NS4xIDE3LjggTDIwMC4wIDE3LjQgTDE5NC4yIDE5LjQgTDE5NS44IDI0LjQgTDE5Ny40IDI0LjUgTDE5NC44IDI1LjYgTDE5My4zIDMzLjAgTDE4OC42IDMyLjggTDE4NC4wIDMzLjggTDE3OS4zIDM0LjggTDE3NC43IDM1LjkgTDE3MC4wIDM1LjUgTDE2NS40IDM1LjYgTDE2MC44IDM1LjUgTDE1Ni4xIDM0LjkgTDE1MS41IDM0LjUgTDE0Ni44IDM1LjEgTDE0Mi4yIDM1LjEgTDEzNy41IDM0LjAgTDEzMi45IDM1LjQgTDEyOC4yIDM0LjQgTDEyMy42IDM1LjIgTDExOC45IDM0LjMgTDExNC4zIDMzLjEgTDEwOS42IDM0LjggTDEwNS4wIDM0LjcgTDEwMC4zIDMzLjIgTDk1LjcgMzMuOSBMOTEuMCAzMi44IEw4Ni40IDMyLjcgTDgxLjcgMzIuOCBMNzcuMSAzMy4wIEw3Mi40IDMyLjUgTDY3LjggMzMuMiBMNjMuMSAzMy45IEw1OC41IDM0LjYgTDUzLjkgMzMuMSBMNDkuMiAzMy4xIEw0NC42IDMzLjcgTDM5LjkgMzIuMyBMMzUuMyAzNC4zIEwzMC42IDMyLjAgTDI2LjAgMzIuNyBMMjEuMyAzMS43IEwxNi43IDMxLjEgTDEyLjAgMzEuMSBMNy40IDI5LjIgTDYuNCAzMS4zIEwxLjkgMzEuMSBMNi44IDMyLjMgTDYuNyAyNS42IEwxLjcgMjUuMiBMNy4zIDI3LjIgTDYuNSAyNC4zIEwwLjAgMjQuNSBMNi42IDI2LjAgTDQuNyAyNC4yIEwyLjggMjMuNiBMNi4xIDI1LjggTDUuNSAyMy45IEwwLjUgMjMuOCBMNi4xIDI1LjAgTDYuMiAyMS4zIEwyLjUgMjEuMSBMNi42IDIyLjkgTDYuOSAxNi40IEwzLjMgMTYuMCBMNS40IDE3LjcgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIj48bGluZSB4MT0iMTUxLjgiIHkxPSI2LjUiIHgyPSIyMDAuMCIgeTI9IjYuMiIgc3Ryb2tlLXdpZHRoPSIwLjg5Ii8+PGxpbmUgeDE9IjE0NC45IiB5MT0iNi43IiB4Mj0iMTY3LjYiIHkyPSI2LjMiIHN0cm9rZS13aWR0aD0iMS40NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuMyAxLjAiLz48bGluZSB4MT0iNTMuOCIgeTE9IjUuNyIgeDI9Ijc1LjIiIHkyPSI1LjIiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTguMSAyLjgiLz48bGluZSB4MT0iNzkuNiIgeTE9IjM1LjkiIHgyPSIxMjEuMiIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMS4yMiIvPjxsaW5lIHgxPSIxMTEuMSIgeTE9IjM1LjQiIHgyPSIxNDQuNCIgeTI9IjM2LjAiIHN0cm9rZS13aWR0aD0iMC45NiIgc3Ryb2tlLWRhc2hhcnJheT0iMTYuMCAxLjgiLz48bGluZSB4MT0iMTIwLjciIHkxPSIzNy45IiB4Mj0iMTg4LjEiIHkyPSIzOC4yIiBzdHJva2Utd2lkdGg9IjEuMjUiIHN0cm9rZS1kYXNoYXJyYXk9IjExLjcgMi44Ii8+PGxpbmUgeDE9IjEuMiIgeTE9IjExLjEiIHgyPSI2LjEiIHkyPSIxMS4zIiBzdHJva2Utd2lkdGg9IjAuNTYiIHN0cm9rZS1kYXNoYXJyYXk9IjkuNSAxLjMiLz48bGluZSB4MT0iMTY2LjYiIHkxPSIzOC42IiB4Mj0iMjAwLjAiIHkyPSIzOC42IiBzdHJva2Utd2lkdGg9IjEuNTQiIHN0cm9rZS1kYXNoYXJyYXk9IjkuMiAzLjgiLz48bGluZSB4MT0iNzUuMyIgeTE9IjYuMCIgeDI9IjExNy45IiB5Mj0iNi41IiBzdHJva2Utd2lkdGg9IjAuODUiIHN0cm9rZS1kYXNoYXJyYXk9IjcuMiAyLjgiLz48bGluZSB4MT0iMTg2LjIiIHkxPSIyNi40IiB4Mj0iMTkzLjIiIHkyPSIyNi42IiBzdHJva2Utd2lkdGg9IjEuNTIiLz48bGluZSB4MT0iODUuMyIgeTE9IjIuNiIgeDI9IjEzOS4yIiB5Mj0iMi40IiBzdHJva2Utd2lkdGg9IjEuNDEiLz48bGluZSB4MT0iMTcxLjUiIHkxPSI2LjYiIHgyPSIyMDAuMCIgeTI9IjYuNyIgc3Ryb2tlLXdpZHRoPSIwLjcxIi8+PGxpbmUgeDE9IjY4LjgiIHkxPSIyLjciIHgyPSIxMTUuNiIgeTI9IjIuNCIgc3Ryb2tlLXdpZHRoPSIwLjY0IiBzdHJva2UtZGFzaGFycmF5PSIxOS4zIDMuMiIvPjxsaW5lIHgxPSIxMjguNiIgeTE9IjMzLjEiIHgyPSIxNzYuNSIgeTI9IjMzLjAiIHN0cm9rZS13aWR0aD0iMC42OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMyAyLjciLz48bGluZSB4MT0iMTcyLjkiIHkxPSIzLjQiIHgyPSIyMDAuMCIgeTI9IjMuMSIgc3Ryb2tlLXdpZHRoPSIxLjA1IiBzdHJva2UtZGFzaGFycmF5PSI4LjQgMi4yIi8+PGxpbmUgeDE9IjYyLjgiIHkxPSIzLjUiIHgyPSIxMjkuMSIgeTI9IjMuNSIgc3Ryb2tlLXdpZHRoPSIwLjgzIiBzdHJva2UtZGFzaGFycmF5PSIxNS4yIDIuMiIvPjxsaW5lIHgxPSIxMTcuNSIgeTE9IjMzLjAiIHgyPSIxMzMuNiIgeTI9IjMzLjYiIHN0cm9rZS13aWR0aD0iMC43OCIvPjxsaW5lIHgxPSI3Ny44IiB5MT0iMzMuNiIgeDI9IjEwNC44IiB5Mj0iMzMuNyIgc3Ryb2tlLXdpZHRoPSIxLjQzIiBzdHJva2UtZGFzaGFycmF5PSI4LjcgMi45Ii8+PGxpbmUgeDE9IjE2Ni4zIiB5MT0iMzUuNSIgeDI9IjIwMC4wIiB5Mj0iMzUuOCIgc3Ryb2tlLXdpZHRoPSIxLjUzIiBzdHJva2UtZGFzaGFycmF5PSIxMi41IDIuMSIvPjxsaW5lIHgxPSI5Mi43IiB5MT0iMzQuMCIgeDI9IjE0Ni4zIiB5Mj0iMzQuMSIgc3Ryb2tlLXdpZHRoPSIxLjA1Ii8+PGxpbmUgeDE9IjU1LjUiIHkxPSIzNC43IiB4Mj0iNjYuOSIgeTI9IjM0LjYiIHN0cm9rZS13aWR0aD0iMS40OCIvPjxsaW5lIHgxPSI5LjUiIHkxPSIyOS43IiB4Mj0iMTcuNyIgeTI9IjI5LjEiIHN0cm9rZS13aWR0aD0iMC44NSIgc3Ryb2tlLWRhc2hhcnJheT0iMTEuOCAxLjIiLz48bGluZSB4MT0iMzAuMyIgeTE9IjMuMSIgeDI9IjQ3LjYiIHkyPSIzLjciIHN0cm9rZS13aWR0aD0iMS40MiIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuOSAyLjgiLz48bGluZSB4MT0iMTQ5LjYiIHkxPSIyLjYiIHgyPSIyMDAuMCIgeTI9IjMuMSIgc3Ryb2tlLXdpZHRoPSIxLjUyIiBzdHJva2UtZGFzaGFycmF5PSIxMS4xIDEuNiIvPjxsaW5lIHgxPSIxMzcuOCIgeTE9IjM2LjAiIHgyPSIxNjMuNSIgeTI9IjM1LjUiIHN0cm9rZS13aWR0aD0iMS4wOSIvPjxsaW5lIHgxPSIxNDUuNyIgeTE9IjMzLjciIHgyPSIyMDAuMCIgeTI9IjMzLjUiIHN0cm9rZS13aWR0aD0iMS4yMSIgc3Ryb2tlLWRhc2hhcnJheT0iNi4zIDIuNSIvPjxsaW5lIHgxPSIxNTkuNyIgeTE9IjMzLjAiIHgyPSIyMDAuMCIgeTI9IjMzLjUiIHN0cm9rZS13aWR0aD0iMS4xMiIvPjxsaW5lIHgxPSIxNDcuMyIgeTE9IjM1LjkiIHgyPSIxNzkuNyIgeTI9IjM2LjEiIHN0cm9rZS13aWR0aD0iMS40OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMSAyLjYiLz48bGluZSB4MT0iOS4xIiB5MT0iMTMuMyIgeDI9IjIwLjYiIHkyPSIxMy41IiBzdHJva2Utd2lkdGg9IjEuMDgiLz48bGluZSB4MT0iMy4zIiB5MT0iMjMuNiIgeDI9IjguMSIgeTI9IjIzLjciIHN0cm9rZS13aWR0aD0iMC42NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTkuNyAxLjQiLz48bGluZSB4MT0iOTMuOSIgeTE9IjcuMyIgeDI9IjExNC41IiB5Mj0iNy45IiBzdHJva2Utd2lkdGg9IjEuNDEiLz48bGluZSB4MT0iMTE1LjYiIHkxPSIzLjciIHgyPSIxNDIuNiIgeTI9IjQuMCIgc3Ryb2tlLXdpZHRoPSIxLjEzIi8+PGxpbmUgeDE9IjguNiIgeTE9IjI2LjAiIHgyPSIxNi45IiB5Mj0iMjUuNSIgc3Ryb2tlLXdpZHRoPSIwLjY5IiBzdHJva2UtZGFzaGFycmF5PSIxNC43IDIuMSIvPjxsaW5lIHgxPSI1OC42IiB5MT0iMzUuMSIgeDI9IjEwMi42IiB5Mj0iMzQuOSIgc3Ryb2tlLXdpZHRoPSIxLjA5IiBzdHJva2UtZGFzaGFycmF5PSIxOS44IDMuNyIvPjwvZz48L3N2Zz4=");
+}
+.hero-usps li:nth-child(3) {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik02LjMgMTEuNSBMMTEuMCA3LjIgTDE1LjcgNy42IEwyMC4zIDcuOSBMMjUuMCA2LjIgTDI5LjcgNy45IEwzNC40IDYuNiBMMzkuMCA3LjQgTDQzLjcgNi44IEw0OC40IDguNSBMNTMuMSA2LjUgTDU3LjggNi43IEw2Mi40IDcuNyBMNjcuMSA2LjggTDcxLjggNi41IEw3Ni41IDguMCBMODEuMSA4LjIgTDg1LjggNy4zIEw5MC41IDYuOCBMOTUuMiA2LjYgTDk5LjkgNi43IEwxMDQuNSA3LjAgTDEwOS4yIDYuNSBMMTEzLjkgNi4yIEwxMTguNiA2LjEgTDEyMy4zIDUuOSBMMTI3LjkgNi41IEwxMzIuNiA2LjYgTDEzNy4zIDYuOCBMMTQyLjAgNy4yIEwxNDYuNiA3LjYgTDE1MS4zIDcuNCBMMTU2LjAgNS44IEwxNjAuNyA1LjIgTDE2NS40IDYuNSBMMTcwLjAgNi4xIEwxNzQuNyA1LjkgTDE3OS40IDYuOCBMMTg0LjEgNS4yIEwxODguNyAxMC4wIEwxOTMuNCA4LjkgTDE5NC41IDguMSBMMTk4LjIgOC42IEwxOTMuOSA5LjYgTDE5NS40IDExLjAgTDIwMC4wIDExLjAgTDE5NS4zIDEyLjMgTDE5NS4xIDExLjYgTDE5OS41IDEyLjEgTDE5NS4yIDEyLjUgTDE5My44IDE0LjAgTDE5OS4xIDE0LjUgTDE5NC41IDE1LjEgTDE5Ni4zIDE5LjUgTDE5Ny45IDE4LjggTDE5My41IDIwLjMgTDE5NS42IDIxLjEgTDE5Ny4wIDIxLjQgTDE5NS4yIDIyLjkgTDE5NS45IDI4LjggTDE5OC41IDI5LjAgTDE5NS4xIDMwLjMgTDE5My40IDI5LjAgTDE4OC43IDMwLjggTDE4NC4xIDMyLjcgTDE3OS40IDMzLjUgTDE3NC43IDM1LjEgTDE3MC4wIDMzLjkgTDE2NS40IDM1LjAgTDE2MC43IDMzLjQgTDE1Ni4wIDMzLjggTDE1MS4zIDM0LjggTDE0Ni42IDM0LjAgTDE0Mi4wIDMzLjYgTDEzNy4zIDM0LjggTDEzMi42IDMzLjYgTDEyNy45IDMzLjggTDEyMy4zIDM0LjAgTDExOC42IDM0LjYgTDExMy45IDM1LjEgTDEwOS4yIDM0LjEgTDEwNC41IDM0LjcgTDk5LjkgMzUuMyBMOTUuMiAzNS40IEw5MC41IDM0LjggTDg1LjggMzYuMSBMODEuMSAzNS41IEw3Ni41IDM0LjEgTDcxLjggMzYuMyBMNjcuMSAzNC41IEw2Mi40IDM0LjMgTDU3LjggMzQuNiBMNTMuMSAzNS4xIEw0OC40IDM1LjMgTDQzLjcgMzUuOSBMMzkuMCAzNC44IEwzNC40IDM1LjEgTDI5LjcgMzYuMiBMMjUuMCAzNS44IEwyMC4zIDMzLjcgTDE1LjcgMzMuNSBMMTEuMCAzNC41IEw2LjMgMzIuMiBMMy45IDMxLjkgTDEuMCAzMS4xIEw2LjIgMzMuMCBMNS4zIDI2LjMgTDAuMCAyNS45IEw0LjYgMjcuOSBMNS4wIDE5LjMgTDAuMCAxOS43IEw1LjMgMjAuNCBMNC45IDE1LjQgTDAuMCAxNS41IEw1LjkgMTYuNiBMNC45IDE1LjAgTDIuMyAxNS4xIEw2LjIgMTYuNiBMNS44IDE0LjQgTDIuOCAxNC42IEw1LjcgMTYuMSBMNC44IDEwLjYgTDAuNyAxMS4yIEw1LjkgMTIuMiBaIiBmaWxsPSIjRkU3QzJGIi8+PGcgc3Ryb2tlPSIjRkU3QzJGIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSIxNjYuNSIgeTE9IjM1LjIiIHgyPSIxNzcuOCIgeTI9IjM0LjciIHN0cm9rZS13aWR0aD0iMS40NSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuOCAxLjUiLz48bGluZSB4MT0iNDYuMyIgeTE9IjM4LjMiIHgyPSI4NS41IiB5Mj0iMzguMyIgc3Ryb2tlLXdpZHRoPSIxLjE3IiBzdHJva2UtZGFzaGFycmF5PSIxMy40IDEuMCIvPjxsaW5lIHgxPSI0MC4wIiB5MT0iMzQuNiIgeDI9IjUzLjEiIHkyPSIzNC4yIiBzdHJva2Utd2lkdGg9IjEuMjciIHN0cm9rZS1kYXNoYXJyYXk9IjE4LjggMy4yIi8+PGxpbmUgeDE9IjE4Ny40IiB5MT0iMzAuNCIgeDI9IjE5OC4yIiB5Mj0iMzAuNSIgc3Ryb2tlLXdpZHRoPSIxLjI5Ii8+PGxpbmUgeDE9IjEyNi42IiB5MT0iMi4wIiB4Mj0iMTcyLjQiIHkyPSIyLjIiIHN0cm9rZS13aWR0aD0iMC41NiIvPjxsaW5lIHgxPSIxNTIuMyIgeTE9IjM3LjQiIHgyPSIxODUuMSIgeTI9IjM3LjkiIHN0cm9rZS13aWR0aD0iMS40MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMCAyLjIiLz48bGluZSB4MT0iNjAuMiIgeTE9IjM4LjUiIHgyPSIxMTAuNSIgeTI9IjM4LjQiIHN0cm9rZS13aWR0aD0iMS41MCIvPjxsaW5lIHgxPSI3My4yIiB5MT0iNC4yIiB4Mj0iMTMyLjAiIHkyPSI0LjIiIHN0cm9rZS13aWR0aD0iMS4zNiIvPjxsaW5lIHgxPSIxMzAuNiIgeTE9IjM2LjEiIHgyPSIxNDUuNCIgeTI9IjM2LjYiIHN0cm9rZS13aWR0aD0iMC43NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuNSAxLjkiLz48bGluZSB4MT0iNTIuNyIgeTE9IjcuMSIgeDI9Ijc0LjkiIHkyPSI2LjYiIHN0cm9rZS13aWR0aD0iMS41NyIgc3Ryb2tlLWRhc2hhcnJheT0iNy42IDEuNCIvPjxsaW5lIHgxPSIyOS41IiB5MT0iMi41IiB4Mj0iNDAuNSIgeTI9IjMuMCIgc3Ryb2tlLXdpZHRoPSIxLjI3IiBzdHJva2UtZGFzaGFycmF5PSI5LjIgMi43Ii8+PGxpbmUgeDE9IjEyMi4yIiB5MT0iMzcuMCIgeDI9IjE4MC4wIiB5Mj0iMzcuMCIgc3Ryb2tlLXdpZHRoPSIxLjQ0IiBzdHJva2UtZGFzaGFycmF5PSI2LjggMi45Ii8+PGxpbmUgeDE9IjMyLjEiIHkxPSIzNy40IiB4Mj0iODQuNSIgeTI9IjM3LjUiIHN0cm9rZS13aWR0aD0iMC45NyIgc3Ryb2tlLWRhc2hhcnJheT0iOS40IDEuOCIvPjxsaW5lIHgxPSI1MC4yIiB5MT0iMzguMiIgeDI9IjEwMy4yIiB5Mj0iMzcuOCIgc3Ryb2tlLXdpZHRoPSIwLjYxIi8+PGxpbmUgeDE9IjguMyIgeTE9IjMxLjIiIHgyPSIxNC41IiB5Mj0iMzEuNCIgc3Ryb2tlLXdpZHRoPSIwLjg0IiBzdHJva2UtZGFzaGFycmF5PSIxMi4yIDEuMyIvPjxsaW5lIHgxPSIxMjMuOCIgeTE9IjM1LjEiIHgyPSIxNDcuOCIgeTI9IjM0LjciIHN0cm9rZS13aWR0aD0iMC44NiIgc3Ryb2tlLWRhc2hhcnJheT0iNi4wIDMuNyIvPjxsaW5lIHgxPSIxNDIuNCIgeTE9IjYuMiIgeDI9IjE3OS4yIiB5Mj0iNS45IiBzdHJva2Utd2lkdGg9IjAuOTYiIHN0cm9rZS1kYXNoYXJyYXk9IjYuMCAyLjYiLz48bGluZSB4MT0iNS42IiB5MT0iNi45IiB4Mj0iMzcuMyIgeTI9IjYuNCIgc3Ryb2tlLXdpZHRoPSIxLjMzIi8+PGxpbmUgeDE9IjExMC4xIiB5MT0iMzYuMCIgeDI9IjE3Ni43IiB5Mj0iMzYuMSIgc3Ryb2tlLXdpZHRoPSIxLjM4IiBzdHJva2UtZGFzaGFycmF5PSIxNi44IDIuNSIvPjxsaW5lIHgxPSIwLjIiIHkxPSIyMi45IiB4Mj0iMTIuMSIgeTI9IjIyLjciIHN0cm9rZS13aWR0aD0iMC44NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuMCAyLjciLz48bGluZSB4MT0iMTg5LjMiIHkxPSIyMi4zIiB4Mj0iMTk3LjciIHkyPSIyMi41IiBzdHJva2Utd2lkdGg9IjEuMDkiLz48bGluZSB4MT0iOTcuOCIgeTE9IjM4LjEiIHgyPSIxNDEuMSIgeTI9IjM4LjYiIHN0cm9rZS13aWR0aD0iMC43MSIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuMSAyLjUiLz48bGluZSB4MT0iMTI5LjAiIHkxPSIzLjQiIHgyPSIxNjYuNSIgeTI9IjMuNSIgc3Ryb2tlLXdpZHRoPSIxLjQzIiBzdHJva2UtZGFzaGFycmF5PSIxNi44IDIuMyIvPjxsaW5lIHgxPSIxMzkuNyIgeTE9IjMuNyIgeDI9IjE5My44IiB5Mj0iMy43IiBzdHJva2Utd2lkdGg9IjEuMTIiIHN0cm9rZS1kYXNoYXJyYXk9IjYuNSAzLjEiLz48bGluZSB4MT0iNzEuMSIgeTE9IjM2LjQiIHgyPSIxMzMuNiIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMC42NSIvPjxsaW5lIHgxPSI5LjYiIHkxPSIyMi4xIiB4Mj0iMTguOCIgeTI9IjIxLjgiIHN0cm9rZS13aWR0aD0iMS4wNiIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMiAyLjkiLz48bGluZSB4MT0iMTYyLjMiIHkxPSIzLjgiIHgyPSIyMDAuMCIgeTI9IjQuMSIgc3Ryb2tlLXdpZHRoPSIxLjAxIiBzdHJva2UtZGFzaGFycmF5PSIxNy42IDEuNiIvPjxsaW5lIHgxPSIyNy42IiB5MT0iMzguNiIgeDI9Ijg1LjIiIHkyPSIzOC44IiBzdHJva2Utd2lkdGg9IjEuMjkiIHN0cm9rZS1kYXNoYXJyYXk9IjEzLjkgMS45Ii8+PGxpbmUgeDE9IjYuMiIgeTE9IjI0LjAiIHgyPSIxMi43IiB5Mj0iMjQuMCIgc3Ryb2tlLXdpZHRoPSIxLjAxIiBzdHJva2UtZGFzaGFycmF5PSIxNi4xIDEuMiIvPjxsaW5lIHgxPSIxMi4wIiB5MT0iNC43IiB4Mj0iMjMuNiIgeTI9IjUuMiIgc3Ryb2tlLXdpZHRoPSIxLjE5Ii8+PGxpbmUgeDE9IjI2LjciIHkxPSIzOC44IiB4Mj0iNzQuNCIgeTI9IjM4LjgiIHN0cm9rZS13aWR0aD0iMS4yMCIgc3Ryb2tlLWRhc2hhcnJheT0iOC4wIDEuNyIvPjxsaW5lIHgxPSIxMDAuMiIgeTE9IjM3LjAiIHgyPSIxMTQuOCIgeTI9IjM2LjciIHN0cm9rZS13aWR0aD0iMS4yOSIgc3Ryb2tlLWRhc2hhcnJheT0iOC40IDIuOSIvPjxsaW5lIHgxPSIxMzAuOSIgeTE9IjQuMCIgeDI9IjE0Ny4zIiB5Mj0iMy44IiBzdHJva2Utd2lkdGg9IjAuOTkiIHN0cm9rZS1kYXNoYXJyYXk9IjE1LjQgMy40Ii8+PGxpbmUgeDE9IjM5LjUiIHkxPSIzNS40IiB4Mj0iNjYuMSIgeTI9IjM1LjUiIHN0cm9rZS13aWR0aD0iMS4wOSIvPjwvZz48L3N2Zz4=");
+}
+.hero-usps li:nth-child(4) {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik01LjUgMTIuNiBMMTAuMiAxMC42IEwxNC45IDguOCBMMTkuNiA4LjYgTDI0LjMgNy44IEwyOS4wIDYuNyBMMzMuNyA2LjQgTDM4LjQgOC42IEw0My4xIDcuOCBMNDcuOCA2LjUgTDUyLjUgNi41IEw1Ny4yIDcuMiBMNjEuOSA2LjYgTDY2LjYgNy4xIEw3MS4zIDcuMCBMNzYuMCA3LjEgTDgwLjcgNy42IEw4NS40IDcuMSBMOTAuMSA3LjYgTDk0LjggNy41IEw5OS41IDYuNiBMMTA0LjIgNS4xIEwxMDguOSA1LjYgTDExMy42IDQuOSBMMTE4LjMgNi44IEwxMjMuMCA2LjggTDEyNy43IDUuOCBMMTMyLjQgNS42IEwxMzcuMSA2LjUgTDE0MS44IDYuMyBMMTQ2LjUgNS4yIEwxNTEuMiA0LjQgTDE1NS45IDQuOSBMMTYwLjYgNC40IEwxNjUuMyA0LjIgTDE3MC4wIDUuMiBMMTc0LjcgNC40IEwxNzkuNCAzLjggTDE4NC4xIDcuMyBMMTg4LjggNy44IEwxOTMuNSA5LjMgTDE5My41IDkuNiBMMTk4LjggMTAuMSBMMTk0LjUgMTEuMCBMMTk0LjQgMTEuMiBMMjAwLjAgMTAuOCBMMTk0LjkgMTIuNyBMMTkzLjUgMTUuMyBMMjAwLjAgMTQuOSBMMTk1LjUgMTcuMSBMMTk2LjIgMTcuMSBMMjAwLjAgMTYuOSBMMTk0LjQgMTguMiBMMTk2LjMgMjIuMSBMMTk2LjcgMjEuNiBMMTk1LjQgMjMuNyBMMTk1LjYgMjcuMSBMMjAwLjAgMjcuMSBMMTk1LjIgMjguMyBMMTk2LjIgMzAuMyBMMTk2LjkgMzAuMyBMMTk0LjcgMzEuOSBMMTkzLjUgMjkuNSBMMTg4LjggMjguOSBMMTg0LjEgMzAuNCBMMTc5LjQgMzIuMSBMMTc0LjcgMzMuMiBMMTcwLjAgMzMuMiBMMTY1LjMgMzMuMyBMMTYwLjYgMzIuNiBMMTU1LjkgMzIuNSBMMTUxLjIgMzEuOSBMMTQ2LjUgMzIuMiBMMTQxLjggMzIuMiBMMTM3LjEgMzMuNSBMMTMyLjQgMzIuNSBMMTI3LjcgMzMuOSBMMTIzLjAgMzMuNSBMMTE4LjMgMzIuMyBMMTEzLjYgMzIuMiBMMTA4LjkgMzIuNyBMMTA0LjIgMzQuMiBMOTkuNSAzMi41IEw5NC44IDMyLjYgTDkwLjEgMzIuOCBMODUuNCAzMi4xIEw4MC43IDMyLjIgTDc2LjAgMzMuMyBMNzEuMyAzMy40IEw2Ni42IDMzLjQgTDYxLjkgMzQuMSBMNTcuMiAzNC4zIEw1Mi41IDMzLjAgTDQ3LjggMzQuNiBMNDMuMSAzNC4wIEwzOC40IDM0LjEgTDMzLjcgMzUuMSBMMjkuMCAzMy4xIEwyNC4zIDM0LjIgTDE5LjYgMzMuMyBMMTQuOSAzMi42IEwxMC4yIDMxLjIgTDUuNSAzMS44IEw0LjEgMzEuMiBMMC42IDMxLjMgTDUuMyAzMi4yIEw0LjggMjguNyBMMS4zIDI5LjMgTDUuMCAyOS42IEwyLjkgMjQuMyBMMC4wIDIzLjYgTDQuMiAyNS44IEwzLjYgMTguMSBMMC4wIDE4LjAgTDUuMSAxOS43IEwzLjcgMTguMSBMMC4wIDE3LjUgTDQuOCAxOS41IEw0LjQgMTIuOCBMMC4wIDEyLjcgTDQuMCAxMy45IEw0LjAgOC43IEwwLjAgOC40IEw1LjIgMTAuMiBaIiBmaWxsPSIjRkU3QzJGIi8+PGcgc3Ryb2tlPSIjRkU3QzJGIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSI0OC44IiB5MT0iNi42IiB4Mj0iMTEzLjEiIHkyPSI2LjYiIHN0cm9rZS13aWR0aD0iMS4wOSIgc3Ryb2tlLWRhc2hhcnJheT0iMTMuMyAzLjAiLz48bGluZSB4MT0iMTY2LjUiIHkxPSIzNC44IiB4Mj0iMTg3LjAiIHkyPSIzNC40IiBzdHJva2Utd2lkdGg9IjEuMzgiIHN0cm9rZS1kYXNoYXJyYXk9IjEzLjEgMS4yIi8+PGxpbmUgeDE9IjU0LjciIHkxPSIzOC4yIiB4Mj0iODguOSIgeTI9IjM4LjAiIHN0cm9rZS13aWR0aD0iMS4wMiIvPjxsaW5lIHgxPSI5Ny4xIiB5MT0iNi42IiB4Mj0iMTI4LjIiIHkyPSI2LjUiIHN0cm9rZS13aWR0aD0iMS40MCIvPjxsaW5lIHgxPSIxNTYuMCIgeTE9IjMuMSIgeDI9IjE3Ni4zIiB5Mj0iMi43IiBzdHJva2Utd2lkdGg9IjAuNzIiLz48bGluZSB4MT0iNS43IiB5MT0iMTMuNCIgeDI9IjEwLjgiIHkyPSIxMi45IiBzdHJva2Utd2lkdGg9IjEuMzUiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjggMy4zIi8+PGxpbmUgeDE9IjUuNiIgeTE9IjI3LjciIHgyPSIxMS43IiB5Mj0iMjcuNiIgc3Ryb2tlLXdpZHRoPSIxLjA5Ii8+PGxpbmUgeDE9IjE1MC4wIiB5MT0iMzMuMyIgeDI9IjE5Ny42IiB5Mj0iMzMuNCIgc3Ryb2tlLXdpZHRoPSIxLjQxIiBzdHJva2UtZGFzaGFycmF5PSIxNi40IDEuMyIvPjxsaW5lIHgxPSIxOS44IiB5MT0iNi45IiB4Mj0iNTguMiIgeTI9IjcuNCIgc3Ryb2tlLXdpZHRoPSIxLjAyIiBzdHJva2UtZGFzaGFycmF5PSI2LjkgMy4wIi8+PGxpbmUgeDE9IjU5LjgiIHkxPSI2LjkiIHgyPSI4Ni4yIiB5Mj0iNy4yIiBzdHJva2Utd2lkdGg9IjEuMDAiLz48bGluZSB4MT0iNzkuMiIgeTE9IjMyLjciIHgyPSI5MC4xIiB5Mj0iMzIuOCIgc3Ryb2tlLXdpZHRoPSIwLjU3IiBzdHJva2UtZGFzaGFycmF5PSI5LjQgMS4zIi8+PGxpbmUgeDE9IjE1OS4xIiB5MT0iMzguMyIgeDI9IjE5NC42IiB5Mj0iMzguMiIgc3Ryb2tlLXdpZHRoPSIwLjcwIi8+PGxpbmUgeDE9Ijk3LjUiIHkxPSI2LjQiIHgyPSIxNjQuNyIgeTI9IjYuMCIgc3Ryb2tlLXdpZHRoPSIxLjI3Ii8+PGxpbmUgeDE9IjE4Ni4yIiB5MT0iMjEuMCIgeDI9IjE5Mi43IiB5Mj0iMjAuNyIgc3Ryb2tlLXdpZHRoPSIwLjgzIiBzdHJva2UtZGFzaGFycmF5PSIxOS40IDEuNCIvPjxsaW5lIHgxPSIzOC4zIiB5MT0iMzMuOCIgeDI9IjYzLjUiIHkyPSIzMy42IiBzdHJva2Utd2lkdGg9IjAuNzYiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjQgMy4wIi8+PGxpbmUgeDE9IjkuMiIgeTE9IjIxLjQiIHgyPSIxNS41IiB5Mj0iMjAuOCIgc3Ryb2tlLXdpZHRoPSIxLjM5Ii8+PGxpbmUgeDE9IjE5MC45IiB5MT0iMTguMSIgeDI9IjE5OS40IiB5Mj0iMTguMyIgc3Ryb2tlLXdpZHRoPSIwLjc3IiBzdHJva2UtZGFzaGFycmF5PSIxOC40IDIuNCIvPjxsaW5lIHgxPSIxNjIuNSIgeTE9IjM4LjciIHgyPSIyMDAuMCIgeTI9IjM4LjQiIHN0cm9rZS13aWR0aD0iMS4wNSIvPjxsaW5lIHgxPSI2LjQiIHkxPSI1LjIiIHgyPSI3NC44IiB5Mj0iNS4zIiBzdHJva2Utd2lkdGg9IjAuODYiIHN0cm9rZS1kYXNoYXJyYXk9IjEwLjEgMi4wIi8+PGxpbmUgeDE9IjIuNCIgeTE9IjguMyIgeDI9IjE1LjkiIHkyPSI4LjIiIHN0cm9rZS13aWR0aD0iMC45OCIgc3Ryb2tlLWRhc2hhcnJheT0iMTkuMSAyLjIiLz48bGluZSB4MT0iMTIyLjYiIHkxPSIyLjciIHgyPSIxNDkuOCIgeTI9IjIuNyIgc3Ryb2tlLXdpZHRoPSIxLjA2IiBzdHJva2UtZGFzaGFycmF5PSIxNi43IDMuMiIvPjxsaW5lIHgxPSIxODguNSIgeTE9IjMwLjciIHgyPSIxOTcuMCIgeTI9IjMwLjciIHN0cm9rZS13aWR0aD0iMC45MCIvPjxsaW5lIHgxPSI2NC40IiB5MT0iMzQuOSIgeDI9Ijc1LjUiIHkyPSIzNS4zIiBzdHJva2Utd2lkdGg9IjEuMzAiIHN0cm9rZS1kYXNoYXJyYXk9IjEyLjkgMy4yIi8+PGxpbmUgeDE9IjguOSIgeTE9IjIzLjkiIHgyPSIxMy40IiB5Mj0iMjQuMyIgc3Ryb2tlLXdpZHRoPSIwLjk1Ii8+PGxpbmUgeDE9IjMyLjAiIHkxPSIzOC4wIiB4Mj0iNDQuMyIgeTI9IjM3LjQiIHN0cm9rZS13aWR0aD0iMC44MyIvPjxsaW5lIHgxPSIzNi45IiB5MT0iNC40IiB4Mj0iOTkuMiIgeTI9IjQuMSIgc3Ryb2tlLXdpZHRoPSIwLjYyIiBzdHJva2UtZGFzaGFycmF5PSIyMC4wIDEuMCIvPjxsaW5lIHgxPSI1OS4zIiB5MT0iMzguMCIgeDI9IjEwMy41IiB5Mj0iMzguNCIgc3Ryb2tlLXdpZHRoPSIxLjM4Ii8+PGxpbmUgeDE9IjUuMSIgeTE9IjQuNiIgeDI9IjY2LjMiIHkyPSI0LjAiIHN0cm9rZS13aWR0aD0iMC41MyIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuMCAyLjkiLz48bGluZSB4MT0iNTcuMiIgeTE9IjMzLjEiIHgyPSI2OS43IiB5Mj0iMzMuNSIgc3Ryb2tlLXdpZHRoPSIxLjMwIi8+PGxpbmUgeDE9IjE2Ny4xIiB5MT0iMi44IiB4Mj0iMjAwLjAiIHkyPSIzLjEiIHN0cm9rZS13aWR0aD0iMS41NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTguMyAzLjAiLz48bGluZSB4MT0iODcuMyIgeTE9IjM3LjQiIHgyPSIxMTMuNyIgeTI9IjM3LjEiIHN0cm9rZS13aWR0aD0iMS4wMyIgc3Ryb2tlLWRhc2hhcnJheT0iMTUuNCAyLjAiLz48bGluZSB4MT0iNTUuOSIgeTE9IjM1LjgiIHgyPSIxMjEuMyIgeTI9IjM1LjYiIHN0cm9rZS13aWR0aD0iMS41MyIgc3Ryb2tlLWRhc2hhcnJheT0iMTMuNyAxLjAiLz48bGluZSB4MT0iMTg1LjYiIHkxPSIyMC4yIiB4Mj0iMTg5LjgiIHkyPSIyMC42IiBzdHJva2Utd2lkdGg9IjAuNTciIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjYgNC4wIi8+PGxpbmUgeDE9IjY3LjIiIHkxPSIzNC45IiB4Mj0iODUuMCIgeTI9IjM0LjgiIHN0cm9rZS13aWR0aD0iMC45NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMyAyLjYiLz48L2c+PC9zdmc+");
+}
+.hero-usps svg {
+  width: 0.8125rem;
+  height: 0.8125rem;
+  flex-shrink: 0;
+}
+/* Narrow phones: slightly smaller; the four USPs wrap onto two lines */
+@media (max-width: 479px) {
+  .hero-usps {
+    gap: 0.375rem;
+  }
+  .hero-usps li {
+    font-size: 0.75rem;
+  }
+}
+@media (min-width: 768px) {
+  .hero-usps {
+    gap: 0.625rem;
+    margin-top: 1.5rem;
+  }
+  .hero-usps li {
+    padding: 0.4375rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Hero: short body text under the headline that sells the feeling and the outcome */
+.hero-lead {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  color: #F7F7F9;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .hero-lead {
+    margin-top: 2rem;
+    font-size: 1.125rem;
+  }
+}
+
+/* Hero: customer rating above the headline (moved from under the search button).
+   Rounded, filled stars; the filled row is cut to the rating (--rating, out of 5). */
+.hero-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: fit-content;
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.hero-rating__stars {
+  position: relative;
+  display: inline-flex;
+}
+.hero-rating__stars svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 0.125rem;
+  fill: currentColor;
+  /* thin, subtle white outline around each star */
+  stroke: rgba(255, 255, 255, 0.4);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+.hero-rating__empty {
+  display: inline-flex;
+  color: rgba(255, 255, 255, 0.25);
+}
+.hero-rating__filled {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  width: calc(var(--rating) / 5 * 100%);
+  overflow: hidden;
+  color: var(--oscar-orange);
+}
+.hero-rating__filled svg {
+  flex-shrink: 0;
+}
+.hero-rating__count {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1;
+}
+.hero-rating:hover .hero-rating__count {
+  color: #FFFFFF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Hero headline: bigger than the live site (36 / 48 / 60px -> 38 / 54 / 68px) */
+.hero-curve + div h1 {
+  font-size: 2.375rem;
+  line-height: 1.1;
+}
+@media (min-width: 768px) {
+  .hero-curve + div h1 { font-size: 3.375rem; }
+}
+@media (min-width: 1024px) {
+  .hero-curve + div h1 { font-size: 4.25rem; }
+}
+
+/* Search form: a bit more breathing room and slightly rounder corners (8px -> 12px).
+   The "Biludlejning" tab gets the same corner and side padding, so its text lines up with the form content. */
+/* Phones keep 16px at the sides: any narrower and the date fields hide their calendar icons */
+[data-testid="rental-search-form"] {
+  padding: 1.5rem 1rem;
+  border-radius: 0.75rem;
+}
+/* The phone "Søg" button had its own bottom margin on top of the padding */
+[data-testid="rental-search-form"] [data-testid="search-submit-button"] {
+  margin-bottom: 0;
+}
+:has(+ [data-testid="rental-search-form"]) > div:first-child {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 1024px) {
+  [data-testid="rental-search-form"] {
+    padding: 1.75rem 2rem;
+  }
+  /* The last visible row kept a 16px gap meant for the (now hidden) row below it */
+  [data-testid="rental-search-form"] > :nth-last-child(2) {
+    margin-bottom: 0;
+  }
+  :has(+ [data-testid="rental-search-form"]) > div:first-child {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Search form tab: "Biludlejning" with a chevron opens a small menu to switch to "Bilabonnement" */
+.rental-mode-trigger {
+  cursor: pointer;
+  text-align: left;
+}
+.rental-mode-trigger svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 0.2s ease;
+}
+.rental-mode-trigger[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+.rental-mode-menu {
+  position: absolute;
+  top: calc(100% - 0.25rem);
+  left: 0.5rem;
+  z-index: 30;
+  min-width: 13rem;
+  padding: 0.375rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.1);
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow: 0 12px 32px -8px rgba(var(--oscar-blue-800), 0.28);
+}
+.rental-mode-menu:not(.hidden) {
+  display: flex;
+  flex-direction: column;
+}
+.rental-mode-menu [role="option"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+.rental-mode-menu [role="option"]:hover {
+  background: rgba(var(--oscar-blue-800), 0.05);
+}
+.rental-mode-menu [role="option"] svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--oscar-orange);
+  visibility: hidden;
+}
+.rental-mode-menu [role="option"][aria-selected="true"] {
+  font-weight: 600;
+}
+.rental-mode-menu [role="option"][aria-selected="true"] svg {
+  visibility: visible;
+}
+
+/* Benefits under the "Kendt fra" logos, in the minimal "feature list" style
+   (from references/Feature list.png, laid out horizontally): a small orange icon in a thin, light circle,
+   a medium-weight title and a soft grey line of text. Four columns on desktop, 2x2 on tablet,
+   stacked on phones. */
+.benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.benefits svg {
+  box-sizing: content-box;
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  padding: 0.8125rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.12);
+  border-radius: 9999px;
+  background: #FFFFFF;
+  color: var(--oscar-orange);
+  stroke-width: 2;
+}
+.benefits__title {
+  margin-top: 0.125rem;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.benefits__text {
+  margin-top: 0.25rem;
+  color: rgba(var(--oscar-blue-800), 0.6);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+@media (min-width: 768px) {
+  .benefits {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 3rem;
+  }
+}
+@media (min-width: 1024px) {
+  .benefits {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+    padding: 1.5rem 0;
+  }
+}
+
+/* Hero: rating and app store badges on one row above the headline.
+   On phones the badges drop onto their own line under the rating. */
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.hero-proof__divider {
+  display: none;
+  width: 1px;
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.25);
+}
+.hero-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.hero-badges img {
+  display: block;
+  width: auto;
+  height: 2rem;
+}
+.hero-badges a {
+  transition: opacity 0.15s ease;
+}
+.hero-badges a:hover {
+  opacity: 0.85;
+}
+@media (min-width: 768px) {
+  .hero-proof__divider {
+    display: block;
+  }
+}
+/* Phones: the hero is taller (560px -> 660px) so the rating and app badges don't run into the logo */
+@media (max-width: 767px) {
+  section:has(> .hero-curve) {
+    height: 41.25rem;
+  }
+}
+
+/* Inline link at the end of a benefit's text (e.g. "Brug for vejhjælp?") */
+.benefits__link {
+  color: var(--oscar-orange);
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.benefits__link:hover {
+  color: rgb(var(--oscar-blue-800));
+}
+
+/* Benefits style: white icons on small orange brush strokes (like the hero USPs), Quicksand titles */
+.benefits--brush svg {
+  width: 1.375rem;
+  height: 1.375rem;
+  padding: 0.9375rem;
+  border: 0;
+  border-radius: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PHBhdGggZD0iTTMuMCA2LjcgTDUuNiA4LjUgTDguMiA2LjkgTDEwLjkgOS4yIEwxMy41IDguMCBMMTYuMSA2LjAgTDE4LjggOC4zIEwyMS40IDkuMiBMMjQuMCA2LjkgTDI2LjYgMTAuMCBMMjkuMiA5LjUgTDMxLjkgNi4xIEwzNC41IDguMCBMMzcuMSA5LjggTDM5LjggNi42IEw0Mi40IDYuNSBMNDUuMCA3LjggTDQ1LjUgMTEuMCBMNDguMCAxMC43IEw0Ni41IDEyLjIgTDQ2LjggMTUuMiBMNDguMCAxNS41IEw0NS45IDE2LjQgTDQ2LjUgMTkuNiBMNDcuNCAxOS42IEw0Ni4yIDIwLjggTDQ1LjQgMjMuNiBMNDguMCAyNC4wIEw0NS42IDI0LjggTDQ1LjcgMzQuMiBMNDguMCAzNC4xIEw0Ni41IDM1LjQgTDQ1LjAgNDAuMiBMNDIuNCA0MS43IEwzOS44IDQxLjMgTDM3LjEgMzkuNSBMMzQuNSAzOC41IEwzMS45IDM5LjMgTDI5LjIgNDAuNSBMMjYuNiA0MS4wIEwyNC4wIDM4LjIgTDIxLjQgMzguOSBMMTguOCAzOC4zIEwxNi4xIDM5LjUgTDEzLjUgMzguOSBMMTAuOSA0MC4wIEw4LjIgNDEuMiBMNS42IDM5LjkgTDMuMCA0MC44IEwyLjAgMzcuOCBMMC4wIDM3LjkgTDEuOSAzOS4wIEwyLjYgMzAuMSBMMC4wIDMwLjIgTDIuMSAzMS4zIEwyLjYgMjAuOCBMMC41IDIwLjYgTDEuNiAyMi4wIEwyLjMgMTIuNiBMMC4wIDEyLjQgTDIuOCAxMy44IEwyLjkgMTAuOCBMMC4wIDExLjEgTDIuNCAxMi4wIFoiIGZpbGw9IiNGRTdDMkYiLz48ZyBzdHJva2U9IiNGRTdDMkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjE5LjMiIHkxPSI1LjciIHgyPSIzOC42IiB5Mj0iNi4xIiBzdHJva2Utd2lkdGg9IjAuOTkiLz48bGluZSB4MT0iOC44IiB5MT0iNS43IiB4Mj0iMzIuNCIgeTI9IjYuMSIgc3Ryb2tlLXdpZHRoPSIwLjczIi8+PGxpbmUgeDE9IjMuMiIgeTE9IjYuNiIgeDI9IjQyLjUiIHkyPSI2LjkiIHN0cm9rZS13aWR0aD0iMC45OSIvPjxsaW5lIHgxPSIxNy4xIiB5MT0iNDQuOCIgeDI9IjI4LjkiIHkyPSI0NC42IiBzdHJva2Utd2lkdGg9IjAuODMiLz48bGluZSB4MT0iOS42IiB5MT0iNDIuNiIgeDI9IjMxLjEiIHkyPSI0Mi4yIiBzdHJva2Utd2lkdGg9IjAuODciLz48bGluZSB4MT0iMTguMiIgeTE9IjQ1LjAiIHgyPSI0NS43IiB5Mj0iNDUuMiIgc3Ryb2tlLXdpZHRoPSIwLjk4Ii8+PC9nPjwvc3ZnPg==") center / 100% 100% no-repeat;
+  color: #FFFFFF;
+}
+.benefits--brush li:nth-child(2) svg { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PHBhdGggZD0iTTMuMCA5LjggTDUuNiA2LjEgTDguMiA2LjcgTDEwLjkgOC42IEwxMy41IDkuNiBMMTYuMSA5LjggTDE4LjggOC40IEwyMS40IDguNyBMMjQuMCA4LjggTDI2LjYgOS41IEwyOS4yIDcuMiBMMzEuOSA5LjQgTDM0LjUgOS44IEwzNy4xIDkuOCBMMzkuOCA4LjggTDQyLjQgNy4wIEw0NS4wIDcuMiBMNDUuNCAxNC4wIEw0Ny4xIDE0LjAgTDQ1LjAgMTUuMiBMNDYuOSAyOC4yIEw0OC4wIDI4LjIgTDQ1LjYgMjkuNCBMNDYuMyAyOC43IEw0OC4wIDI4LjUgTDQ1LjYgMjkuOSBMNDYuMiAzMy4xIEw0Ny45IDMzLjIgTDQ1LjggMzQuMyBMNDUuOSAzNi43IEw0OC4wIDM2LjggTDQ1LjEgMzcuOSBMNDUuMCA0MS4xIEw0Mi40IDQxLjggTDM5LjggNDAuNCBMMzcuMSA0MC4zIEwzNC41IDQxLjEgTDMxLjkgNDAuMyBMMjkuMiAzOC44IEwyNi42IDQwLjQgTDI0LjAgMzguMiBMMjEuNCA0MS43IEwxOC44IDQxLjcgTDE2LjEgMzkuMyBMMTMuNSAzOC45IEwxMC45IDM5LjQgTDguMiAzOC41IEw1LjYgNDIuMCBMMy4wIDM4LjYgTDEuMSAzNy45IEwwLjAgMzcuOCBMMi45IDM5LjEgTDEuMiAzNi4wIEwwLjUgMzYuMSBMMi41IDM3LjIgTDIuMyAyMi4xIEwwLjAgMjEuNyBMMi45IDIzLjMgTDEuOSAyMS4zIEwwLjAgMjEuNSBMMi43IDIyLjUgTDEuNiAyMC4wIEwwLjggMTkuOSBMMS44IDIxLjIgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48bGluZSB4MT0iMTkuOCIgeTE9IjYuNyIgeDI9IjQxLjQiIHkyPSI2LjciIHN0cm9rZS13aWR0aD0iMS4xOCIvPjxsaW5lIHgxPSIxMy42IiB5MT0iNC44IiB4Mj0iMzQuNCIgeTI9IjUuMSIgc3Ryb2tlLXdpZHRoPSIxLjI2Ii8+PGxpbmUgeDE9IjEzLjAiIHkxPSI2LjQiIHgyPSI0NS4wIiB5Mj0iNS45IiBzdHJva2Utd2lkdGg9IjEuMDAiLz48bGluZSB4MT0iMTMuNCIgeTE9IjQzLjAiIHgyPSIzNC4xIiB5Mj0iNDIuNyIgc3Ryb2tlLXdpZHRoPSIxLjE1Ii8+PGxpbmUgeDE9IjkuOCIgeTE9IjQzLjEiIHgyPSIzMi44IiB5Mj0iNDIuNiIgc3Ryb2tlLXdpZHRoPSIxLjM3Ii8+PGxpbmUgeDE9IjguMyIgeTE9IjQzLjMiIHgyPSIzMC4xIiB5Mj0iNDMuMSIgc3Ryb2tlLXdpZHRoPSIwLjgwIi8+PC9nPjwvc3ZnPg=="); }
+.benefits--brush li:nth-child(3) svg { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PHBhdGggZD0iTTMuMCA5LjcgTDUuNiA5LjYgTDguMiA4LjQgTDEwLjkgOC4xIEwxMy41IDYuOCBMMTYuMSA2LjkgTDE4LjggNi4xIEwyMS40IDguOCBMMjQuMCA4LjEgTDI2LjYgNy40IEwyOS4yIDkuMSBMMzEuOSA4LjYgTDM0LjUgOS45IEwzNy4xIDkuMCBMMzkuOCA4LjMgTDQyLjQgNy4zIEw0NS4wIDcuOSBMNDUuNiAxNS4wIEw0OC4wIDE0LjYgTDQ1LjIgMTYuMiBMNDUuMiAxNS4xIEw0Ny4xIDE0LjggTDQ1LjkgMTYuMyBMNDYuNiAyMi41IEw0OC4wIDIyLjQgTDQ1LjQgMjMuNyBMNDUuNiAyNi41IEw0OC4wIDI2LjYgTDQ1LjQgMjcuNyBMNDUuMiAyOC4wIEw0OC4wIDI4LjIgTDQ2LjIgMjkuMiBMNDUuMCA0MC45IEw0Mi40IDM4LjMgTDM5LjggNDAuNiBMMzcuMSAzOS41IEwzNC41IDM5LjUgTDMxLjkgNDAuNSBMMjkuMiA0MC40IEwyNi42IDM4LjIgTDI0LjAgNDAuOSBMMjEuNCAzOS43IEwxOC44IDM4LjMgTDE2LjEgMzkuOCBMMTMuNSAzOS44IEwxMC45IDM4LjUgTDguMiAzOS43IEw1LjYgMzguMyBMMy4wIDQxLjggTDIuNyAzNi41IEwwLjAgMzUuOSBMMi40IDM3LjcgTDMuMCAzNS43IEwwLjAgMzUuOSBMMS41IDM2LjkgTDEuNCAyNi42IEwwLjAgMjYuNiBMMS41IDI3LjggTDEuNSAyNS4zIEwwLjAgMjUuOCBMMi40IDI2LjUgTDIuNiAxNi43IEwwLjggMTYuNiBMMi43IDE3LjkgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj48bGluZSB4MT0iMTEuOCIgeTE9IjYuNyIgeDI9IjQyLjYiIHkyPSI2LjUiIHN0cm9rZS13aWR0aD0iMC45NCIvPjxsaW5lIHgxPSIxOC4yIiB5MT0iNi44IiB4Mj0iMzYuMCIgeTI9IjYuNiIgc3Ryb2tlLXdpZHRoPSIxLjMxIi8+PGxpbmUgeDE9IjE2LjYiIHkxPSIzLjkiIHgyPSI0NC4xIiB5Mj0iNC4xIiBzdHJva2Utd2lkdGg9IjAuOTMiLz48bGluZSB4MT0iMTQuNSIgeTE9IjQxLjQiIHgyPSI0Mi45IiB5Mj0iNDEuNiIgc3Ryb2tlLXdpZHRoPSIwLjc5Ii8+PGxpbmUgeDE9IjcuMyIgeTE9IjQzLjEiIHgyPSIzNS40IiB5Mj0iNDMuNCIgc3Ryb2tlLXdpZHRoPSIxLjA1Ii8+PGxpbmUgeDE9IjExLjkiIHkxPSI0MS43IiB4Mj0iNDIuOSIgeTI9IjQxLjMiIHN0cm9rZS13aWR0aD0iMS4xMCIvPjwvZz48L3N2Zz4="); }
+.benefits--brush li:nth-child(4) svg { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PHBhdGggZD0iTTMuMCA4LjggTDUuNiA2LjcgTDguMiA2LjggTDEwLjkgNi40IEwxMy41IDYuNiBMMTYuMSA4LjkgTDE4LjggNy44IEwyMS40IDEwLjAgTDI0LjAgOC4xIEwyNi42IDkuMCBMMjkuMiA3LjIgTDMxLjkgNi4zIEwzNC41IDkuNCBMMzcuMSA3LjMgTDM5LjggOC4yIEw0Mi40IDkuNiBMNDUuMCA3LjMgTDQ3LjAgMTEuOSBMNDguMCAxMS43IEw0Ni4xIDEzLjEgTDQ2LjggMTIuNyBMNDcuMyAxMi43IEw0NS4yIDEzLjkgTDQ1LjMgMjguNiBMNDguMCAyOC44IEw0Ni41IDI5LjggTDQ1LjMgMzIuNCBMNDguMCAzMy4wIEw0Ni4xIDMzLjYgTDQ2LjEgMzIuOSBMNDcuNyAzMy4xIEw0NS40IDM0LjEgTDQ1LjAgNDEuNiBMNDIuNCA0MS43IEwzOS44IDM5LjUgTDM3LjEgMzkuMiBMMzQuNSAzOC42IEwzMS45IDQxLjAgTDI5LjIgNDEuOCBMMjYuNiAzOS44IEwyNC4wIDQxLjggTDIxLjQgMzguNSBMMTguOCA0MS41IEwxNi4xIDQxLjEgTDEzLjUgNDAuOCBMMTAuOSA0MS4wIEw4LjIgNDAuNyBMNS42IDQyLjAgTDMuMCA0MS40IEwyLjEgMzIuMyBMMC4wIDMyLjAgTDIuNyAzMy41IEwxLjkgMjguMiBMMC4wIDI4LjYgTDIuNiAyOS40IEwyLjMgMjguMCBMMC44IDI4LjAgTDIuNSAyOS4yIEwyLjEgMjEuMyBMMC4wIDIwLjcgTDEuNSAyMi41IEwxLjYgMjEuMCBMMC4wIDIxLjAgTDIuMSAyMi4yIFoiIGZpbGw9IiNGRTdDMkYiLz48ZyBzdHJva2U9IiNGRTdDMkYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCI+PGxpbmUgeDE9IjE4LjMiIHkxPSI0LjYiIHgyPSI0Mi40IiB5Mj0iNC44IiBzdHJva2Utd2lkdGg9IjAuNjEiLz48bGluZSB4MT0iNi43IiB5MT0iNC42IiB4Mj0iMzcuOCIgeTI9IjQuOCIgc3Ryb2tlLXdpZHRoPSIwLjk0Ii8+PGxpbmUgeDE9IjEzLjQiIHkxPSIzLjkiIHgyPSI0NC4zIiB5Mj0iMy43IiBzdHJva2Utd2lkdGg9IjAuOTEiLz48bGluZSB4MT0iMTUuNyIgeTE9IjQyLjIiIHgyPSIzMy43IiB5Mj0iNDIuNCIgc3Ryb2tlLXdpZHRoPSIwLjkyIi8+PGxpbmUgeDE9IjIuMyIgeTE9IjQyLjIiIHgyPSIzNi4zIiB5Mj0iNDEuNyIgc3Ryb2tlLXdpZHRoPSIxLjIzIi8+PGxpbmUgeDE9IjE3LjIiIHkxPSI0Mi4zIiB4Mj0iMzcuNSIgeTI9IjQyLjciIHN0cm9rZS13aWR0aD0iMC43NyIvPjwvZz48L3N2Zz4="); }
+.benefits--brush .benefits__title {
+  font-family: var(--heading-font);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* Benefits layout: the icon sits above the heading */
+.benefits--stacked li {
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.benefits--stacked .benefits__title {
+  margin-top: 0;
+}
+
+/* ===== Review section ("Læs hvad vores kunder siger"): carousel on a light blue panel ===== */
+
+/* Shared pieces */
+.rv-heading {
+  color: rgb(var(--oscar-blue-800));
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+@media (min-width: 768px) { .rv-heading { font-size: 2.25rem; } }
+
+.rv-stars--split svg { width: 1.25rem; height: 1.25rem; }
+/* Stay as wide as the stars (not the column), so the 4.5 cut-off lands on the last star */
+.rv-stars--split { align-self: flex-start; width: fit-content; }
+.rv-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  object-fit: cover;
+}
+
+.rv-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgb(var(--oscar-blue-800));
+  border-radius: 0.5rem;
+  color: rgb(var(--oscar-blue-800));
+  font-weight: 600;
+  transition: background 0.15s ease;
+}
+.rv-cta:hover { background: rgba(var(--oscar-blue-800), 0.05); }
+.rv-cta svg { width: 1rem; height: 1rem; }
+
+.rv-card__name {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+  color: rgb(var(--oscar-blue-800));
+}
+.rv-card__name strong { font-weight: 600; }
+/* Town after the name, in normal weight */
+.rv-card__city { color: rgba(var(--oscar-blue-800), 0.7); font-weight: 400; }
+
+
+/* Carousel */
+.rv-c__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.rv-c__sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 0.75rem;
+  color: rgba(var(--oscar-blue-800), 0.7);
+}
+.rv-c__sub .hero-rating__empty { color: rgba(var(--oscar-blue-800), 0.15); }
+.rv-c__nav { display: none; gap: 0.5rem; }
+.rv-c__btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.2);
+  border-radius: 9999px;
+  color: rgb(var(--oscar-blue-800));
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.rv-c__btn:hover { border-color: rgb(var(--oscar-blue-800)); background: rgba(var(--oscar-blue-800), 0.05); }
+.rv-c__btn svg { width: 1.125rem; height: 1.125rem; }
+.rv-c__track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: 0.25rem;
+}
+.rv-c__track::-webkit-scrollbar { display: none; }
+.rv-c__card {
+  display: flex;
+  flex: 0 0 85%;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 15rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.1);
+  border-radius: 1rem;
+  background: #FFFFFF;
+  scroll-snap-align: start;
+}
+.rv-c__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: fit-content;
+  padding: 0.25rem 0.625rem;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik0xMC4yIDUuMCBMMTkwLjkgNS44IEwxOTIuMyA5LjcgTDQuMCAxMC44IEw0LjMgMTQuMSBMMTkzLjcgMTUuMiBMMTk2LjYgMTguOCBMMy4zIDE5LjYgTDcuNiAyMy41IEwxOTUuNSAyNC4zIEwxOTUuMCAyNy42IEwzLjggMjguNyBMNC43IDMxLjUgTDE4OC43IDMyLjMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLXdpZHRoPSI2LjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==") center / 100% 100% no-repeat;
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.rv-c__chip svg { width: 0.875rem; height: 0.875rem; fill: currentColor; }
+.rv-c__chip { gap: 0.125rem; padding: 0.3125rem 0.75rem; }
+.rv-c__quote {
+  color: rgb(var(--oscar-blue-800));
+  font-size: 1.0625rem;
+  line-height: 1.55;
+}
+.rv-c__foot { margin-top: 1.5rem; }
+@media (min-width: 768px) { .rv-c__card { flex-basis: calc((100% - 1rem) / 2); } }
+@media (min-width: 1024px) { .rv-c__nav { display: flex; } .rv-c__card { flex-basis: calc((100% - 2rem) / 3); } }
+
+/* Light blue panel behind the carousel; cards are white with a soft shadow */
+.rv-panel {
+  padding: 2rem 1.25rem;
+  border-radius: 1rem;
+}
+
+.rv-panel--blue { background: var(--oscar-blue-tint); }
+.rv-panel .rv-c__card {
+  border-color: transparent;
+  box-shadow: 0 1px 2px rgba(var(--oscar-blue-800), 0.04), 0 8px 24px -12px rgba(var(--oscar-blue-800), 0.18);
+}
+.rv-panel .rv-c__btn { background: #FFFFFF; }
+.rv-panel .rv-c__track {
+  margin: -0.75rem;
+  padding: 0.75rem;
+  scroll-padding: 0.75rem;
+}
+@media (min-width: 1024px) { .rv-panel { padding: 3rem; } }
+
+/* Featured review: the reviewer "pops out" of a light blue panel. The panel's bottom edge
+   cuts him at the waist (the photo is cropped there) and his head rises above the panel's top.
+   Photo left, the review written freely on the right. */
+.rv-feature {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 2rem 1.25rem 0;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+.rv-feature__photo {
+  order: 2;
+  display: flex;
+  justify-content: center;
+  align-self: end;
+}
+.rv-feature__photo img {
+  display: block;
+  width: auto;
+  height: 18rem;
+}
+.rv-feature__body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.rv-feature__quote {
+  color: rgb(var(--oscar-blue-800));
+  font-family: var(--heading-font);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.rv-feature__name {
+  color: rgba(var(--oscar-blue-800), 0.7);
+}
+.rv-feature__name strong {
+  color: rgb(var(--oscar-blue-800));
+  font-weight: 600;
+}
+.rv-feature__name span {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.9375rem;
+}
+@media (min-width: 1024px) {
+  .rv-feature {
+    grid-template-columns: 5fr 7fr;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 7rem; /* room for his head above the panel */
+    margin-bottom: 2rem;
+    padding: 0 3.5rem 0 2rem;
+  }
+  .rv-feature__photo {
+    order: 0;
+    position: relative;
+    align-self: stretch;
+  }
+  .rv-feature__photo img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    height: calc(100% + 6.5rem); /* head and shoulders rise 6.5rem above the panel */
+    width: auto;
+    max-width: none;
+    transform: translateX(-50%);
+  }
+  .rv-feature__body {
+    padding: 3rem 0;
+  }
+  .rv-feature__quote {
+    font-size: 1.875rem;
+  }
+}
+
+
+/* Featured review: no background. The reviewer stands right on the top edge of the
+   review panel below, so that edge cuts him at the waist and he "floats" freely above it. */
+.rv-feature--free {
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  background: none;
+}
+@media (min-width: 1024px) {
+  .rv-feature--free {
+    padding: 0;
+  }
+  .rv-feature--free .rv-feature__body {
+    padding: 2rem 0 4rem;
+  }
+}
+
+/* Featured review: one oversized quotation mark floats in the background, behind the reviewer and the
+   text, in a very faint brand blue (no orange). */
+.rv-feature--free {
+  isolation: isolate;
+}
+.rv-feature--free::before {
+  content: "“";
+  position: absolute;
+  z-index: -1;
+  top: -4rem;
+  right: -1rem;
+  color: rgba(var(--oscar-blue-800), 0.06);
+  font-family: var(--heading-font);
+  font-size: 24rem;
+  font-weight: 700;
+  line-height: 1;
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .rv-feature--free::before {
+    top: -15rem;
+    right: auto;
+    left: 26%;
+    font-size: 50rem;
+  }
+}
+
+/* Car listing ("Se vores biler"): heading and the line under it are centred, car type buttons removed */
+[data-testid="vehicles-carousel"] > .container:has(h2) {
+  justify-content: center;
+  text-align: center;
+}
+[data-testid="vehicles-carousel"] > .container:has(h2) h2 {
+  justify-content: center;
+}
+[data-testid="vehicles-carousel"] > .container:has(h2) .prose {
+  margin-inline: auto;
+  color: rgba(var(--oscar-blue-800), 0.75);
+  font-size: 1.125rem;
+}
+[data-testid="vehicles-carousel"] > .container:has(h2) {
+  margin-bottom: 2rem;
+}
+/* Phones/tablets: keep the same side margin as the rest of the page when the cars scroll sideways */
+@media (max-width: 1023px) {
+  [data-testid="vehicles-carousel"] ul.snap-x {
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+  }
+}
+/* Car type cards (moved up from "Vi har en lejebil til ethvert behov"): centred row on desktop */
+@media (min-width: 1024px) {
+  [data-testid="vehicles-carousel"] ul.snap-x {
+    justify-content: center;
+  }
+}
+
+/* Car type cards: bigger cards and especially bigger car photos */
+[data-testid="vehicles-carousel"] ul.snap-x > li {
+  max-width: none;
+  width: 17rem;
+}
+[data-testid="vehicles-carousel"] article {
+  padding: 0.75rem 1.25rem 1.25rem;
+}
+[data-testid="vehicles-carousel"] article .h-28 {
+  height: 10.5rem;
+  margin-top: 0.25rem;
+}
+/* The photos are trimmed to the car itself, so they can fill the card's full width */
+[data-testid="vehicles-carousel"] article .h-28 img {
+  width: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center bottom;
+}
+@media (min-width: 1024px) {
+  [data-testid="vehicles-carousel"] ul.snap-x {
+    gap: 1.5rem;
+  }
+  [data-testid="vehicles-carousel"] ul.snap-x > li {
+    width: calc((100% - 4.5rem) / 4);
+  }
+}
+
+/* Price label on the car type cards: the same orange brush stroke as the hero USPs */
+[data-testid="vehicles-carousel"] article .bg-brand-orange-02 {
+  padding: 0.25rem 0.625rem;
+  border-radius: 0;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik03LjMgOC40IEwxMS45IDUuOCBMMTYuNSA0LjQgTDIxLjIgNS4xIEwyNS44IDQuOSBMMzAuNSA0LjcgTDM1LjEgMy41IEwzOS43IDQuOCBMNDQuNCA0LjcgTDQ5LjAgNS42IEw1My42IDQuNCBMNTguMyA1LjggTDYyLjkgMy45IEw2Ny42IDYuMyBMNzIuMiA1LjkgTDc2LjggNi41IEw4MS41IDQuNSBMODYuMSA1LjcgTDkwLjggNC44IEw5NS40IDUuMSBMMTAwLjAgNS40IEwxMDQuNyA2LjkgTDEwOS4zIDUuNCBMMTEzLjkgNS43IEwxMTguNiA1LjcgTDEyMy4yIDcuNiBMMTI3LjkgNS44IEwxMzIuNSA2LjEgTDEzNy4xIDYuMCBMMTQxLjggNi43IEwxNDYuNCA2LjMgTDE1MS4xIDcuMyBMMTU1LjcgNi4xIEwxNjAuMyA3LjUgTDE2NS4wIDYuMSBMMTY5LjYgNi41IEwxNzQuMiA3LjAgTDE3OC45IDguMSBMMTgzLjUgOC4wIEwxODguMiA4LjggTDE5Mi44IDEyLjAgTDE5NC45IDE2LjQgTDIwMC4wIDE3LjAgTDE5My42IDE4LjAgTDE5NS40IDI0LjkgTDE5OC43IDI1LjEgTDE5My42IDI2LjMgTDE5NC42IDI1LjcgTDE5Ni4yIDI1LjkgTDE5NC44IDI3LjQgTDE5NS4wIDI1LjcgTDE5Ny43IDI2LjEgTDE5NC4wIDI2LjkgTDE5NS4zIDI3LjAgTDE5Ni4yIDI3LjQgTDE5Mi45IDI4LjQgTDE5NC4yIDI5LjYgTDE5Ni45IDI5LjkgTDE5My44IDMxLjAgTDE5NS42IDMwLjAgTDE5Ny4xIDI5LjIgTDE5My40IDMxLjQgTDE5Mi44IDI4LjkgTDE4OC4yIDMwLjMgTDE4My41IDMxLjcgTDE3OC45IDMyLjEgTDE3NC4yIDM0LjEgTDE2OS42IDMzLjEgTDE2NS4wIDMyLjggTDE2MC4zIDMzLjkgTDE1NS43IDMzLjAgTDE1MS4xIDMyLjEgTDE0Ni40IDMyLjIgTDE0MS44IDMxLjcgTDEzNy4xIDMzLjcgTDEzMi41IDMzLjQgTDEyNy45IDMzLjggTDEyMy4yIDMzLjAgTDExOC42IDMyLjUgTDExMy45IDMxLjkgTDEwOS4zIDMzLjUgTDEwNC43IDMxLjkgTDEwMC4wIDMyLjIgTDk1LjQgMzQuMSBMOTAuOCAzMi4wIEw4Ni4xIDMyLjMgTDgxLjUgMzMuOCBMNzYuOCAzMi4yIEw3Mi4yIDMyLjEgTDY3LjYgMzIuMiBMNjIuOSAzNC4yIEw1OC4zIDM0LjQgTDUzLjYgMzQuMCBMNDkuMCAzMy4wIEw0NC40IDM0LjcgTDM5LjcgMzMuNSBMMzUuMSAzMy40IEwzMC41IDMyLjkgTDI1LjggMzIuOSBMMjEuMiAzNC42IEwxNi41IDMxLjMgTDExLjkgMzEuNCBMNy4zIDMwLjcgTDUuMyAyOS43IEwzLjMgMjkuNiBMNS42IDMxLjUgTDQuNiAyOS40IEwyLjMgMjkuNSBMNi42IDMwLjMgTDUuOCAyMy44IEwwLjEgMjQuNCBMNS44IDI1LjYgTDYuNCAxOC42IEwzLjQgMTguNSBMNi43IDE5LjYgTDYuMCAxNS44IEwxLjEgMTUuOCBMNi42IDE3LjUgTDQuMyAxMi45IEwyLjAgMTIuMiBMNy4yIDE0LjUgTDcuMSAxMi4xIEwwLjcgMTIuMiBMNi42IDEzLjcgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIj48bGluZSB4MT0iODAuNCIgeTE9IjIuMSIgeDI9IjkxLjkiIHkyPSIyLjIiIHN0cm9rZS13aWR0aD0iMS40MSIgc3Ryb2tlLWRhc2hhcnJheT0iOC4wIDEuMSIvPjxsaW5lIHgxPSIxMTQuMyIgeTE9IjM2LjUiIHgyPSIxNzIuOCIgeTI9IjM2LjEiIHN0cm9rZS13aWR0aD0iMS41NSIvPjxsaW5lIHgxPSI1LjEiIHkxPSIzMy42IiB4Mj0iNDMuNCIgeTI9IjMzLjkiIHN0cm9rZS13aWR0aD0iMS4yOSIgc3Ryb2tlLWRhc2hhcnJheT0iOS44IDIuMCIvPjxsaW5lIHgxPSIxMzEuNSIgeTE9IjM2LjQiIHgyPSIxNjUuMSIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMS4zNyIvPjxsaW5lIHgxPSI1LjEiIHkxPSIyNS4zIiB4Mj0iMTUuNCIgeTI9IjI1LjciIHN0cm9rZS13aWR0aD0iMS41MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMCAzLjYiLz48bGluZSB4MT0iMTc5LjkiIHkxPSIxOS4xIiB4Mj0iMTkxLjEiIHkyPSIxOS40IiBzdHJva2Utd2lkdGg9IjEuNDAiLz48bGluZSB4MT0iMTY5LjUiIHkxPSI2LjkiIHgyPSIyMDAuMCIgeTI9IjYuNyIgc3Ryb2tlLXdpZHRoPSIxLjA5Ii8+PGxpbmUgeDE9IjAuOSIgeTE9IjI4LjUiIHgyPSI5LjMiIHkyPSIyOC41IiBzdHJva2Utd2lkdGg9IjEuMTEiLz48bGluZSB4MT0iMTQuMSIgeTE9IjYuMyIgeDI9IjcyLjEiIHkyPSI1LjkiIHN0cm9rZS13aWR0aD0iMC42OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMCAxLjQiLz48bGluZSB4MT0iMTQ1LjciIHkxPSIzNy4xIiB4Mj0iMTk3LjAiIHkyPSIzNi43IiBzdHJva2Utd2lkdGg9IjEuNTQiIHN0cm9rZS1kYXNoYXJyYXk9IjE5LjMgMS4zIi8+PGxpbmUgeDE9IjEyNi44IiB5MT0iMzQuMyIgeDI9IjE3NS4yIiB5Mj0iMzQuNCIgc3Ryb2tlLXdpZHRoPSIxLjA4Ii8+PGxpbmUgeDE9IjE0Ni42IiB5MT0iMy42IiB4Mj0iMjAwLjAiIHkyPSI0LjIiIHN0cm9rZS13aWR0aD0iMC43MyIvPjxsaW5lIHgxPSIzNy4zIiB5MT0iMzYuMSIgeDI9Ijc5LjUiIHkyPSIzNS41IiBzdHJva2Utd2lkdGg9IjEuMDUiLz48bGluZSB4MT0iOS4wIiB5MT0iMjAuNCIgeDI9IjE4LjciIHkyPSIxOS45IiBzdHJva2Utd2lkdGg9IjEuMDQiLz48bGluZSB4MT0iMTY1LjUiIHkxPSIzNS4xIiB4Mj0iMjAwLjAiIHkyPSIzNS41IiBzdHJva2Utd2lkdGg9IjAuODAiIHN0cm9rZS1kYXNoYXJyYXk9IjcuOCAyLjMiLz48bGluZSB4MT0iMi4yIiB5MT0iMTkuNCIgeDI9IjEyLjMiIHkyPSIxOS4xIiBzdHJva2Utd2lkdGg9IjEuNTIiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjkgMS4xIi8+PGxpbmUgeDE9IjU3LjkiIHkxPSI1LjUiIHgyPSI4OS4yIiB5Mj0iNS41IiBzdHJva2Utd2lkdGg9IjEuMTgiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjIgMS40Ii8+PGxpbmUgeDE9IjkzLjIiIHkxPSIyLjQiIHgyPSIxMjkuNCIgeTI9IjIuMSIgc3Ryb2tlLXdpZHRoPSIwLjkxIiBzdHJva2UtZGFzaGFycmF5PSIxMy40IDEuNSIvPjxsaW5lIHgxPSI5My4xIiB5MT0iMzYuNSIgeDI9IjE1NC4xIiB5Mj0iMzYuMiIgc3Ryb2tlLXdpZHRoPSIxLjE3Ii8+PGxpbmUgeDE9IjE1Ni4zIiB5MT0iMzcuNiIgeDI9IjE4NS4zIiB5Mj0iMzcuMyIgc3Ryb2tlLXdpZHRoPSIwLjg1Ii8+PGxpbmUgeDE9IjIuNyIgeTE9IjI5LjMiIHgyPSIxNC4wIiB5Mj0iMjkuNiIgc3Ryb2tlLXdpZHRoPSIwLjc5IiBzdHJva2UtZGFzaGFycmF5PSIxNy43IDIuMyIvPjxsaW5lIHgxPSIxMTkuNCIgeTE9IjMuNyIgeDI9IjEzMC41IiB5Mj0iNC4yIiBzdHJva2Utd2lkdGg9IjAuNzIiLz48bGluZSB4MT0iMTg4LjMiIHkxPSIxMC44IiB4Mj0iMTk3LjMiIHkyPSIxMC4yIiBzdHJva2Utd2lkdGg9IjEuMjUiIHN0cm9rZS1kYXNoYXJyYXk9IjcuMCAxLjMiLz48bGluZSB4MT0iOTkuNyIgeTE9IjM1LjciIHgyPSIxMTguNSIgeTI9IjM2LjMiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuOCA0LjAiLz48bGluZSB4MT0iMTY0LjYiIHkxPSIxLjYiIHgyPSIyMDAuMCIgeTI9IjEuNSIgc3Ryb2tlLXdpZHRoPSIxLjM0IiBzdHJva2UtZGFzaGFycmF5PSIxMi41IDIuNSIvPjxsaW5lIHgxPSIxMjIuMSIgeTE9IjMyLjYiIHgyPSIxODIuOCIgeTI9IjMyLjIiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTYuNCAyLjIiLz48bGluZSB4MT0iNS45IiB5MT0iNC40IiB4Mj0iNjkuNSIgeTI9IjQuOSIgc3Ryb2tlLXdpZHRoPSIxLjM4Ii8+PGxpbmUgeDE9IjEwNC45IiB5MT0iMzUuMCIgeDI9IjE0NS4yIiB5Mj0iMzQuOCIgc3Ryb2tlLXdpZHRoPSIxLjU4Ii8+PGxpbmUgeDE9IjE4OS45IiB5MT0iMjUuOSIgeDI9IjE5Ny45IiB5Mj0iMjYuMSIgc3Ryb2tlLXdpZHRoPSIxLjQ5Ii8+PGxpbmUgeDE9IjcyLjEiIHkxPSIzNy4zIiB4Mj0iMTI1LjQiIHkyPSIzNy4xIiBzdHJva2Utd2lkdGg9IjAuNTgiIHN0cm9rZS1kYXNoYXJyYXk9IjEyLjYgMS4wIi8+PGxpbmUgeDE9IjQyLjYiIHkxPSIzNi40IiB4Mj0iMTA5LjMiIHkyPSIzNi41IiBzdHJva2Utd2lkdGg9IjEuMjMiIHN0cm9rZS1kYXNoYXJyYXk9IjE1LjIgMi43Ii8+PGxpbmUgeDE9IjExMi4xIiB5MT0iNy41IiB4Mj0iMTY0LjIiIHkyPSI2LjkiIHN0cm9rZS13aWR0aD0iMS4zNCIvPjxsaW5lIHgxPSI0Ni44IiB5MT0iMzcuMiIgeDI9IjgwLjkiIHkyPSIzNi45IiBzdHJva2Utd2lkdGg9IjAuNTYiIHN0cm9rZS1kYXNoYXJyYXk9IjExLjMgMS4zIi8+PGxpbmUgeDE9IjE5MC4wIiB5MT0iMjEuMiIgeDI9IjE5OS42IiB5Mj0iMjEuNiIgc3Ryb2tlLXdpZHRoPSIxLjU5Ii8+PC9nPjwvc3ZnPg==") center / 100% 100% no-repeat;
+  font-weight: 600;
+}
+[data-testid="vehicles-carousel"] ul.snap-x > li:nth-child(2) article .bg-brand-orange-02 { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik03LjQgNy4yIEwxMi4wIDcuNyBMMTYuNyA2LjkgTDIxLjMgNS4wIEwyNi4wIDQuNiBMMzAuNiA2LjUgTDM1LjMgNS44IEwzOS45IDUuMCBMNDQuNiA2LjMgTDQ5LjIgNS40IEw1My45IDYuNSBMNTguNSA2LjkgTDYzLjEgNi4xIEw2Ny44IDUuNyBMNzIuNCA3LjQgTDc3LjEgNi42IEw4MS43IDYuNiBMODYuNCA2LjIgTDkxLjAgNi43IEw5NS43IDYuNCBMMTAwLjMgNy4yIEwxMDUuMCA2LjkgTDEwOS42IDYuMSBMMTE0LjMgNi44IEwxMTguOSA4LjYgTDEyMy42IDcuMCBMMTI4LjIgNi44IEwxMzIuOSA2LjkgTDEzNy41IDcuMCBMMTQyLjIgNy41IEwxNDYuOCA3LjAgTDE1MS41IDYuNiBMMTU2LjEgNy4zIEwxNjAuOCA4LjQgTDE2NS40IDcuNiBMMTcwLjAgNy4wIEwxNzQuNyA2LjEgTDE3OS4zIDguNCBMMTg0LjAgNy40IEwxODguNiAxMC43IEwxOTMuMyA5LjIgTDE5NS40IDEwLjIgTDIwMC4wIDEwLjQgTDE5NS4yIDExLjMgTDE5My40IDExLjQgTDE5OC43IDExLjMgTDE5My42IDEyLjkgTDE5NC4zIDEzLjkgTDE5Ny41IDEzLjYgTDE5NS4yIDE0LjcgTDE5NC40IDE1LjUgTDE5Ny43IDE1LjAgTDE5NC4yIDE2LjUgTDE5Ni4wIDE1LjggTDE5OC44IDE2LjEgTDE5My42IDE3LjAgTDE5NS4xIDE3LjggTDIwMC4wIDE3LjQgTDE5NC4yIDE5LjQgTDE5NS44IDI0LjQgTDE5Ny40IDI0LjUgTDE5NC44IDI1LjYgTDE5My4zIDMzLjAgTDE4OC42IDMyLjggTDE4NC4wIDMzLjggTDE3OS4zIDM0LjggTDE3NC43IDM1LjkgTDE3MC4wIDM1LjUgTDE2NS40IDM1LjYgTDE2MC44IDM1LjUgTDE1Ni4xIDM0LjkgTDE1MS41IDM0LjUgTDE0Ni44IDM1LjEgTDE0Mi4yIDM1LjEgTDEzNy41IDM0LjAgTDEzMi45IDM1LjQgTDEyOC4yIDM0LjQgTDEyMy42IDM1LjIgTDExOC45IDM0LjMgTDExNC4zIDMzLjEgTDEwOS42IDM0LjggTDEwNS4wIDM0LjcgTDEwMC4zIDMzLjIgTDk1LjcgMzMuOSBMOTEuMCAzMi44IEw4Ni40IDMyLjcgTDgxLjcgMzIuOCBMNzcuMSAzMy4wIEw3Mi40IDMyLjUgTDY3LjggMzMuMiBMNjMuMSAzMy45IEw1OC41IDM0LjYgTDUzLjkgMzMuMSBMNDkuMiAzMy4xIEw0NC42IDMzLjcgTDM5LjkgMzIuMyBMMzUuMyAzNC4zIEwzMC42IDMyLjAgTDI2LjAgMzIuNyBMMjEuMyAzMS43IEwxNi43IDMxLjEgTDEyLjAgMzEuMSBMNy40IDI5LjIgTDYuNCAzMS4zIEwxLjkgMzEuMSBMNi44IDMyLjMgTDYuNyAyNS42IEwxLjcgMjUuMiBMNy4zIDI3LjIgTDYuNSAyNC4zIEwwLjAgMjQuNSBMNi42IDI2LjAgTDQuNyAyNC4yIEwyLjggMjMuNiBMNi4xIDI1LjggTDUuNSAyMy45IEwwLjUgMjMuOCBMNi4xIDI1LjAgTDYuMiAyMS4zIEwyLjUgMjEuMSBMNi42IDIyLjkgTDYuOSAxNi40IEwzLjMgMTYuMCBMNS40IDE3LjcgWiIgZmlsbD0iI0ZFN0MyRiIvPjxnIHN0cm9rZT0iI0ZFN0MyRiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBmaWxsPSJub25lIj48bGluZSB4MT0iMTUxLjgiIHkxPSI2LjUiIHgyPSIyMDAuMCIgeTI9IjYuMiIgc3Ryb2tlLXdpZHRoPSIwLjg5Ii8+PGxpbmUgeDE9IjE0NC45IiB5MT0iNi43IiB4Mj0iMTY3LjYiIHkyPSI2LjMiIHN0cm9rZS13aWR0aD0iMS40NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuMyAxLjAiLz48bGluZSB4MT0iNTMuOCIgeTE9IjUuNyIgeDI9Ijc1LjIiIHkyPSI1LjIiIHN0cm9rZS13aWR0aD0iMC43MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTguMSAyLjgiLz48bGluZSB4MT0iNzkuNiIgeTE9IjM1LjkiIHgyPSIxMjEuMiIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMS4yMiIvPjxsaW5lIHgxPSIxMTEuMSIgeTE9IjM1LjQiIHgyPSIxNDQuNCIgeTI9IjM2LjAiIHN0cm9rZS13aWR0aD0iMC45NiIgc3Ryb2tlLWRhc2hhcnJheT0iMTYuMCAxLjgiLz48bGluZSB4MT0iMTIwLjciIHkxPSIzNy45IiB4Mj0iMTg4LjEiIHkyPSIzOC4yIiBzdHJva2Utd2lkdGg9IjEuMjUiIHN0cm9rZS1kYXNoYXJyYXk9IjExLjcgMi44Ii8+PGxpbmUgeDE9IjEuMiIgeTE9IjExLjEiIHgyPSI2LjEiIHkyPSIxMS4zIiBzdHJva2Utd2lkdGg9IjAuNTYiIHN0cm9rZS1kYXNoYXJyYXk9IjkuNSAxLjMiLz48bGluZSB4MT0iMTY2LjYiIHkxPSIzOC42IiB4Mj0iMjAwLjAiIHkyPSIzOC42IiBzdHJva2Utd2lkdGg9IjEuNTQiIHN0cm9rZS1kYXNoYXJyYXk9IjkuMiAzLjgiLz48bGluZSB4MT0iNzUuMyIgeTE9IjYuMCIgeDI9IjExNy45IiB5Mj0iNi41IiBzdHJva2Utd2lkdGg9IjAuODUiIHN0cm9rZS1kYXNoYXJyYXk9IjcuMiAyLjgiLz48bGluZSB4MT0iMTg2LjIiIHkxPSIyNi40IiB4Mj0iMTkzLjIiIHkyPSIyNi42IiBzdHJva2Utd2lkdGg9IjEuNTIiLz48bGluZSB4MT0iODUuMyIgeTE9IjIuNiIgeDI9IjEzOS4yIiB5Mj0iMi40IiBzdHJva2Utd2lkdGg9IjEuNDEiLz48bGluZSB4MT0iMTcxLjUiIHkxPSI2LjYiIHgyPSIyMDAuMCIgeTI9IjYuNyIgc3Ryb2tlLXdpZHRoPSIwLjcxIi8+PGxpbmUgeDE9IjY4LjgiIHkxPSIyLjciIHgyPSIxMTUuNiIgeTI9IjIuNCIgc3Ryb2tlLXdpZHRoPSIwLjY0IiBzdHJva2UtZGFzaGFycmF5PSIxOS4zIDMuMiIvPjxsaW5lIHgxPSIxMjguNiIgeTE9IjMzLjEiIHgyPSIxNzYuNSIgeTI9IjMzLjAiIHN0cm9rZS13aWR0aD0iMC42OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMyAyLjciLz48bGluZSB4MT0iMTcyLjkiIHkxPSIzLjQiIHgyPSIyMDAuMCIgeTI9IjMuMSIgc3Ryb2tlLXdpZHRoPSIxLjA1IiBzdHJva2UtZGFzaGFycmF5PSI4LjQgMi4yIi8+PGxpbmUgeDE9IjYyLjgiIHkxPSIzLjUiIHgyPSIxMjkuMSIgeTI9IjMuNSIgc3Ryb2tlLXdpZHRoPSIwLjgzIiBzdHJva2UtZGFzaGFycmF5PSIxNS4yIDIuMiIvPjxsaW5lIHgxPSIxMTcuNSIgeTE9IjMzLjAiIHgyPSIxMzMuNiIgeTI9IjMzLjYiIHN0cm9rZS13aWR0aD0iMC43OCIvPjxsaW5lIHgxPSI3Ny44IiB5MT0iMzMuNiIgeDI9IjEwNC44IiB5Mj0iMzMuNyIgc3Ryb2tlLXdpZHRoPSIxLjQzIiBzdHJva2UtZGFzaGFycmF5PSI4LjcgMi45Ii8+PGxpbmUgeDE9IjE2Ni4zIiB5MT0iMzUuNSIgeDI9IjIwMC4wIiB5Mj0iMzUuOCIgc3Ryb2tlLXdpZHRoPSIxLjUzIiBzdHJva2UtZGFzaGFycmF5PSIxMi41IDIuMSIvPjxsaW5lIHgxPSI5Mi43IiB5MT0iMzQuMCIgeDI9IjE0Ni4zIiB5Mj0iMzQuMSIgc3Ryb2tlLXdpZHRoPSIxLjA1Ii8+PGxpbmUgeDE9IjU1LjUiIHkxPSIzNC43IiB4Mj0iNjYuOSIgeTI9IjM0LjYiIHN0cm9rZS13aWR0aD0iMS40OCIvPjxsaW5lIHgxPSI5LjUiIHkxPSIyOS43IiB4Mj0iMTcuNyIgeTI9IjI5LjEiIHN0cm9rZS13aWR0aD0iMC44NSIgc3Ryb2tlLWRhc2hhcnJheT0iMTEuOCAxLjIiLz48bGluZSB4MT0iMzAuMyIgeTE9IjMuMSIgeDI9IjQ3LjYiIHkyPSIzLjciIHN0cm9rZS13aWR0aD0iMS40MiIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuOSAyLjgiLz48bGluZSB4MT0iMTQ5LjYiIHkxPSIyLjYiIHgyPSIyMDAuMCIgeTI9IjMuMSIgc3Ryb2tlLXdpZHRoPSIxLjUyIiBzdHJva2UtZGFzaGFycmF5PSIxMS4xIDEuNiIvPjxsaW5lIHgxPSIxMzcuOCIgeTE9IjM2LjAiIHgyPSIxNjMuNSIgeTI9IjM1LjUiIHN0cm9rZS13aWR0aD0iMS4wOSIvPjxsaW5lIHgxPSIxNDUuNyIgeTE9IjMzLjciIHgyPSIyMDAuMCIgeTI9IjMzLjUiIHN0cm9rZS13aWR0aD0iMS4yMSIgc3Ryb2tlLWRhc2hhcnJheT0iNi4zIDIuNSIvPjxsaW5lIHgxPSIxNTkuNyIgeTE9IjMzLjAiIHgyPSIyMDAuMCIgeTI9IjMzLjUiIHN0cm9rZS13aWR0aD0iMS4xMiIvPjxsaW5lIHgxPSIxNDcuMyIgeTE9IjM1LjkiIHgyPSIxNzkuNyIgeTI9IjM2LjEiIHN0cm9rZS13aWR0aD0iMS40OSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMSAyLjYiLz48bGluZSB4MT0iOS4xIiB5MT0iMTMuMyIgeDI9IjIwLjYiIHkyPSIxMy41IiBzdHJva2Utd2lkdGg9IjEuMDgiLz48bGluZSB4MT0iMy4zIiB5MT0iMjMuNiIgeDI9IjguMSIgeTI9IjIzLjciIHN0cm9rZS13aWR0aD0iMC42NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTkuNyAxLjQiLz48bGluZSB4MT0iOTMuOSIgeTE9IjcuMyIgeDI9IjExNC41IiB5Mj0iNy45IiBzdHJva2Utd2lkdGg9IjEuNDEiLz48bGluZSB4MT0iMTE1LjYiIHkxPSIzLjciIHgyPSIxNDIuNiIgeTI9IjQuMCIgc3Ryb2tlLXdpZHRoPSIxLjEzIi8+PGxpbmUgeDE9IjguNiIgeTE9IjI2LjAiIHgyPSIxNi45IiB5Mj0iMjUuNSIgc3Ryb2tlLXdpZHRoPSIwLjY5IiBzdHJva2UtZGFzaGFycmF5PSIxNC43IDIuMSIvPjxsaW5lIHgxPSI1OC42IiB5MT0iMzUuMSIgeDI9IjEwMi42IiB5Mj0iMzQuOSIgc3Ryb2tlLXdpZHRoPSIxLjA5IiBzdHJva2UtZGFzaGFycmF5PSIxOS44IDMuNyIvPjwvZz48L3N2Zz4="); }
+[data-testid="vehicles-carousel"] ul.snap-x > li:nth-child(3) article .bg-brand-orange-02 { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik02LjMgMTEuNSBMMTEuMCA3LjIgTDE1LjcgNy42IEwyMC4zIDcuOSBMMjUuMCA2LjIgTDI5LjcgNy45IEwzNC40IDYuNiBMMzkuMCA3LjQgTDQzLjcgNi44IEw0OC40IDguNSBMNTMuMSA2LjUgTDU3LjggNi43IEw2Mi40IDcuNyBMNjcuMSA2LjggTDcxLjggNi41IEw3Ni41IDguMCBMODEuMSA4LjIgTDg1LjggNy4zIEw5MC41IDYuOCBMOTUuMiA2LjYgTDk5LjkgNi43IEwxMDQuNSA3LjAgTDEwOS4yIDYuNSBMMTEzLjkgNi4yIEwxMTguNiA2LjEgTDEyMy4zIDUuOSBMMTI3LjkgNi41IEwxMzIuNiA2LjYgTDEzNy4zIDYuOCBMMTQyLjAgNy4yIEwxNDYuNiA3LjYgTDE1MS4zIDcuNCBMMTU2LjAgNS44IEwxNjAuNyA1LjIgTDE2NS40IDYuNSBMMTcwLjAgNi4xIEwxNzQuNyA1LjkgTDE3OS40IDYuOCBMMTg0LjEgNS4yIEwxODguNyAxMC4wIEwxOTMuNCA4LjkgTDE5NC41IDguMSBMMTk4LjIgOC42IEwxOTMuOSA5LjYgTDE5NS40IDExLjAgTDIwMC4wIDExLjAgTDE5NS4zIDEyLjMgTDE5NS4xIDExLjYgTDE5OS41IDEyLjEgTDE5NS4yIDEyLjUgTDE5My44IDE0LjAgTDE5OS4xIDE0LjUgTDE5NC41IDE1LjEgTDE5Ni4zIDE5LjUgTDE5Ny45IDE4LjggTDE5My41IDIwLjMgTDE5NS42IDIxLjEgTDE5Ny4wIDIxLjQgTDE5NS4yIDIyLjkgTDE5NS45IDI4LjggTDE5OC41IDI5LjAgTDE5NS4xIDMwLjMgTDE5My40IDI5LjAgTDE4OC43IDMwLjggTDE4NC4xIDMyLjcgTDE3OS40IDMzLjUgTDE3NC43IDM1LjEgTDE3MC4wIDMzLjkgTDE2NS40IDM1LjAgTDE2MC43IDMzLjQgTDE1Ni4wIDMzLjggTDE1MS4zIDM0LjggTDE0Ni42IDM0LjAgTDE0Mi4wIDMzLjYgTDEzNy4zIDM0LjggTDEzMi42IDMzLjYgTDEyNy45IDMzLjggTDEyMy4zIDM0LjAgTDExOC42IDM0LjYgTDExMy45IDM1LjEgTDEwOS4yIDM0LjEgTDEwNC41IDM0LjcgTDk5LjkgMzUuMyBMOTUuMiAzNS40IEw5MC41IDM0LjggTDg1LjggMzYuMSBMODEuMSAzNS41IEw3Ni41IDM0LjEgTDcxLjggMzYuMyBMNjcuMSAzNC41IEw2Mi40IDM0LjMgTDU3LjggMzQuNiBMNTMuMSAzNS4xIEw0OC40IDM1LjMgTDQzLjcgMzUuOSBMMzkuMCAzNC44IEwzNC40IDM1LjEgTDI5LjcgMzYuMiBMMjUuMCAzNS44IEwyMC4zIDMzLjcgTDE1LjcgMzMuNSBMMTEuMCAzNC41IEw2LjMgMzIuMiBMMy45IDMxLjkgTDEuMCAzMS4xIEw2LjIgMzMuMCBMNS4zIDI2LjMgTDAuMCAyNS45IEw0LjYgMjcuOSBMNS4wIDE5LjMgTDAuMCAxOS43IEw1LjMgMjAuNCBMNC45IDE1LjQgTDAuMCAxNS41IEw1LjkgMTYuNiBMNC45IDE1LjAgTDIuMyAxNS4xIEw2LjIgMTYuNiBMNS44IDE0LjQgTDIuOCAxNC42IEw1LjcgMTYuMSBMNC44IDEwLjYgTDAuNyAxMS4yIEw1LjkgMTIuMiBaIiBmaWxsPSIjRkU3QzJGIi8+PGcgc3Ryb2tlPSIjRkU3QzJGIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSIxNjYuNSIgeTE9IjM1LjIiIHgyPSIxNzcuOCIgeTI9IjM0LjciIHN0cm9rZS13aWR0aD0iMS40NSIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuOCAxLjUiLz48bGluZSB4MT0iNDYuMyIgeTE9IjM4LjMiIHgyPSI4NS41IiB5Mj0iMzguMyIgc3Ryb2tlLXdpZHRoPSIxLjE3IiBzdHJva2UtZGFzaGFycmF5PSIxMy40IDEuMCIvPjxsaW5lIHgxPSI0MC4wIiB5MT0iMzQuNiIgeDI9IjUzLjEiIHkyPSIzNC4yIiBzdHJva2Utd2lkdGg9IjEuMjciIHN0cm9rZS1kYXNoYXJyYXk9IjE4LjggMy4yIi8+PGxpbmUgeDE9IjE4Ny40IiB5MT0iMzAuNCIgeDI9IjE5OC4yIiB5Mj0iMzAuNSIgc3Ryb2tlLXdpZHRoPSIxLjI5Ii8+PGxpbmUgeDE9IjEyNi42IiB5MT0iMi4wIiB4Mj0iMTcyLjQiIHkyPSIyLjIiIHN0cm9rZS13aWR0aD0iMC41NiIvPjxsaW5lIHgxPSIxNTIuMyIgeTE9IjM3LjQiIHgyPSIxODUuMSIgeTI9IjM3LjkiIHN0cm9rZS13aWR0aD0iMS40MCIgc3Ryb2tlLWRhc2hhcnJheT0iMTQuMCAyLjIiLz48bGluZSB4MT0iNjAuMiIgeTE9IjM4LjUiIHgyPSIxMTAuNSIgeTI9IjM4LjQiIHN0cm9rZS13aWR0aD0iMS41MCIvPjxsaW5lIHgxPSI3My4yIiB5MT0iNC4yIiB4Mj0iMTMyLjAiIHkyPSI0LjIiIHN0cm9rZS13aWR0aD0iMS4zNiIvPjxsaW5lIHgxPSIxMzAuNiIgeTE9IjM2LjEiIHgyPSIxNDUuNCIgeTI9IjM2LjYiIHN0cm9rZS13aWR0aD0iMC43NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuNSAxLjkiLz48bGluZSB4MT0iNTIuNyIgeTE9IjcuMSIgeDI9Ijc0LjkiIHkyPSI2LjYiIHN0cm9rZS13aWR0aD0iMS41NyIgc3Ryb2tlLWRhc2hhcnJheT0iNy42IDEuNCIvPjxsaW5lIHgxPSIyOS41IiB5MT0iMi41IiB4Mj0iNDAuNSIgeTI9IjMuMCIgc3Ryb2tlLXdpZHRoPSIxLjI3IiBzdHJva2UtZGFzaGFycmF5PSI5LjIgMi43Ii8+PGxpbmUgeDE9IjEyMi4yIiB5MT0iMzcuMCIgeDI9IjE4MC4wIiB5Mj0iMzcuMCIgc3Ryb2tlLXdpZHRoPSIxLjQ0IiBzdHJva2UtZGFzaGFycmF5PSI2LjggMi45Ii8+PGxpbmUgeDE9IjMyLjEiIHkxPSIzNy40IiB4Mj0iODQuNSIgeTI9IjM3LjUiIHN0cm9rZS13aWR0aD0iMC45NyIgc3Ryb2tlLWRhc2hhcnJheT0iOS40IDEuOCIvPjxsaW5lIHgxPSI1MC4yIiB5MT0iMzguMiIgeDI9IjEwMy4yIiB5Mj0iMzcuOCIgc3Ryb2tlLXdpZHRoPSIwLjYxIi8+PGxpbmUgeDE9IjguMyIgeTE9IjMxLjIiIHgyPSIxNC41IiB5Mj0iMzEuNCIgc3Ryb2tlLXdpZHRoPSIwLjg0IiBzdHJva2UtZGFzaGFycmF5PSIxMi4yIDEuMyIvPjxsaW5lIHgxPSIxMjMuOCIgeTE9IjM1LjEiIHgyPSIxNDcuOCIgeTI9IjM0LjciIHN0cm9rZS13aWR0aD0iMC44NiIgc3Ryb2tlLWRhc2hhcnJheT0iNi4wIDMuNyIvPjxsaW5lIHgxPSIxNDIuNCIgeTE9IjYuMiIgeDI9IjE3OS4yIiB5Mj0iNS45IiBzdHJva2Utd2lkdGg9IjAuOTYiIHN0cm9rZS1kYXNoYXJyYXk9IjYuMCAyLjYiLz48bGluZSB4MT0iNS42IiB5MT0iNi45IiB4Mj0iMzcuMyIgeTI9IjYuNCIgc3Ryb2tlLXdpZHRoPSIxLjMzIi8+PGxpbmUgeDE9IjExMC4xIiB5MT0iMzYuMCIgeDI9IjE3Ni43IiB5Mj0iMzYuMSIgc3Ryb2tlLXdpZHRoPSIxLjM4IiBzdHJva2UtZGFzaGFycmF5PSIxNi44IDIuNSIvPjxsaW5lIHgxPSIwLjIiIHkxPSIyMi45IiB4Mj0iMTIuMSIgeTI9IjIyLjciIHN0cm9rZS13aWR0aD0iMC44NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTAuMCAyLjciLz48bGluZSB4MT0iMTg5LjMiIHkxPSIyMi4zIiB4Mj0iMTk3LjciIHkyPSIyMi41IiBzdHJva2Utd2lkdGg9IjEuMDkiLz48bGluZSB4MT0iOTcuOCIgeTE9IjM4LjEiIHgyPSIxNDEuMSIgeTI9IjM4LjYiIHN0cm9rZS13aWR0aD0iMC43MSIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuMSAyLjUiLz48bGluZSB4MT0iMTI5LjAiIHkxPSIzLjQiIHgyPSIxNjYuNSIgeTI9IjMuNSIgc3Ryb2tlLXdpZHRoPSIxLjQzIiBzdHJva2UtZGFzaGFycmF5PSIxNi44IDIuMyIvPjxsaW5lIHgxPSIxMzkuNyIgeTE9IjMuNyIgeDI9IjE5My44IiB5Mj0iMy43IiBzdHJva2Utd2lkdGg9IjEuMTIiIHN0cm9rZS1kYXNoYXJyYXk9IjYuNSAzLjEiLz48bGluZSB4MT0iNzEuMSIgeTE9IjM2LjQiIHgyPSIxMzMuNiIgeTI9IjM1LjkiIHN0cm9rZS13aWR0aD0iMC42NSIvPjxsaW5lIHgxPSI5LjYiIHkxPSIyMi4xIiB4Mj0iMTguOCIgeTI9IjIxLjgiIHN0cm9rZS13aWR0aD0iMS4wNiIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMiAyLjkiLz48bGluZSB4MT0iMTYyLjMiIHkxPSIzLjgiIHgyPSIyMDAuMCIgeTI9IjQuMSIgc3Ryb2tlLXdpZHRoPSIxLjAxIiBzdHJva2UtZGFzaGFycmF5PSIxNy42IDEuNiIvPjxsaW5lIHgxPSIyNy42IiB5MT0iMzguNiIgeDI9Ijg1LjIiIHkyPSIzOC44IiBzdHJva2Utd2lkdGg9IjEuMjkiIHN0cm9rZS1kYXNoYXJyYXk9IjEzLjkgMS45Ii8+PGxpbmUgeDE9IjYuMiIgeTE9IjI0LjAiIHgyPSIxMi43IiB5Mj0iMjQuMCIgc3Ryb2tlLXdpZHRoPSIxLjAxIiBzdHJva2UtZGFzaGFycmF5PSIxNi4xIDEuMiIvPjxsaW5lIHgxPSIxMi4wIiB5MT0iNC43IiB4Mj0iMjMuNiIgeTI9IjUuMiIgc3Ryb2tlLXdpZHRoPSIxLjE5Ii8+PGxpbmUgeDE9IjI2LjciIHkxPSIzOC44IiB4Mj0iNzQuNCIgeTI9IjM4LjgiIHN0cm9rZS13aWR0aD0iMS4yMCIgc3Ryb2tlLWRhc2hhcnJheT0iOC4wIDEuNyIvPjxsaW5lIHgxPSIxMDAuMiIgeTE9IjM3LjAiIHgyPSIxMTQuOCIgeTI9IjM2LjciIHN0cm9rZS13aWR0aD0iMS4yOSIgc3Ryb2tlLWRhc2hhcnJheT0iOC40IDIuOSIvPjxsaW5lIHgxPSIxMzAuOSIgeTE9IjQuMCIgeDI9IjE0Ny4zIiB5Mj0iMy44IiBzdHJva2Utd2lkdGg9IjAuOTkiIHN0cm9rZS1kYXNoYXJyYXk9IjE1LjQgMy40Ii8+PGxpbmUgeDE9IjM5LjUiIHkxPSIzNS40IiB4Mj0iNjYuMSIgeTI9IjM1LjUiIHN0cm9rZS13aWR0aD0iMS4wOSIvPjwvZz48L3N2Zz4="); }
+[data-testid="vehicles-carousel"] ul.snap-x > li:nth-child(4) article .bg-brand-orange-02 { background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxwYXRoIGQ9Ik01LjUgMTIuNiBMMTAuMiAxMC42IEwxNC45IDguOCBMMTkuNiA4LjYgTDI0LjMgNy44IEwyOS4wIDYuNyBMMzMuNyA2LjQgTDM4LjQgOC42IEw0My4xIDcuOCBMNDcuOCA2LjUgTDUyLjUgNi41IEw1Ny4yIDcuMiBMNjEuOSA2LjYgTDY2LjYgNy4xIEw3MS4zIDcuMCBMNzYuMCA3LjEgTDgwLjcgNy42IEw4NS40IDcuMSBMOTAuMSA3LjYgTDk0LjggNy41IEw5OS41IDYuNiBMMTA0LjIgNS4xIEwxMDguOSA1LjYgTDExMy42IDQuOSBMMTE4LjMgNi44IEwxMjMuMCA2LjggTDEyNy43IDUuOCBMMTMyLjQgNS42IEwxMzcuMSA2LjUgTDE0MS44IDYuMyBMMTQ2LjUgNS4yIEwxNTEuMiA0LjQgTDE1NS45IDQuOSBMMTYwLjYgNC40IEwxNjUuMyA0LjIgTDE3MC4wIDUuMiBMMTc0LjcgNC40IEwxNzkuNCAzLjggTDE4NC4xIDcuMyBMMTg4LjggNy44IEwxOTMuNSA5LjMgTDE5My41IDkuNiBMMTk4LjggMTAuMSBMMTk0LjUgMTEuMCBMMTk0LjQgMTEuMiBMMjAwLjAgMTAuOCBMMTk0LjkgMTIuNyBMMTkzLjUgMTUuMyBMMjAwLjAgMTQuOSBMMTk1LjUgMTcuMSBMMTk2LjIgMTcuMSBMMjAwLjAgMTYuOSBMMTk0LjQgMTguMiBMMTk2LjMgMjIuMSBMMTk2LjcgMjEuNiBMMTk1LjQgMjMuNyBMMTk1LjYgMjcuMSBMMjAwLjAgMjcuMSBMMTk1LjIgMjguMyBMMTk2LjIgMzAuMyBMMTk2LjkgMzAuMyBMMTk0LjcgMzEuOSBMMTkzLjUgMjkuNSBMMTg4LjggMjguOSBMMTg0LjEgMzAuNCBMMTc5LjQgMzIuMSBMMTc0LjcgMzMuMiBMMTcwLjAgMzMuMiBMMTY1LjMgMzMuMyBMMTYwLjYgMzIuNiBMMTU1LjkgMzIuNSBMMTUxLjIgMzEuOSBMMTQ2LjUgMzIuMiBMMTQxLjggMzIuMiBMMTM3LjEgMzMuNSBMMTMyLjQgMzIuNSBMMTI3LjcgMzMuOSBMMTIzLjAgMzMuNSBMMTE4LjMgMzIuMyBMMTEzLjYgMzIuMiBMMTA4LjkgMzIuNyBMMTA0LjIgMzQuMiBMOTkuNSAzMi41IEw5NC44IDMyLjYgTDkwLjEgMzIuOCBMODUuNCAzMi4xIEw4MC43IDMyLjIgTDc2LjAgMzMuMyBMNzEuMyAzMy40IEw2Ni42IDMzLjQgTDYxLjkgMzQuMSBMNTcuMiAzNC4zIEw1Mi41IDMzLjAgTDQ3LjggMzQuNiBMNDMuMSAzNC4wIEwzOC40IDM0LjEgTDMzLjcgMzUuMSBMMjkuMCAzMy4xIEwyNC4zIDM0LjIgTDE5LjYgMzMuMyBMMTQuOSAzMi42IEwxMC4yIDMxLjIgTDUuNSAzMS44IEw0LjEgMzEuMiBMMC42IDMxLjMgTDUuMyAzMi4yIEw0LjggMjguNyBMMS4zIDI5LjMgTDUuMCAyOS42IEwyLjkgMjQuMyBMMC4wIDIzLjYgTDQuMiAyNS44IEwzLjYgMTguMSBMMC4wIDE4LjAgTDUuMSAxOS43IEwzLjcgMTguMSBMMC4wIDE3LjUgTDQuOCAxOS41IEw0LjQgMTIuOCBMMC4wIDEyLjcgTDQuMCAxMy45IEw0LjAgOC43IEwwLjAgOC40IEw1LjIgMTAuMiBaIiBmaWxsPSIjRkU3QzJGIi8+PGcgc3Ryb2tlPSIjRkU3QzJGIiBzdHJva2UtbGluZWNhcD0icm91bmQiIGZpbGw9Im5vbmUiPjxsaW5lIHgxPSI0OC44IiB5MT0iNi42IiB4Mj0iMTEzLjEiIHkyPSI2LjYiIHN0cm9rZS13aWR0aD0iMS4wOSIgc3Ryb2tlLWRhc2hhcnJheT0iMTMuMyAzLjAiLz48bGluZSB4MT0iMTY2LjUiIHkxPSIzNC44IiB4Mj0iMTg3LjAiIHkyPSIzNC40IiBzdHJva2Utd2lkdGg9IjEuMzgiIHN0cm9rZS1kYXNoYXJyYXk9IjEzLjEgMS4yIi8+PGxpbmUgeDE9IjU0LjciIHkxPSIzOC4yIiB4Mj0iODguOSIgeTI9IjM4LjAiIHN0cm9rZS13aWR0aD0iMS4wMiIvPjxsaW5lIHgxPSI5Ny4xIiB5MT0iNi42IiB4Mj0iMTI4LjIiIHkyPSI2LjUiIHN0cm9rZS13aWR0aD0iMS40MCIvPjxsaW5lIHgxPSIxNTYuMCIgeTE9IjMuMSIgeDI9IjE3Ni4zIiB5Mj0iMi43IiBzdHJva2Utd2lkdGg9IjAuNzIiLz48bGluZSB4MT0iNS43IiB5MT0iMTMuNCIgeDI9IjEwLjgiIHkyPSIxMi45IiBzdHJva2Utd2lkdGg9IjEuMzUiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjggMy4zIi8+PGxpbmUgeDE9IjUuNiIgeTE9IjI3LjciIHgyPSIxMS43IiB5Mj0iMjcuNiIgc3Ryb2tlLXdpZHRoPSIxLjA5Ii8+PGxpbmUgeDE9IjE1MC4wIiB5MT0iMzMuMyIgeDI9IjE5Ny42IiB5Mj0iMzMuNCIgc3Ryb2tlLXdpZHRoPSIxLjQxIiBzdHJva2UtZGFzaGFycmF5PSIxNi40IDEuMyIvPjxsaW5lIHgxPSIxOS44IiB5MT0iNi45IiB4Mj0iNTguMiIgeTI9IjcuNCIgc3Ryb2tlLXdpZHRoPSIxLjAyIiBzdHJva2UtZGFzaGFycmF5PSI2LjkgMy4wIi8+PGxpbmUgeDE9IjU5LjgiIHkxPSI2LjkiIHgyPSI4Ni4yIiB5Mj0iNy4yIiBzdHJva2Utd2lkdGg9IjEuMDAiLz48bGluZSB4MT0iNzkuMiIgeTE9IjMyLjciIHgyPSI5MC4xIiB5Mj0iMzIuOCIgc3Ryb2tlLXdpZHRoPSIwLjU3IiBzdHJva2UtZGFzaGFycmF5PSI5LjQgMS4zIi8+PGxpbmUgeDE9IjE1OS4xIiB5MT0iMzguMyIgeDI9IjE5NC42IiB5Mj0iMzguMiIgc3Ryb2tlLXdpZHRoPSIwLjcwIi8+PGxpbmUgeDE9Ijk3LjUiIHkxPSI2LjQiIHgyPSIxNjQuNyIgeTI9IjYuMCIgc3Ryb2tlLXdpZHRoPSIxLjI3Ii8+PGxpbmUgeDE9IjE4Ni4yIiB5MT0iMjEuMCIgeDI9IjE5Mi43IiB5Mj0iMjAuNyIgc3Ryb2tlLXdpZHRoPSIwLjgzIiBzdHJva2UtZGFzaGFycmF5PSIxOS40IDEuNCIvPjxsaW5lIHgxPSIzOC4zIiB5MT0iMzMuOCIgeDI9IjYzLjUiIHkyPSIzMy42IiBzdHJva2Utd2lkdGg9IjAuNzYiIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjQgMy4wIi8+PGxpbmUgeDE9IjkuMiIgeTE9IjIxLjQiIHgyPSIxNS41IiB5Mj0iMjAuOCIgc3Ryb2tlLXdpZHRoPSIxLjM5Ii8+PGxpbmUgeDE9IjE5MC45IiB5MT0iMTguMSIgeDI9IjE5OS40IiB5Mj0iMTguMyIgc3Ryb2tlLXdpZHRoPSIwLjc3IiBzdHJva2UtZGFzaGFycmF5PSIxOC40IDIuNCIvPjxsaW5lIHgxPSIxNjIuNSIgeTE9IjM4LjciIHgyPSIyMDAuMCIgeTI9IjM4LjQiIHN0cm9rZS13aWR0aD0iMS4wNSIvPjxsaW5lIHgxPSI2LjQiIHkxPSI1LjIiIHgyPSI3NC44IiB5Mj0iNS4zIiBzdHJva2Utd2lkdGg9IjAuODYiIHN0cm9rZS1kYXNoYXJyYXk9IjEwLjEgMi4wIi8+PGxpbmUgeDE9IjIuNCIgeTE9IjguMyIgeDI9IjE1LjkiIHkyPSI4LjIiIHN0cm9rZS13aWR0aD0iMC45OCIgc3Ryb2tlLWRhc2hhcnJheT0iMTkuMSAyLjIiLz48bGluZSB4MT0iMTIyLjYiIHkxPSIyLjciIHgyPSIxNDkuOCIgeTI9IjIuNyIgc3Ryb2tlLXdpZHRoPSIxLjA2IiBzdHJva2UtZGFzaGFycmF5PSIxNi43IDMuMiIvPjxsaW5lIHgxPSIxODguNSIgeTE9IjMwLjciIHgyPSIxOTcuMCIgeTI9IjMwLjciIHN0cm9rZS13aWR0aD0iMC45MCIvPjxsaW5lIHgxPSI2NC40IiB5MT0iMzQuOSIgeDI9Ijc1LjUiIHkyPSIzNS4zIiBzdHJva2Utd2lkdGg9IjEuMzAiIHN0cm9rZS1kYXNoYXJyYXk9IjEyLjkgMy4yIi8+PGxpbmUgeDE9IjguOSIgeTE9IjIzLjkiIHgyPSIxMy40IiB5Mj0iMjQuMyIgc3Ryb2tlLXdpZHRoPSIwLjk1Ii8+PGxpbmUgeDE9IjMyLjAiIHkxPSIzOC4wIiB4Mj0iNDQuMyIgeTI9IjM3LjQiIHN0cm9rZS13aWR0aD0iMC44MyIvPjxsaW5lIHgxPSIzNi45IiB5MT0iNC40IiB4Mj0iOTkuMiIgeTI9IjQuMSIgc3Ryb2tlLXdpZHRoPSIwLjYyIiBzdHJva2UtZGFzaGFycmF5PSIyMC4wIDEuMCIvPjxsaW5lIHgxPSI1OS4zIiB5MT0iMzguMCIgeDI9IjEwMy41IiB5Mj0iMzguNCIgc3Ryb2tlLXdpZHRoPSIxLjM4Ii8+PGxpbmUgeDE9IjUuMSIgeTE9IjQuNiIgeDI9IjY2LjMiIHkyPSI0LjAiIHN0cm9rZS13aWR0aD0iMC41MyIgc3Ryb2tlLWRhc2hhcnJheT0iMTIuMCAyLjkiLz48bGluZSB4MT0iNTcuMiIgeTE9IjMzLjEiIHgyPSI2OS43IiB5Mj0iMzMuNSIgc3Ryb2tlLXdpZHRoPSIxLjMwIi8+PGxpbmUgeDE9IjE2Ny4xIiB5MT0iMi44IiB4Mj0iMjAwLjAiIHkyPSIzLjEiIHN0cm9rZS13aWR0aD0iMS41NyIgc3Ryb2tlLWRhc2hhcnJheT0iMTguMyAzLjAiLz48bGluZSB4MT0iODcuMyIgeTE9IjM3LjQiIHgyPSIxMTMuNyIgeTI9IjM3LjEiIHN0cm9rZS13aWR0aD0iMS4wMyIgc3Ryb2tlLWRhc2hhcnJheT0iMTUuNCAyLjAiLz48bGluZSB4MT0iNTUuOSIgeTE9IjM1LjgiIHgyPSIxMjEuMyIgeTI9IjM1LjYiIHN0cm9rZS13aWR0aD0iMS41MyIgc3Ryb2tlLWRhc2hhcnJheT0iMTMuNyAxLjAiLz48bGluZSB4MT0iMTg1LjYiIHkxPSIyMC4yIiB4Mj0iMTg5LjgiIHkyPSIyMC42IiBzdHJva2Utd2lkdGg9IjAuNTciIHN0cm9rZS1kYXNoYXJyYXk9IjE2LjYgNC4wIi8+PGxpbmUgeDE9IjY3LjIiIHkxPSIzNC45IiB4Mj0iODUuMCIgeTI9IjM0LjgiIHN0cm9rZS13aWR0aD0iMC45NCIgc3Ryb2tlLWRhc2hhcnJheT0iMTcuMyAyLjYiLz48L2c+PC9zdmc+"); }
+
+
+/* Car section: light blue panel with white cards; the cars rise above the top of each card */
+.cars-v2 > .overflow-hidden {
+  padding: 1.5rem 0 2rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+.cars-v2 ul.snap-x {
+  padding-top: 3.5rem;
+}
+.cars-v2 article {
+  overflow: visible;
+  border: 0;
+  border-radius: 1rem;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(var(--oscar-blue-800), 0.04), 0 10px 28px -14px rgba(var(--oscar-blue-800), 0.25);
+}
+.cars-v2 article .h-28 {
+  order: -1;
+  margin-top: -4.5rem;
+}
+.cars-v2 article .bg-brand-orange-02 {
+  align-self: flex-start;
+}
+@media (min-width: 1024px) {
+  .cars-v2 > .overflow-hidden { padding: 1rem 2rem 2.5rem; }
+  .cars-v2 ul.snap-x { overflow: visible; }
+}
+
+
+/* The blue panel is lower than the cards, so the white cards rise above its
+   top edge (and the cars still rise above the cards). The panel is drawn as a layer behind them. */
+.cars-v2 > .overflow-hidden {
+  position: relative;
+  isolation: isolate;
+  background: none;
+}
+.cars-v2 > .overflow-hidden::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 48% 0 0 0;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+/* The top half of each card now sits on white, so it needs a visible edge and a clearer shadow */
+.cars-v2 article {
+  border: 1px solid rgba(var(--oscar-blue-800), 0.08);
+  box-shadow: 0 2px 4px rgba(var(--oscar-blue-800), 0.05), 0 16px 36px -16px rgba(var(--oscar-blue-800), 0.3);
+}
+/* Phones: the cars can't rise above the scrolling row, so drop the extra space above it */
+@media (max-width: 1023px) {
+  .cars-v2 ul.snap-x { padding-top: 0.75rem; padding-bottom: 1.25rem; }
+  .cars-v2 article .h-28 { margin-top: 0; }
+  .cars-v2 > .overflow-hidden { padding-top: 0; }
+}
+/* Taller blue panel (starts at 36% instead of 48%) */
+.cars-v2 > .overflow-hidden::before { top: 36%; }
+/* A mild, soft shadow behind each card. It sits behind the white card, so only the part above the
+   card's top edge shows, as a soft glow behind the car that rises above the card. This gives the
+   light cars a little contrast against the white page. Desktop only (on phones the cars sit inside the cards). */
+@media (min-width: 1024px) {
+  .cars-v2 ul.snap-x { padding-top: 5.5rem; }
+  .cars-v2 ul.snap-x > li {
+    position: relative;
+    isolation: isolate;
+  }
+  .cars-v2 ul.snap-x > li > a {
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+  }
+  .cars-v2 ul.snap-x > li::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: -5.5rem;
+    left: 0.75rem;
+    right: 0.75rem;
+    height: 11.25rem;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(var(--oscar-blue-800), 0.1), rgba(var(--oscar-blue-800), 0.065) 60%, rgba(var(--oscar-blue-800), 0) 100%);
+    filter: blur(6px);
+    pointer-events: none;
+  }
+}
+
+/* Section headings "Du har noget, du skal. Vi har lejebilen." and "Det her kan blive din oplevelse": 20% bigger */
+[data-testid="vehicles-carousel"] > .container:has(h2) h2 { font-size: 1.8rem; line-height: 1.15; }
+.rv-heading { font-size: 2.1rem; }
+@media (min-width: 768px) {
+  [data-testid="vehicles-carousel"] > .container:has(h2) h2,
+  .rv-heading { font-size: 2.7rem; }
+}
+
+/* "Om Oscar" section (between the car types and the reviews): a narrower light blue panel,
+   using the text that used to sit at the bottom of the page ("Biludlejning hos Oscar") */
+.about__panel {
+  max-width: 50rem;
+  margin-inline: auto;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+  text-align: center;
+}
+.about__heading {
+  color: rgb(var(--oscar-blue-800));
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+.about__body {
+  margin-top: 1.5rem;
+  color: rgba(var(--oscar-blue-800), 0.8);
+  line-height: 1.65;
+  text-align: left;
+}
+.about__body p + p { margin-top: 1rem; }
+.about__body h3 {
+  margin: 1.75rem 0 0.75rem;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.about__cta { margin-top: 2rem; }
+@media (min-width: 768px) {
+  .about__panel { padding: 3.5rem 4rem; }
+  .about__heading { font-size: 2.7rem; }
+}
+/* Partner photo at the top of the "Om Oscar" panel (Peter in Harlev, from hejoscar.dk/afdelinger/harlev).
+   Cropped to 3:2 from the top, so the Oscar sign and his face stay in view. */
+.about__photo {
+  position: relative;
+  margin: 0 0 2rem;
+}
+.about__photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 0.75rem;
+}
+.about__photo figcaption {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 0.375rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+/* Font switch button in the "Kontakt & FAQ" menu */
+.font-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  border-top: 1px solid rgba(var(--oscar-blue-800), 0.1);
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.875rem;
+  text-align: left;
+  cursor: pointer;
+}
+.font-toggle:hover { background: rgba(var(--oscar-blue-800), 0.04); }
+.font-toggle > span:first-child { white-space: nowrap; }
+.font-toggle__value {
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  background: rgba(var(--oscar-blue-800), 0.08);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Hero USPs as pills, based on the print marketing pills (references/Skærmbillede 2026-09-24 kl. 13.22.40.png):
+   rounded, slightly see-through Oscar orange with a soft blur, white bold text,
+   and a check mark in a white circle on the left. Replaces the brush strokes. */
+.hero-usps li,
+.hero-usps li:nth-child(n) {
+  gap: 0.5rem;
+  padding: 0.3125rem 0.875rem 0.3125rem 0.3125rem;
+  border-radius: 0.75rem;
+  background: rgba(254, 102, 12, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px -6px rgba(var(--oscar-blue-800), 0.45);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+.hero-usps li svg {
+  display: block;
+  box-sizing: content-box;
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0.3125rem;
+  border-radius: 9999px;
+  background: #FFFFFF;
+  color: var(--oscar-orange);
+  stroke-width: 3.5;
+}
+@media (max-width: 479px) {
+  .hero-usps li svg { display: block; }
+  .hero-usps li { padding-right: 0.625rem; }
+}
+@media (min-width: 768px) {
+  .hero-usps li,
+  .hero-usps li:nth-child(n) {
+    padding: 0.375rem 1rem 0.375rem 0.375rem;
+    font-size: 0.9375rem;
+  }
+  .hero-usps li svg { width: 0.875rem; height: 0.875rem; padding: 0.375rem; }
+}
+/* Softer and smaller pills */
+.hero-usps { gap: 0.375rem; }
+.hero-usps li,
+.hero-usps li:nth-child(n) {
+  gap: 0.375rem;
+  padding: 0.1875rem 0.625rem 0.1875rem 0.1875rem;
+  border-radius: 0.5rem;
+  background: rgba(254, 102, 12, 0.5);
+  box-shadow: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.hero-usps li svg {
+  width: 0.5625rem;
+  height: 0.5625rem;
+  padding: 0.25rem;
+  stroke-width: 4;
+}
+@media (min-width: 768px) {
+  .hero-usps { gap: 0.5rem; }
+  .hero-usps li,
+  .hero-usps li:nth-child(n) {
+    padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+    font-size: 0.8125rem;
+  }
+  .hero-usps li svg { width: 0.625rem; height: 0.625rem; padding: 0.25rem; }
+}
+/* Same light orange as the brush strokes behind the benefit icons (brand-orange-02, #FE7C2F), slightly see-through */
+.hero-usps li,
+.hero-usps li:nth-child(n) {
+  background: rgba(254, 124, 47, 0.9);
+}
+.hero-usps li svg { color: var(--oscar-orange-02); }
+/* 1px more padding on the left and right of the pills */
+.hero-usps li,
+.hero-usps li:nth-child(n) { padding: 3px 11px 3px 4px; }
+@media (min-width: 768px) {
+  .hero-usps li,
+  .hero-usps li:nth-child(n) { padding: 4px 13px 4px 5px; }
+}
+
+/* Pills, version 2 (class hero-usps--light on the list): white, semi-transparent background,
+   near-black text and a white check mark on an orange circle.
+   Remove the class "hero-usps--light" in index.html to go back to the orange pills. */
+.hero-usps--light li,
+.hero-usps--light li:nth-child(n) {
+  background: rgba(255, 255, 255, 0.85);
+  color: #222222;
+}
+.hero-usps--light li svg {
+  background: var(--oscar-orange);
+  color: #FFFFFF;
+}
+.hero-usps--light li,
+.hero-usps--light li:nth-child(n) {
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+}
+/* Hero stars and pill icons use the same light orange as the benefit brush strokes (brand-orange-02, #FE7C2F) */
+.hero-rating .hero-rating__filled { color: var(--oscar-orange-02); }
+.hero-usps--light li svg { background: var(--oscar-orange-02); }
+
+/* Benefits under the logos: the icon now sits in a square box with rounded corners, in the style of the
+   hero pills (same size and same light orange, brand-orange-02), instead of a brush stroke */
+.benefits--brush svg,
+.benefits--brush li:nth-child(n) svg {
+  border-radius: 0.75rem;
+  background: var(--oscar-orange-02);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+}
+
+/* Price labels on the car type cards: pills in the same style as the hero pills and the benefit boxes
+   (rounded, light orange brand-orange-02, light shadow), without icons, instead of brush strokes */
+[data-testid="vehicles-carousel"] article .bg-brand-orange-02,
+[data-testid="vehicles-carousel"] ul.snap-x > li:nth-child(n) article .bg-brand-orange-02 {
+  padding: 4px 10px;
+  border-radius: 0.5rem;
+  background: var(--oscar-orange-02);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+/* Car type cards: price pill at the bottom left, "Se alle" link at the bottom right */
+.car-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.car-card__foot .bg-brand-orange-02 { align-self: center !important; }
+/* Star labels in the reviews (cards and featured review): pills in the same style as the price pills */
+.rv-c__chip {
+  padding: 4px 8px;
+  border-radius: 0.5rem;
+  background: var(--oscar-orange-02);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+}
+
+/* Car type cards, bottom part (inspired by references/Eksempel på bund-sektion under cards.png):
+   a thin divider, "fra X kr./dag" on the left and an orange button with the number of available
+   vehicles on the right. The numbers are placeholders. */
+.car-card__foot {
+  align-items: center;
+  margin-top: 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(var(--oscar-blue-800), 0.12);
+}
+.car-card__price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.25rem;
+  color: rgb(var(--oscar-blue-800));
+  line-height: 1.1;
+}
+.car-card__from { font-size: 0.875rem; }
+.car-card__price strong { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.01em; }
+.car-card__per { flex-basis: 100%; font-size: 0.875rem; }
+.car-card__cta {
+  flex-shrink: 0;
+  padding: 0.625rem 0.875rem;
+  border-radius: 0.5rem;
+  background: var(--oscar-orange);
+  color: #FFFFFF;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+[data-testid="vehicles-carousel"] article:hover .car-card__cta { background: #E85A05; }
+/* "fra" sits on the same line as the price, "/dag" on the line below (as in the example) */
+.car-card__price { display: block; white-space: nowrap; }
+.car-card__per { display: block; margin-top: 0.125rem; }
+.car-card__foot { gap: 0.5rem; }
+.car-card__cta { padding: 0.625rem 0.625rem; font-size: 0.8125rem; }
+.car-card__price strong { font-size: 1.375rem; }
+/* "fra" on its own line at the top; price and "/dag" together on the line below */
+.car-card__from { display: block; margin-bottom: 0.125rem; }
+.car-card__per { display: inline; margin-top: 0; margin-left: 0.125rem; }
+/* Bigger availability buttons (min. 44px tall, a comfortable tap target) */
+.car-card__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.75rem 0.875rem;
+  font-size: 0.875rem;
+}
+/* Room for the bigger button: the price column may shrink, and the cards get a bit less side padding */
+.car-card__price { min-width: 0; }
+[data-testid="vehicles-carousel"] article { padding-left: 1rem !important; padding-right: 1rem !important; }
+@media (max-width: 1023px) {
+  [data-testid="vehicles-carousel"] ul.snap-x > li { width: 18.75rem; }
+}
+.car-card__price { flex-shrink: 0; }
+.car-card__cta { font-size: 15px; }
+@media (min-width: 1024px) {
+  .car-card__cta { padding-left: 0.625rem; padding-right: 0.625rem; }
+  .car-card__foot { gap: 0.375rem; }
+}
+.hero-usps--light li,
+.hero-usps--light li:nth-child(n) { background: rgba(255, 255, 255, 0.8); }
+/* The van photo sits a little higher than the others: push it 10px down */
+[data-testid="vehicles-carousel"] img[src$="car-varevogn.webp"] { transform: translateY(10px); }
+
+/* "Om Oscar": text on the left, partner photo on the right (desktop); photo above the text on phones.
+   Photo: an Oscar partner in front of an "Oscar Biludlejning – Lokalt, enkelt, billigt" sign (from hejoscar.dk/erhverv). */
+.about__panel { max-width: 68rem; }
+.about__panel .about__heading { text-align: left; }
+.about__photo { order: -1; margin: 0 0 1.75rem; }
+.about__photo img {
+  aspect-ratio: 4 / 5;
+  object-position: 72% center;
+}
+.about__photo figcaption { display: none; }
+@media (min-width: 1024px) {
+  .about__panel {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 3.5rem;
+    padding: 3.5rem;
+    text-align: left;
+  }
+  .about__photo { order: 0; margin: 0; align-self: stretch; }
+  .about__photo img { height: 100%; aspect-ratio: auto; min-height: 28rem; }
+  .about__text .about__cta { margin-top: 1.75rem; }
+}
+/* Keep the Oscar sign in view: a wider crop, not stretched to the full text height */
+.about__panel { display: flex; flex-direction: column; text-align: left; }
+.about__photo img { aspect-ratio: 4 / 3; object-position: 58% center; }
+@media (min-width: 1024px) {
+  .about__panel { display: grid; grid-template-columns: 1fr 1fr; }
+  .about__photo { align-self: center; }
+  .about__photo img { height: auto; min-height: 0; aspect-ratio: 5 / 6; object-position: 55% center; }
+}
+
+/* ===== "Om Oscar" design proposals (temporary, for comparing designs) ===== */
+.variant-label {
+  display: inline-block;
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.625rem;
+  border: 1px dashed rgba(var(--oscar-blue-800), 0.3);
+  border-radius: 0.375rem;
+  color: rgba(var(--oscar-blue-800), 0.7);
+  font-size: 0.8125rem;
+}
+.variant-label strong { color: rgb(var(--oscar-blue-800)); }
+[data-about-variant] .about__heading { text-align: left; }
+[data-about-variant] .about__body { margin-top: 1.25rem; }
+[data-about-variant] .about__cta { margin-top: 1.75rem; }
+[data-about-variant] figure { margin: 0; }
+[data-about-variant] figure img { display: block; width: 100%; object-fit: cover; object-position: 55% center; }
+
+/* All proposals use the landscape photo (about 2.3:1) and keep the text column at most ~35rem wide */
+[data-about-variant] .about__body { max-width: 35rem; }
+[data-about-variant] .abx1__img { display: block; }
+
+/* 1: photo across the full width of the screen; the text sits on top of it in a navy gradient, like the hero */
+.abx1 { position: relative; isolation: isolate; overflow: hidden; }
+.abx1__img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 70% center; }
+.abx1::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.92) 0%, rgba(var(--oscar-blue-800), 0.75) 55%, rgba(var(--oscar-blue-800), 0.2) 100%);
+}
+.abx1__inner { padding-top: 3rem; padding-bottom: 14rem; }
+.abx1 .about__heading { color: #FFFFFF; }
+.abx1 .about__body { color: rgba(255, 255, 255, 0.85); }
+.abx1 .rv-cta { border-color: rgba(255, 255, 255, 0.6); color: #FFFFFF; }
+.abx1 .rv-cta:hover { background: rgba(255, 255, 255, 0.08); }
+@media (min-width: 1024px) {
+  .abx1::before { background: linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.92) 0%, rgba(var(--oscar-blue-800), 0.8) 35%, rgba(var(--oscar-blue-800), 0.1) 62%, rgba(var(--oscar-blue-800), 0) 75%); }
+  .abx1__inner { min-height: 34rem; display: flex; align-items: center; padding-top: 4rem; padding-bottom: 4rem; }
+  .abx1__text { max-width: 30rem; }
+  .abx1__img { object-position: 40% center; left: 18%; width: 82%; }
+}
+
+/* 2: centred; heading and a narrow text column on top, a wide photo below with a white pill on it */
+.abx2 { text-align: center; }
+.abx2__text { max-width: 38rem; margin-inline: auto; }
+.abx2 .about__heading { text-align: center !important; }
+.abx2 .about__body { margin-inline: auto; }
+.abx2__photo { position: relative; margin-top: 2.5rem !important; }
+.abx2__photo img { aspect-ratio: 16 / 9; border-radius: 1rem; }
+.abx2__tag {
+  position: absolute; left: 1rem; bottom: 1rem; padding: 6px 12px; border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.85); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3); color: #222222; font-size: 0.875rem; font-weight: 600;
+}
+@media (min-width: 1024px) { .abx2__photo img { aspect-ratio: 21 / 8; } .abx2__tag { left: 1.5rem; bottom: 1.5rem; } }
+
+/* 3: magazine layout; a big heading across the top, then the photo on the left and a narrow text column on the right */
+.abx3 .about__heading { max-width: 40rem; }
+.abx3__row { display: grid; gap: 1.5rem; margin-top: 1.75rem; }
+.abx3__photo img { aspect-ratio: 16 / 9; border-radius: 1rem; }
+.abx3__text .about__body { margin-top: 0; }
+@media (min-width: 1024px) {
+  .abx3 .about__heading { font-size: 3.25rem; max-width: 48rem; }
+  .abx3__row { grid-template-columns: 1.6fr 1fr; gap: 3.5rem; align-items: end; margin-top: 2.5rem; }
+}
+
+/* 4: photo at the top of a light blue panel; a white text card rises up over the bottom of the photo */
+.abx4 { padding: 1rem 1rem 1.5rem; border-radius: 1rem; background: var(--oscar-blue-tint); }
+.abx4__photo img { aspect-ratio: 16 / 9; border-radius: 0.75rem; }
+.abx4__card {
+  position: relative; max-width: 36rem; margin: -2.5rem auto 0; padding: 1.75rem 1.5rem;
+  border-radius: 1rem; background: #FFFFFF; text-align: center;
+  box-shadow: 0 2px 4px rgba(var(--oscar-blue-800), 0.05), 0 20px 40px -18px rgba(var(--oscar-blue-800), 0.35);
+}
+.abx4 .about__heading { text-align: center !important; }
+.abx4 .about__body { margin-inline: auto; }
+@media (min-width: 1024px) {
+  .abx4 { padding: 1.5rem 1.5rem 2.5rem; }
+  .abx4__photo img { aspect-ratio: 21 / 8; }
+  .abx4__card { margin-top: -7rem; padding: 2.5rem 3rem; }
+}
+@media (min-width: 1024px) {
+  .abx1__img { left: 0; width: 100%; object-position: 30% center; }
+  .abx1::before { background: linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.95) 0%, rgba(var(--oscar-blue-800), 0.85) 35%, rgba(var(--oscar-blue-800), 0.25) 58%, rgba(var(--oscar-blue-800), 0) 72%); }
+}
+.abx2 .about__body { text-align: center; }
+@media (max-width: 1023px) {
+  .abx1::before { background: linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.95) 0%, rgba(var(--oscar-blue-800), 0.9) 52%, rgba(var(--oscar-blue-800), 0) 78%); }
+  .abx1__inner { padding-bottom: 16rem; }
+  .abx1__img { object-position: 62% bottom; }
+}
+
+/* "Om Oscar" (based on proposal 4): a light blue panel with the photo on the right, kept fairly small so it
+   stays sharp, and a white text card on the left that overlaps the photo's left edge so the text "pops" */
+.aby__panel {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1rem 1.5rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+.aby__photo { order: -1; margin: 0; }
+.aby__photo img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; object-position: 55% center; border-radius: 0.75rem; }
+.aby__card {
+  position: relative;
+  z-index: 1;
+  margin: -2.5rem 0.5rem 0;
+  padding: 1.75rem 1.5rem;
+  border-radius: 1rem;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(var(--oscar-blue-800), 0.05), 0 20px 40px -18px rgba(var(--oscar-blue-800), 0.35);
+}
+.aby .about__heading { text-align: left; }
+.aby .about__body { max-width: 34rem; margin-top: 1.25rem; }
+.aby .about__cta { margin-top: 1.75rem; }
+@media (min-width: 1024px) {
+  .aby__panel {
+    display: grid;
+    grid-template-columns: 30rem minmax(0, 40rem);
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 3rem;
+  }
+  .aby__photo { order: 0; grid-column: 2; grid-row: 1; }
+  .aby__photo img { aspect-ratio: 3 / 2; }
+  .aby__card { grid-column: 1; grid-row: 1; margin: 0 -5rem 0 0; padding: 2.5rem; }
+}
+
+/* ===== "Om Oscar" small variants (temporary) ===== */
+.aby__photo { position: relative; }
+/* 3: no light blue panel; an offset light blue block sits behind the photo instead */
+.aby--noplate .aby__panel { padding: 0; background: none; }
+.aby--noplate .aby__photo { isolation: isolate; }
+.aby--noplate .aby__photo::before {
+  content: ""; position: absolute; z-index: -1; inset: 1.25rem -1.25rem -1.25rem 1.25rem;
+  border-radius: 1rem; background: var(--oscar-blue-tint);
+}
+.aby--noplate .aby__photo { margin: 0 1.25rem 1.25rem 0; }
+@media (min-width: 1024px) {
+  .aby--noplate .aby__panel { padding: 1rem 1.5rem 2.5rem 0; }
+}
+/* Variant 3 (updated): no background at all; the text card itself is light blue */
+.aby--noplate .aby__photo::before { display: none; }
+.aby--noplate .aby__photo { margin: 0; }
+.aby--noplate .aby__card { background: var(--oscar-blue-tint); }
+@media (min-width: 1024px) { .aby--noplate .aby__panel { padding: 1rem 0 1rem; } }
+/* Variant 3: the photo lies on top of the card (z-index), so the whole photo is visible;
+   the light blue card tucks in behind the photo's left edge */
+.aby--noplate .aby__photo { position: relative; z-index: 2; }
+.aby--noplate .aby__card { z-index: 1; }
+@media (min-width: 1024px) {
+  .aby--noplate .aby__card { padding-right: 7.5rem; }
+}
+@media (max-width: 1023px) {
+  .aby--noplate .aby__card { padding-top: 4.25rem; }
+}
+/* Variant 3: show the whole photo, uncropped */
+.aby--noplate .aby__photo img { aspect-ratio: auto; height: auto; object-fit: contain; }
+
+/* ===== "Om Oscar": no background, light blue text card left, whole photo right (on top of the card) ===== */
+.aby--noplate .aby__photo img { box-shadow: 0 2px 4px rgba(var(--oscar-blue-800), 0.05), 0 18px 36px -18px rgba(var(--oscar-blue-800), 0.35); }
+/* The photo sits low and runs out below the bottom edge of the card */
+@media (min-width: 1024px) {
+  .aby3--down .aby__panel { align-items: end; padding-bottom: 3rem !important; }
+  .aby3--down .aby__photo { margin-bottom: -3rem; }
+}
+
+/* An oversized, very faint Oscar logo symbol fills the empty space above the photo
+   (like the big quotation mark behind the featured review) */
+.aby__panel { position: relative; isolation: isolate; }
+.aby__bg-logo {
+  position: absolute;
+  z-index: 0;
+  top: -2rem;
+  right: 2rem;
+  width: 22rem;
+  height: 22rem;
+  color: rgba(var(--oscar-blue-800), 0.06);
+  pointer-events: none;
+}
+@media (max-width: 1023px) { .aby__bg-logo { display: none; } }
+.aby__bg-logo { top: -3rem; right: 10rem; width: 19rem; height: 23.5rem; }
+.aby__bg-logo { width: 21rem; right: 9rem; }
+/* Bigger logo that runs a bit behind the photo */
+.aby__bg-logo { top: -3.5rem; right: 6.5rem; width: 28rem; height: 31.3rem; }
+/* The photo no longer runs below the card: its bottom lines up inside the card's bottom edge */
+@media (min-width: 1024px) {
+  .aby3--down .aby__photo { margin-bottom: 2.5rem; }
+  .aby3--down .aby__panel { padding-bottom: 0 !important; }
+}
+/* Slightly smaller logo, so more of it shows above the photo (it still tucks a little behind it) */
+.aby__bg-logo { top: -3rem; right: 8.25rem; width: 23.5rem; height: 26.3rem; }
+.aby__bg-logo { top: -2.5rem; right: 10rem; width: 20rem; height: 22.4rem; }
+/* Hero headline 20% bigger on tablet and desktop (54 / 68px -> 65 / 82px).
+   Phones: 40px, the largest size that keeps "Lej en bil nær dig" on one line */
+.hero-curve + div h1 { font-size: 2.5rem; }
+@media (min-width: 768px) { .hero-curve + div h1 { font-size: 4.05rem; } }
+@media (min-width: 1024px) { .hero-curve + div h1 { font-size: 5.1rem; } }
+
+/* ===== "Om Oscar", calm version: a quiet pause between the car types and the featured review.
+   No panel, no overlap, no background logo. A narrow text column on the left and the whole photo on the right. */
+.about-calm__grid { display: grid; gap: 2rem; }
+.about-calm__photo { order: -1; margin: 0; }
+.about-calm__photo img { display: block; width: 100%; height: auto; border-radius: 1rem; }
+.about-calm .about__heading { text-align: left; }
+.about-calm .about__body { max-width: 34rem; margin-top: 1.25rem; }
+.about-calm .about__cta { margin-top: 1.75rem; }
+@media (min-width: 1024px) {
+  .about-calm__grid { grid-template-columns: minmax(0, 30rem) minmax(0, 1fr); align-items: center; gap: 5rem; }
+  .about-calm__photo { order: 0; }
+}
+
+/* More space between sections (was 24px / 40px above and below each section, now 40px / 64px).
+   The "Kendt fra" logo row keeps its tighter spacing, since it belongs with the hero and search form. */
+section.py-6:not(.xl\:container),
+section.about-calm {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+@media (min-width: 1024px) {
+  section.py-6:not(.xl\:container),
+  section.about-calm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+/* Car section: the panel behind the cards uses the stronger light blue from the brand guide */
+.cars-v2 > .overflow-hidden::before { background: var(--oscar-blue-accent); }
+
+/* Car section panel: the light blue from the start (#F1F3FA), with an orange stripe along the top
+   and a blue stripe (brand-blue-600) along the bottom, like the Oscar sign in the partner photo */
+.cars-v2 > .overflow-hidden::before {
+  background:
+    linear-gradient(var(--oscar-orange), var(--oscar-orange)) top / 100% 12px no-repeat,
+    linear-gradient(var(--oscar-blue-600), var(--oscar-blue-600)) bottom / 100% 12px no-repeat,
+    var(--oscar-blue-tint);
+}
+
+/* Car cards: semi-transparent white (30%) with a light blur, and a clearer edge */
+.cars-v2 article {
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(var(--oscar-blue-800), 0.18);
+}
+.cars-v2 article { -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+.cars-v2 article { background: rgba(255, 255, 255, 0.5); }
+.cars-v2 article { background: rgba(255, 255, 255, 0.8); }
+.cars-v2 article { background: rgba(255, 255, 255, 0.85); }
+/* Swap: the panel behind the cards is white with a light border (stripes kept), and the cards are light blue */
+.cars-v2 > .overflow-hidden::before {
+  background:
+    linear-gradient(var(--oscar-orange), var(--oscar-orange)) top / 100% 12px no-repeat,
+    linear-gradient(var(--oscar-blue-600), var(--oscar-blue-600)) bottom / 100% 12px no-repeat,
+    #FFFFFF;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.12);
+}
+.cars-v2 article { background: rgba(241, 243, 250, 0.85); }
+.cars-v2 article { background: rgba(241, 243, 250, 0.95); }
+/* Thicker stripes (20px) */
+.cars-v2 > .overflow-hidden::before {
+  background:
+    linear-gradient(var(--oscar-orange), var(--oscar-orange)) top / 100% 20px no-repeat,
+    linear-gradient(var(--oscar-blue-600), var(--oscar-blue-600)) bottom / 100% 20px no-repeat,
+    #FFFFFF;
+}
+.cars-v2 article { background: rgba(241, 243, 250, 0.98); }
+
+/* "Se alle ... anmeldelser" link next to the stars (replaces the button below the cards) */
+.rv-c__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: rgb(var(--oscar-blue-800));
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.rv-c__all:hover { color: var(--oscar-orange); }
+.rv-c__all svg { width: 1rem; height: 1rem; }
+/* Car box: a softer version of the search form's layered shadow (about half the strength) */
+.cars-v2 > .overflow-hidden::before {
+  box-shadow:
+    0 1px 2px rgba(var(--oscar-blue-800), 0.03),
+    0 8px 18px -6px rgba(var(--oscar-blue-800), 0.09),
+    0 24px 48px -16px rgba(var(--oscar-blue-800), 0.11);
+}
+/* "for alle" in the "Om Oscar" heading: on its own line, in Oscar orange */
+.about__heading-accent { color: var(--oscar-orange); }
+/* Big quotation mark behind the featured review: brand blue (brand-blue-80, #CFDFFC) */
+.rv-feature--free::before { color: var(--oscar-blue-accent); }
+
+/* App section: the hand holding the phone (transparent photo, references/Mobil i hånd, transparent baggrund.png)
+   rises above the top edge of the dark section. The old background photo with the hand is replaced by a plain
+   dark gradient in the same colours. Desktop and tablet; phones keep the original layout. */
+.app-pop__phone { display: none; }
+@media (min-width: 768px) {
+  .app-pop {
+    margin-top: 7rem;
+    background: linear-gradient(90deg, #0F1525 0%, #1A2131 100%);
+  }
+  .app-pop > .md\:absolute { display: none !important; }
+  .app-pop__phone {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: max(1rem, calc((100% - 80rem) / 2));
+    bottom: 0;
+    width: auto;
+    height: calc(100% + 7rem);
+    max-width: 55%;
+    object-fit: contain;
+    object-position: right bottom;
+    pointer-events: none;
+  }
+}
+/* Hero body text: wide enough to sit on two lines on desktop; the price in bold */
+@media (min-width: 1024px) { .hero-lead { max-width: 40rem; } }
+.hero-lead strong { font-weight: 700; }
+
+/* Draft banner (added for the public draft link): makes clear this is a design proposal, not the live site */
+.draft-banner {
+  position: relative;
+  z-index: 60;
+  padding: 0.5rem 1rem;
+  background: #222222;
+  color: #FFFFFF;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.draft-banner strong { color: var(--oscar-orange-02); }
+/* The menu is positioned from the top of the page wrapper, so it now starts below the draft banner */
+div:has(> header.absolute) { position: relative; }
