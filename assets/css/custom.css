@@ -1601,3 +1601,71 @@ section.about-calm {
 .draft-banner strong { color: var(--oscar-orange-02); }
 /* The menu is positioned from the top of the page wrapper, so it now starts below the draft banner */
 div:has(> header.absolute) { position: relative; }
+/* "Lokal biludlejning for alle": photo on top, text below, keeping their widths (photo 43rem, text 30rem).
+   The section is a narrow centred column. */
+@media (min-width: 1024px) {
+  .about-calm__grid {
+    grid-template-columns: minmax(0, 43rem);
+    justify-content: center;
+    gap: 2.5rem;
+  }
+  .about-calm__photo { order: -1; }
+  .about-calm__text { max-width: 30rem; }
+}
+/* Text block centred under the photo; the lines themselves stay left-aligned */
+@media (min-width: 1024px) {
+  .about-calm__text { justify-self: center; width: 100%; }
+}
+/* "Lokal biludlejning for alle": photo and text wrapped in a box in the neutral brand grey
+   (Background Grey, #F7F7F9, from the brand guide) */
+.about-calm__grid {
+  padding: 1rem 1rem 2rem;
+  border-radius: 1rem;
+  background: #F7F7F9;
+}
+@media (min-width: 1024px) {
+  .about-calm__grid {
+    max-width: calc(43rem + 6rem);
+    margin-inline: auto;
+    padding: 3rem 3rem 3.5rem;
+  }
+}
+/* "Om Oscar" box: the same light blue as the review panel (#F1F3FA) */
+.about-calm__grid { background: var(--oscar-blue-tint); }
+/* "Lej en bil på 3 minutter" and the app heading: the same size as the other large section headings (29px / 43px) */
+h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
+@media (min-width: 768px) { h2.h2-big { font-size: 2.7rem; } }
+
+/* Desktop: 30px side padding (was 16px), so content doesn't run edge to edge on screens around 1280px.
+   The FAQ uses the same side padding, so it lines up with the other sections. */
+@media (min-width: 1024px) {
+  .container, .container.lg\:px-28 { padding-left: 30px; padding-right: 30px; }
+}
+/* Car section panel respects the 30px desktop side padding too (cards keep their spacing inside it) */
+@media (min-width: 1024px) {
+  .cars-v2 > .overflow-hidden::before { left: 30px; right: 30px; }
+  .cars-v2 > .overflow-hidden { padding-left: 46px !important; padding-right: 46px !important; }
+}
+/* Narrower desktops (1024–1399px): slightly tighter card footer, so the availability button stays inside the card */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  [data-testid="vehicles-carousel"] ul.snap-x { gap: 1rem; }
+  [data-testid="vehicles-carousel"] ul.snap-x > li { width: calc((100% - 3rem) / 4); }
+  .car-card__cta { padding-left: 0.5rem; padding-right: 0.5rem; font-size: 14px; }
+  .car-card__price strong { font-size: 1.25rem; }
+}
+/* Safety net: if a card gets too narrow, the button drops below the price instead of sticking out */
+.car-card__foot { flex-wrap: wrap; row-gap: 0.75rem; }
+@media (min-width: 1400px) {
+  .car-card__cta { padding-left: 0.5rem; padding-right: 0.5rem; }
+}
+@media (min-width: 1400px) {
+  [data-testid="vehicles-carousel"] ul.snap-x { gap: 1rem; }
+  [data-testid="vehicles-carousel"] ul.snap-x > li { width: calc((100% - 3rem) / 4); }
+  .car-card__cta { font-size: 14px; }
+  .car-card__price strong { font-size: 1.3rem; }
+}
+/* App section: the QR code on its own (no background box), with "Scan for at downloade" next to it */
+.app-qr img { border-radius: 0.375rem; }
+/* App section text: same left edge as the other sections ("Lej en bil på 3 minutter"): the page's side padding */
+@media (min-width: 768px) { .app-pop .md\:mx-10 { margin-left: 16px; } }
+@media (min-width: 1024px) { .app-pop .md\:mx-10 { margin-left: 30px; } }
