@@ -76,7 +76,7 @@ Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
 The page is online at **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/** (free GitHub Pages, account patrickgammelmark). Anyone with the link can see it, no login needed.
 - Search engines are told not to index the page. (The "Designforslag" banner at the top has been removed.)
 - The `references/` folder is not uploaded.
-- To update the online version after changes, ask Claude to "push the changes to the draft link". To take it offline, ask Claude to delete the GitHub repository.
+- To update the online version after changes, ask Claude to "push the changes to the draft link". The links to the styling and script carry a version number (`?v=…`) that is bumped on every update, so phones and browsers always load the newest styling instead of an old saved copy. To take it offline, ask Claude to delete the GitHub repository.
 
 ## Costs
 None. Everything runs locally in your browser.

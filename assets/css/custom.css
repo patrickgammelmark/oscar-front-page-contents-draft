@@ -1709,3 +1709,6 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (min-width: 1024px) {
   .form-top__types ul.lg\:flex { overflow-x: auto; }
 }
+/* Dropdown button reacts to a single tap on phones, and its menu always sits above the form fields */
+.form-top__mode .rental-mode-trigger { touch-action: manipulation; cursor: pointer; }
+.form-top__mode .rental-mode-menu { z-index: 50; }
