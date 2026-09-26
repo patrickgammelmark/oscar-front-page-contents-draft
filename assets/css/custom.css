@@ -1587,18 +1587,6 @@ section.about-calm {
 @media (min-width: 1024px) { .hero-lead { max-width: 40rem; } }
 .hero-lead strong { font-weight: 700; }
 
-/* Draft banner (added for the public draft link): makes clear this is a design proposal, not the live site */
-.draft-banner {
-  position: relative;
-  z-index: 60;
-  padding: 0.5rem 1rem;
-  background: #222222;
-  color: #FFFFFF;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  text-align: center;
-}
-.draft-banner strong { color: var(--oscar-orange-02); }
 /* The menu is positioned from the top of the page wrapper, so it now starts below the draft banner */
 div:has(> header.absolute) { position: relative; }
 /* "Lokal biludlejning for alle": photo on top, text below, keeping their widths (photo 43rem, text 30rem).
