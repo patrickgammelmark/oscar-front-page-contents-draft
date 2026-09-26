@@ -1769,3 +1769,8 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (max-width: 767px) {
   .hero-rating-below { display: flex; justify-content: center; margin-top: 1rem; }
 }
+/* Search form: only the car type buttons in the top row (the "Biludlejning" dropdown is removed).
+   Phones: vertical padding matches the side padding (16px instead of 24px) */
+@media (max-width: 767px) {
+  [data-testid="rental-search-form"] { padding-top: 1rem; padding-bottom: 1rem; }
+}
