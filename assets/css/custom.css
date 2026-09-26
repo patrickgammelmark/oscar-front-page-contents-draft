@@ -1712,3 +1712,13 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 /* Dropdown button reacts to a single tap on phones, and its menu always sits above the form fields */
 .form-top__mode .rental-mode-trigger { touch-action: manipulation; cursor: pointer; }
 .form-top__mode .rental-mode-menu { z-index: 50; }
+
+/* Hero: the search form sits 20px higher, and the gaps between the top elements are 4px tighter */
+.container.pointer-events-auto.top-full:has(> [data-testid="rental-search-form"]) { top: calc(100% - 20px); }
+.hero-proof { margin-bottom: 0.5rem; }
+.hero-usps { margin-top: 1rem; }
+.hero-lead { margin-top: 1.25rem; }
+@media (min-width: 768px) {
+  .hero-usps { margin-top: 1.25rem; }
+  .hero-lead { margin-top: 1.75rem; }
+}
