@@ -1669,3 +1669,22 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 /* App section text: same left edge as the other sections ("Lej en bil på 3 minutter"): the page's side padding */
 @media (min-width: 768px) { .app-pop .md\:mx-10 { margin-left: 16px; } }
 @media (min-width: 1024px) { .app-pop .md\:mx-10 { margin-left: 30px; } }
+
+/* Mobile hero: no app store badges (the rating stays), a shorter lead text (the first sentence is dropped),
+   and the three USP pills on one line */
+@media (max-width: 767px) {
+  .hero-badges, .hero-proof__divider { display: none !important; }
+  .hero-lead__intro { display: none; }
+  .hero-usps { flex-wrap: nowrap; gap: 0.25rem; }
+  .hero-usps li,
+  .hero-usps li:nth-child(n) { gap: 0.25rem; padding: 3px 8px 3px 3px; font-size: 0.6875rem; white-space: nowrap; }
+  .hero-usps li svg { width: 0.5rem; height: 0.5rem; padding: 0.1875rem; }
+}
+/* Mobile hero: the badges are gone, so the hero no longer needs the extra height; very narrow phones get a
+   slightly smaller headline so "Lej en bil nær dig" stays on one line */
+@media (max-width: 767px) {
+  section:has(> .hero-curve) { height: 35rem; }
+}
+@media (max-width: 379px) {
+  .hero-curve + div h1 { font-size: 2.2rem; }
+}
