@@ -1676,3 +1676,36 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (max-width: 379px) {
   .hero-curve + div h1 { font-size: 2.2rem; }
 }
+
+/* Search form: the "Biludlejning" dropdown now sits inside the form, on the same row as the car type pills,
+   separated by a thin vertical line. The pills scroll sideways. This makes the form lower. */
+:has(+ [data-testid="rental-search-form"]):not(:has(*)) { display: none; }
+.form-top {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  min-width: 0;
+}
+.form-top__mode { position: relative; flex-shrink: 0; }
+.form-top__mode .rental-mode-trigger {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  padding: 0 0.25rem;
+  color: rgb(var(--oscar-blue-800));
+  font-weight: 600;
+  white-space: nowrap;
+}
+.form-top__mode .rental-mode-menu { top: calc(100% + 0.25rem); left: 0; }
+.form-top__sep {
+  flex-shrink: 0;
+  width: 1px;
+  height: 1.75rem;
+  background: rgba(var(--oscar-blue-800), 0.15);
+}
+.form-top__types { flex: 1; min-width: 0; }
+.form-top__types > [data-testid="rental-search-car-type-filter"] > div:first-child { margin-left: 0; margin-right: -1rem; }
+.form-top__types > [data-testid="rental-search-car-type-filter"] > div:first-child ul { padding-left: 0; }
+@media (min-width: 1024px) {
+  .form-top__types ul.lg\:flex { overflow-x: auto; }
+}
