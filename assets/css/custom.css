@@ -1855,3 +1855,42 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 }
 /* FAQ: the "Se alle ofte stillede spørgsmål" button sits under the questions */
 .faq-all { align-self: flex-start; }
+
+/* "Populære byer i Danmark": one simple list of all cities, sorted by number of cars.
+   No region tabs, no borders, no arrows; photo, city name and number of available cars. */
+.city-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem 2rem;
+}
+.city-list__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-inline: -0.5rem;
+  border-radius: 0.75rem;
+  transition: background 0.15s ease;
+}
+.city-list__item:hover { background: var(--oscar-blue-tint); }
+.city-list__item img {
+  width: 4rem;
+  height: 4rem;
+  flex-shrink: 0;
+  border-radius: 0.625rem;
+  object-fit: cover;
+}
+.city-list__item > span { display: flex; flex-direction: column; gap: 0.125rem; }
+.city-list__item strong { color: rgb(var(--oscar-blue-800)); font-size: 1.0625rem; font-weight: 600; }
+.city-list__item > span > span { color: rgba(var(--oscar-blue-800), 0.65); font-size: 0.9375rem; }
+@media (min-width: 640px) { .city-list { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .city-list { grid-template-columns: repeat(4, 1fr); gap: 1rem 2rem; } }
+/* Phones: two columns with smaller photos, so the list stays short */
+@media (max-width: 639px) {
+  .city-list { grid-template-columns: repeat(2, 1fr); gap: 0.25rem 0.75rem; }
+  .city-list__item { gap: 0.625rem; }
+  .city-list__item img { width: 3rem; height: 3rem; border-radius: 0.5rem; }
+  .city-list__item strong { font-size: 0.9375rem; }
+  .city-list__item > span > span { font-size: 0.75rem; }
+}
+@media (max-width: 639px) { .city-list__suffix { display: none; } }
