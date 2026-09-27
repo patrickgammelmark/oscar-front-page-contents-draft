@@ -1820,3 +1820,36 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 }
 /* App Store / Google Play badges removed from the hero on desktop too (only the rating remains) */
 .hero-badges, .hero-proof__divider { display: none !important; }
+
+/* ===== "Lokal biludlejning for alle", fitted to the rest of the redesign =====
+   Same set-up as the hero: text on the left at the page's left edge, the photo on the right, full container width.
+   No box (the reviews right below already use the light blue panel), so it reads as a calm white section. */
+.about-calm__grid,
+.about-calm__grid:where(*) {
+  max-width: none;
+  margin-inline: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+.about-calm__photo { order: -1; }
+.about-calm__photo img {
+  border-radius: 1rem;
+  box-shadow:
+    0 1px 2px rgba(var(--oscar-blue-800), 0.03),
+    0 8px 18px -6px rgba(var(--oscar-blue-800), 0.09),
+    0 24px 48px -16px rgba(var(--oscar-blue-800), 0.11);
+}
+.about-calm .about__heading { font-size: 1.8rem; line-height: 1.15; }
+.about-calm .about__body { max-width: 34rem; }
+@media (min-width: 768px) { .about-calm .about__heading { font-size: 2.7rem; } }
+@media (min-width: 1024px) {
+  .about-calm__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    justify-content: stretch;
+    align-items: center;
+    gap: 4.5rem;
+  }
+  .about-calm__photo { order: 0; }
+  .about-calm__text { justify-self: start; width: auto; max-width: 30rem; }
+}
