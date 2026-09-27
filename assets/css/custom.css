@@ -1790,3 +1790,12 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   section:has(> .hero-curve) { padding-bottom: 4.75rem; }
   section.xl\:container.py-6 { padding-top: 9.5rem; padding-bottom: 4.5rem; }
 }
+
+/* Mobile: the USP pills move from under the headline to below the search form, above the rating */
+.hero-usps-below { display: none; }
+@media (max-width: 767px) {
+  .hero-curve + .container .hero-usps { display: none; }
+  .hero-usps-below { display: block; }
+  .hero-usps-below .hero-usps { display: flex; margin-top: 1rem; }
+  .hero-usps-below + .hero-rating-below { margin-top: 0.875rem; }
+}
