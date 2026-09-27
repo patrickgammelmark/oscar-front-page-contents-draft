@@ -1774,3 +1774,19 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (max-width: 767px) {
   [data-testid="rental-search-form"] { padding-top: 1rem; padding-bottom: 1rem; }
 }
+
+/* Mobile hero, centred version: headline, pills and body text are centred on phones. */
+@media (max-width: 767px) {
+  .hero-curve + .container,
+  .hero-curve + .container .flex-col { align-items: center; text-align: center; }
+  .hero-curve + .container h1 { text-align: center; }
+  .hero-usps { justify-content: center; }
+  .hero-lead { margin-inline: auto; text-align: center; }
+}
+
+/* Mobile: 20px more space at the bottom of the blue hero, and more space around the "Kendt fra" logos,
+   so the logos are not visible on the first screen */
+@media (max-width: 767px) {
+  section:has(> .hero-curve) { padding-bottom: 4.75rem; }
+  section.xl\:container.py-6 { padding-top: 9.5rem; padding-bottom: 4.5rem; }
+}
