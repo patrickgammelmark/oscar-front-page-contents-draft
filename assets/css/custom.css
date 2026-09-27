@@ -1818,3 +1818,5 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   .benefits--brush .benefits__title { font-size: 1.0625rem; line-height: 1.3; white-space: nowrap; }
   .benefits__text { margin-top: 0.25rem; font-size: 0.9375rem; }
 }
+/* App Store / Google Play badges removed from the hero on desktop too (only the rating remains) */
+.hero-badges, .hero-proof__divider { display: none !important; }
