@@ -1799,3 +1799,8 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   .hero-usps-below .hero-usps { display: flex; margin-top: 1rem; }
   .hero-usps-below + .hero-rating-below { margin-top: 0.875rem; }
 }
+/* Mobile: more space around the search form, so the "Søg" button doesn't compete with the pills right below it */
+@media (max-width: 767px) {
+  .container.pointer-events-auto.top-full:has(> [data-testid="rental-search-form"]) { padding-top: 2rem; }
+  .hero-usps-below .hero-usps { margin-top: 2rem; }
+}
