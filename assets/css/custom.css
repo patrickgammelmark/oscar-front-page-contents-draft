@@ -1853,3 +1853,5 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   .about-calm__photo { order: 0; }
   .about-calm__text { justify-self: start; width: auto; max-width: 30rem; }
 }
+/* FAQ: the "Se alle ofte stillede spørgsmål" button sits under the questions */
+.faq-all { align-self: flex-start; }
