@@ -160,3 +160,24 @@ document.querySelectorAll('[data-rv-track]').forEach(function (track) {
     try { localStorage.setItem('oscar-fonts', alt ? 'alt' : 'default'); } catch (err) {}
   });
 })();
+
+// "Lej en bil på 3 minutter" on phones: tap a step to open it (one open at a time)
+document.querySelectorAll('.md\\:hidden > ol[data-orientation="vertical"]').forEach(function (list) {
+  var items = list.querySelectorAll(':scope > li');
+  items.forEach(function (item) {
+    var button = item.querySelector('button');
+    var panel = item.querySelector('[role="region"]');
+    if (!button || !panel) return;
+    button.addEventListener('click', function () {
+      var open = panel.hasAttribute('hidden');
+      items.forEach(function (other) {
+        var b = other.querySelector('button'), p = other.querySelector('[role="region"]');
+        if (!b || !p) return;
+        var isThis = other === item && open;
+        p.toggleAttribute('hidden', !isThis);
+        [other, b, p].forEach(function (el) { el.setAttribute('data-state', isThis ? 'open' : 'closed'); });
+        b.setAttribute('aria-expanded', isThis);
+      });
+    });
+  });
+});
