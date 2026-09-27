@@ -1894,3 +1894,54 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   .city-list__item > span > span { font-size: 0.75rem; }
 }
 @media (max-width: 639px) { .city-list__suffix { display: none; } }
+
+/* ===== "Brug for hjælp? Kontakt os." in the page's design language =====
+   A light blue panel (like the reviews), heading and short text on the left, and two white cards on the right,
+   each with an orange icon box (like the benefits), a short text, the key detail and an outlined button. */
+.contact__panel {
+  display: grid;
+  gap: 1.75rem;
+  padding: 1.75rem 1.25rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+.contact__intro p { max-width: 26rem; margin-top: 0.75rem; color: rgba(var(--oscar-blue-800), 0.75); font-size: 1.0625rem; line-height: 1.5; }
+.contact__intro h2 { color: rgb(var(--oscar-blue-800)); }
+.contact__cards { display: grid; gap: 1rem; }
+.contact__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: #FFFFFF;
+  box-shadow: 0 1px 2px rgba(var(--oscar-blue-800), 0.04), 0 8px 24px -12px rgba(var(--oscar-blue-800), 0.18);
+}
+.contact__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 1rem;
+  border-radius: 0.625rem;
+  background: var(--oscar-orange-02);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+  color: #FFFFFF;
+}
+.contact__icon svg { width: 1.25rem; height: 1.25rem; }
+.contact__card h3 { color: rgb(var(--oscar-blue-800)); font-size: 1.125rem; font-weight: 600; }
+.contact__card > p { margin-top: 0.25rem; color: rgba(var(--oscar-blue-800), 0.7); }
+.contact__detail { margin-top: 0.75rem !important; color: rgb(var(--oscar-blue-800)) !important; font-weight: 600; user-select: all; }
+.contact__hours { display: grid; gap: 0.25rem; margin-top: 0.5rem; }
+.contact__hours div { display: flex; gap: 0.75rem; }
+.contact__hours dt { min-width: 5rem; color: rgba(var(--oscar-blue-800), 0.7); }
+.contact__hours dd { color: rgb(var(--oscar-blue-800)); font-weight: 600; font-variant-numeric: tabular-nums; }
+.contact__cta { margin-top: auto; padding-top: 0.625rem; padding-bottom: 0.625rem; background: #FFFFFF; cursor: pointer; }
+.contact__card > .contact__cta { margin-top: 1.5rem; }
+@media (min-width: 640px) { .contact__cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) {
+  .contact__panel { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; gap: 3rem; padding: 3rem; }
+}
+/* Buttons line up at the bottom of both cards */
+.contact__card > .contact__cta { margin-top: auto; }
+.contact__detail, .contact__hours { margin-bottom: 1.5rem; }
