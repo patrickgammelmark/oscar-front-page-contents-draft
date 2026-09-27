@@ -1788,7 +1788,7 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
    so the logos are not visible on the first screen */
 @media (max-width: 767px) {
   section:has(> .hero-curve) { padding-bottom: 4.75rem; }
-  section.xl\:container.py-6 { padding-top: 9.5rem; padding-bottom: 4.5rem; }
+  section.xl\:container.py-6 { padding-top: 4.75rem; padding-bottom: 2.25rem; }
 }
 
 /* Mobile: the USP pills move from under the headline to below the search form, above the rating */
