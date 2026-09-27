@@ -1945,3 +1945,6 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 /* Buttons line up at the bottom of both cards */
 .contact__card > .contact__cta { margin-top: auto; }
 .contact__detail, .contact__hours { margin-bottom: 1.5rem; }
+/* All large section headings share one size: 28.8px on phones, 43.2px from tablet up */
+.rv-heading { font-size: 1.8rem; line-height: 1.15; }
+@media (min-width: 768px) { .rv-heading { font-size: 2.7rem; } }
