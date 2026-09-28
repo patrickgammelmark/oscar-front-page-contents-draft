@@ -72,6 +72,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - Car section ("Du har noget, du skal. Vi har lejebilen."): the buttons say "Se 600+ biler" (the numbers are placeholders). The cars rise above the top of their cards by the same amount at every screen width, phones included, and the cards are a little lower. When the button has to sit below the price, it fills the card's full width. On screens under 1024px the panel behind the cards runs edge to edge without rounded corners, like a band you slide the cards along.
 - The heading "Du har noget, du skal. Vi har lejebilen." always breaks at the full stop when it doesn't fit on one line, on every screen size.
 - The hero headline "Lej en bil nær dig" never wraps: on screens where it wouldn't fit on one line, it shrinks gradually instead. The bottom of the "g" is no longer cut off on phones.
+- The heading "Lokal biludlejning for alle" sits on one line when there is room (tablets and wide phones). Otherwise it breaks just before "for alle", as before.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
