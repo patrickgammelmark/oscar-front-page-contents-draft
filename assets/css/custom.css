@@ -2010,3 +2010,36 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (max-width: 767px) {
   .steps-list li > div > .aspect-video { flex-basis: 48%; }
 }
+
+/* "Lej en bil på 3 minutter": orange arrows between the steps, so it reads as a step-by-step guide.
+   Desktop/tablet: arrows pointing right, between the pictures. Phones: arrows pointing down, under each picture. */
+.steps-list li { position: relative; }
+.steps-list li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--oscar-orange);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m13 6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='m13 6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
+}
+@media (min-width: 768px) {
+  /* Wider gaps between the columns, so the arrows have room */
+  .steps-list ol { gap: 2.5rem; --total-gap: 7.5rem !important; }
+  .steps-list li { container-type: inline-size; }
+  /* Centred in the gap, level with the middle of the picture (pictures are 16:9, so the middle is at 9/32 of the width) */
+  .steps-list li:not(:last-child)::after {
+    left: calc(100% + 1.25rem - 0.75rem);
+    top: calc(100cqi * 9 / 32 - 0.75rem);
+  }
+}
+@media (max-width: 767px) {
+  .steps-list ol { gap: 2.25rem; }
+  /* Centred under the picture (48% wide), in the gap to the next row */
+  .steps-list li:not(:last-child)::after {
+    top: calc(100% + 1.125rem - 0.75rem);
+    left: calc(24% - 0.75rem);
+    rotate: 90deg;
+  }
+}
