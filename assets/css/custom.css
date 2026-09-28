@@ -1988,3 +1988,21 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @media (min-width: 1024px) { .hero-curve + div h1 { font-size: min(5.1rem, 11.3cqi); } }
 /* Phones: the site's "max 3 lines" rule cut off the bottom of the "g" in "dig". The headline is always one line now, so it is switched off. */
 .hero-curve + div h1 { display: block; overflow: visible; -webkit-line-clamp: none; }
+
+/* "Lej en bil på 3 minutter" on phones (below 768px): no fold-out list. Each step is a row with the picture
+   on the left and the title and description on the right. */
+@media (max-width: 767px) {
+  .steps-list ol { grid-template-columns: 1fr; gap: 1.25rem; }
+  .steps-list li > div {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  .steps-list li > div > .aspect-video {
+    order: 0;
+    flex: 0 0 40%;
+  }
+  .steps-list li > div > div:last-child { flex: 1; min-width: 0; gap: 0.25rem; }
+  .steps-list h3 { font-size: 1.0625rem; }
+  .steps-list .prose p { margin: 0; font-size: 0.9375rem; line-height: 1.45; }
+}
