@@ -1979,3 +1979,12 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 }
 /* "Du har noget, du skal. Vi har lejebilen.": when the heading doesn't fit on one line, it breaks at the full stop */
 .h2-line { display: inline-block; }
+/* Hero headline "Lej en bil nær dig": never wraps. It keeps its normal size, but on screens where it
+   wouldn't fit on one line it shrinks with the space available (cqi = 1% of the text column's width). */
+.hero-curve + div div:has(> h1) { container-type: inline-size; }
+.hero-curve + div h1 { white-space: nowrap; font-size: min(2.5rem, 11.3cqi); }
+@media (max-width: 379px) { .hero-curve + div h1 { font-size: min(2.2rem, 11.3cqi); } }
+@media (min-width: 768px) { .hero-curve + div h1 { font-size: min(4.05rem, 11.3cqi); } }
+@media (min-width: 1024px) { .hero-curve + div h1 { font-size: min(5.1rem, 11.3cqi); } }
+/* Phones: the site's "max 3 lines" rule cut off the bottom of the "g" in "dig". The headline is always one line now, so it is switched off. */
+.hero-curve + div h1 { display: block; overflow: visible; -webkit-line-clamp: none; }
