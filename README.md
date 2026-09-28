@@ -76,7 +76,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - "Lej en bil på 3 minutter" on phones: no longer a fold-out list. All four steps are shown, each as a row with the picture on the left and the title and description on the right. Tablets and desktop are unchanged. The pictures take up about half the row (48%), the text the rest.
 - Arrows between the four steps (a white arrow in an orange circle with a white ring, easy to spot when skimming; the circles overlap the pictures slightly) in "Lej en bil på 3 minutter", so it reads as a step-by-step guide: pointing right between the pictures on tablet and desktop, pointing down between the rows on phones.
 - Step 2 text now ends "... ekstra chauffører, mm."
-- Tighter text under "Lokal biludlejning for alle": new first sentence ("Med Oscar Biludlejning kan du finde gode, billige lejebiler hos lokale virksomheder."), "Det er nemt:" instead of "Idéen er enkel:", and "Vi sørger for, at nøglerne ligger klar til dig."
+- Tighter text under "Lokal biludlejning for alle": new first sentence ("Med Oscar Biludlejning kan du finde gode, billige lejebiler hos lokale virksomheder."), "Det er nemt: Du vælger bil, tid, sted og tilvalg." (was "Idéen er enkel: ... og dine tilvalg."), and "Vi sørger for, at nøglerne ligger klar til dig."
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
