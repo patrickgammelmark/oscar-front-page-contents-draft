@@ -74,7 +74,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - The hero headline "Lej en bil nær dig" never wraps: on screens where it wouldn't fit on one line, it shrinks gradually instead. The bottom of the "g" is no longer cut off on phones.
 - The heading "Lokal biludlejning for alle" sits on one line when there is room (tablets and wide phones). Otherwise it breaks just before "for alle", as before.
 - "Lej en bil på 3 minutter" on phones: no longer a fold-out list. All four steps are shown, each as a row with the picture on the left and the title and description on the right. Tablets and desktop are unchanged. The pictures take up about half the row (48%), the text the rest.
-- Arrows between the four steps (a white arrow in an orange circle, easy to spot when skimming) in "Lej en bil på 3 minutter", so it reads as a step-by-step guide: pointing right between the pictures on tablet and desktop, pointing down between the rows on phones.
+- Arrows between the four steps (a white arrow in an orange circle with a white ring, easy to spot when skimming; the circles overlap the pictures slightly) in "Lej en bil på 3 minutter", so it reads as a step-by-step guide: pointing right between the pictures on tablet and desktop, pointing down between the rows on phones.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
