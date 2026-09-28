@@ -1977,3 +1977,5 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 @container (max-width: 15rem) {
   .car-card__cta { flex-basis: 100%; }
 }
+/* "Du har noget, du skal. Vi har lejebilen.": when the heading doesn't fit on one line, it breaks at the full stop */
+.h2-line { display: inline-block; }

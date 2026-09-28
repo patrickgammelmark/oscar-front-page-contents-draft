@@ -70,6 +70,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - More space between the sections further down the page: 64px above and below each section on desktop (was 40px) and 40px on phones (was 24px).
 - More side padding on desktop: 30px on each side (was 16px), so the content has room on screens around 1280px wide. All sections, including the FAQ and the app section, now line up on the same left and right edges.
 - Car section ("Du har noget, du skal. Vi har lejebilen."): the buttons say "Se 600+ biler" (the numbers are placeholders). The cars rise above the top of their cards by the same amount at every screen width, phones included, and the cards are a little lower. When the button has to sit below the price, it fills the card's full width. On screens under 1024px the panel behind the cards runs edge to edge without rounded corners, like a band you slide the cards along.
+- The heading "Du har noget, du skal. Vi har lejebilen." always breaks at the full stop when it doesn't fit on one line, on every screen size.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
