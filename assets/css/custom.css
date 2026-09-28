@@ -2006,3 +2006,7 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
   .steps-list h3 { font-size: 1.0625rem; }
   .steps-list .prose p { margin: 0; font-size: 0.9375rem; line-height: 1.45; }
 }
+/* Steps on phones: the pictures take a bit more of the row (48% instead of 40%), the text a bit less */
+@media (max-width: 767px) {
+  .steps-list li > div > .aspect-video { flex-basis: 48%; }
+}
