@@ -1948,3 +1948,32 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
 /* All large section headings share one size: 28.8px on phones, 43.2px from tablet up */
 .rv-heading { font-size: 1.8rem; line-height: 1.15; }
 @media (min-width: 768px) { .rv-heading { font-size: 2.7rem; } }
+
+/* Car section: the cars rise above their cards by the same share at every screen width.
+   The photo box scales with the card (instead of a fixed height), and its negative top margin is a
+   percentage of the card width, so smaller cards keep the same "pop". This also makes the cards a bit lower. */
+[data-testid="vehicles-carousel"] article .h-28 {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 15 / 8;
+  margin-top: -30%;
+}
+.cars-v2 ul.snap-x { padding-top: 5.5rem; }
+/* Phones and tablets (below 1024px): room above the cards inside the sliding row, so the cars can rise
+   above them there too. The panel behind runs edge to edge as one continuous band (no rounded corners). */
+@media (max-width: 1023px) {
+  .cars-v2 ul.snap-x { padding-top: 4.5rem; }
+  .cars-v2 > .overflow-hidden { border-radius: 0; }
+  .cars-v2 > .overflow-hidden::before {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+/* When the card is too narrow for price and button side by side, the button drops below the price
+   and fills the card's full width */
+.car-card__foot { container-type: inline-size; }
+.car-card__cta { justify-content: center; }
+@container (max-width: 15rem) {
+  .car-card__cta { flex-basis: 100%; }
+}
