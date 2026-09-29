@@ -79,6 +79,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - Step 2 text now ends "... ekstra chauffører, mm."
 - Tighter text under "Lokal biludlejning for alle": new first sentence ("Med Oscar Biludlejning kan du finde gode, billige lejebiler hos lokale virksomheder."), "Det er nemt: Du vælger bil, tid, sted og tilvalg." (was "Idéen er enkel: ... og dine tilvalg."), and "Vi sørger for, at nøglerne ligger klar til dig."
 - The city list heading is now "Find en lejebil i din by" (was "Populære byer i Danmark").
+- The link "Brug for vejhjælp?" ("Need roadside assistance?" on the English page) under "Vejhjælp 24/7" is removed.
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
