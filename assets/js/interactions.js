@@ -160,3 +160,23 @@ document.querySelectorAll('[data-rv-track]').forEach(function (track) {
     try { localStorage.setItem('oscar-fonts', alt ? 'alt' : 'default'); } catch (err) {}
   });
 })();
+
+// Location page gallery: tap a thumbnail to show it as the big photo (quick, soft fade)
+document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
+  var main = gallery.querySelector('[data-gallery-main]');
+  var thumbs = gallery.querySelectorAll('[data-gallery-src]');
+  if (!main) return;
+  thumbs.forEach(function (thumb) {
+    new Image().src = thumb.getAttribute('data-gallery-src'); // load in advance, so the switch is instant
+    thumb.addEventListener('click', function () {
+      if (thumb.getAttribute('aria-current') === 'true') return;
+      thumbs.forEach(function (t) { t.setAttribute('aria-current', t === thumb ? 'true' : 'false'); });
+      main.classList.add('is-fading');
+      setTimeout(function () {
+        main.src = thumb.getAttribute('data-gallery-src');
+        main.alt = thumb.getAttribute('data-gallery-alt');
+        main.classList.remove('is-fading');
+      }, 180);
+    });
+  });
+});
