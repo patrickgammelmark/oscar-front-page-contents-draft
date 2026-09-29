@@ -95,6 +95,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English hero pill: "Rent local" (was "Support local").
 - Help section ("Brug for hjælp?" / "Need help?"), both languages: the heading now sits on top, with three cards below it: email, live chat and a new phone card ("Ring til os" / "Call us", +45 42 90 90 48, the number on hejoscar.dk/oscar-kundeservice). Three columns from 1024px, stacked on smaller screens.
 - Danish text changes: placeholder "Hvor vil du leje en bil?"; "Prøv selv, og find ud af hvorfor." removed (the benefit title is centred next to its icon on phones); shorter car card texts; shorter step texts ("Vælg tid og sted, og find en bil til dit behov.", "Betal nemt og sikkert med din foretrukne betalingsløsning.", "Hent din lejebil, og kør!"); app heading "Få rabatter og gem ubrugte kilometer med Oscar-appen".
+- New Danish text under "Lokal biludlejning for alle" (four short paragraphs, starting "Hos Oscar finder du billige lejebiler hos lokale virksomheder." and ending "Lokalt, enkelt og uden skjulte gebyrer.").
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
