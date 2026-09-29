@@ -2610,3 +2610,6 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search__title::before { display: none; }
 .loc-search { padding-top: 0.625rem; }
 @media (min-width: 1024px) { .loc-search { padding-top: 0.75rem; } }
+/* Location icon above the H1: filled, in the same orange as the stars, with a white dot in the middle */
+.loc-hero__proof .loc-hero__place svg { color: var(--oscar-orange); fill: var(--oscar-orange); stroke: var(--oscar-orange); }
+.loc-hero__proof .loc-hero__place svg circle { fill: #FFFFFF; stroke: none; }
