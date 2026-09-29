@@ -2683,3 +2683,17 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .loc-meet__media { order: 0; }
   .loc-meet__thumbs { gap: 0.75rem; }
 }
+/* Hero photo (desktop): always the full height of the hero, 55% wide, cropped from the centre ("cover");
+   it fades into the blue on the left only */
+@media (min-width: 1024px) {
+  .loc-hero__bg {
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+    object-position: center;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%);
+  }
+}
