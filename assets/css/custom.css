@@ -2618,3 +2618,26 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 /* Partner photo badges: the partner's name comes first, in bold */
 .loc-meet__badges .loc-meet__name { font-weight: 700; }
 .loc-meet__badges .loc-meet__role { font-weight: 600; }
+/* Hero photo, narrower (desktop): 55% wide in its own proportions (not stretched to the hero's height), so it is
+   shown smaller and looks sharper. It sits in the top right corner and fades softly into the blue on the left and bottom. */
+@media (min-width: 1024px) {
+  .loc-hero__bg {
+    top: 0;
+    bottom: auto;
+    width: 55%;
+    height: auto;
+    aspect-ratio: 1213 / 530;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 70%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to right, transparent 0%, #000 30%), linear-gradient(to bottom, #000 70%, transparent 100%);
+    mask-composite: intersect;
+  }
+  .loc-hero::before {
+    background: linear-gradient(90deg,
+      rgb(var(--oscar-blue-800)) 0%,
+      rgb(var(--oscar-blue-800)) 45%,
+      rgba(var(--oscar-blue-800), 0.55) 62%,
+      rgba(var(--oscar-blue-800), 0.2) 100%);
+  }
+}
