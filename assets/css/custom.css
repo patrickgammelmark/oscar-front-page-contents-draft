@@ -2606,3 +2606,7 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search__title::before { display: inline-block; margin-right: 0.5rem; vertical-align: 0.1em; }
 /* Phones: a little more room between the hero text and the (taller) search box */
 @media (max-width: 639px) { .loc-hero__below { margin-top: -4.5rem; } }
+/* Location search heading: no dot; less space above it */
+.loc-search__title::before { display: none; }
+.loc-search { padding-top: 0.625rem; }
+@media (min-width: 1024px) { .loc-search { padding-top: 0.75rem; } }
