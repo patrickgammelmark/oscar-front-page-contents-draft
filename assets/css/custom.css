@@ -2613,3 +2613,5 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 /* Location icon above the H1: filled, in the same orange as the stars, with a white dot in the middle */
 .loc-hero__proof .loc-hero__place svg { color: var(--oscar-orange); fill: var(--oscar-orange); stroke: var(--oscar-orange); }
 .loc-hero__proof .loc-hero__place svg circle { fill: #FFFFFF; stroke: none; }
+/* The hole in the location pin shows the hero's dark blue instead of white */
+.loc-hero__proof .loc-hero__place svg circle { fill: rgb(var(--oscar-blue-800)); }
