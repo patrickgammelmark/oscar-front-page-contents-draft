@@ -2617,3 +2617,4 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-hero__proof .loc-hero__place svg circle { fill: rgb(var(--oscar-blue-800)); }
 /* Partner photo badges: the partner's name comes first, in bold */
 .loc-meet__badges .loc-meet__name { font-weight: 700; }
+.loc-meet__badges .loc-meet__role { font-weight: 600; }
