@@ -85,6 +85,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English hero text starts "Plan a weekend away, tackle a move or get things from A to B."
 - English benefits: "Rated 4.5/5 by 10,000+ customers", "Free cancellation up to 7 days before pickup.", "Help whenever you need it, at no extra cost." and "See the full price before you book." English car card texts: "Cars for city trips, weekends and everyday driving.", "… ideal for tools, equipment and smaller loads.", "… for private trips and business travel." (all four card texts now end with a full stop).
 - English review heading: "See what our customers say".
+- English app text: "…renting a car from Oscar is even easier and more affordable."
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
