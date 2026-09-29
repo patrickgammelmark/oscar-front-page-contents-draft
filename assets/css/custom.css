@@ -2200,3 +2200,7 @@ html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
 @media (min-width: 768px) and (max-width: 1023px) { .contact__cards { grid-template-columns: 1fr; } }
 @media (min-width: 1024px) { .contact__cards { grid-template-columns: repeat(3, 1fr); } }
 .contact__cta, .contact__hours dd { white-space: nowrap; }
+/* Phones: a benefit with only a title (no small text below) is centred next to its icon */
+@media (max-width: 767px) {
+  .benefits--stacked li:not(:has(.benefits__text)) { align-items: center; }
+}
