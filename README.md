@@ -93,6 +93,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - FAQ: the short text under the heading is removed (both languages).
 - English help section: "Email us", "We reply within 2–4 business hours." and "Start live chat".
 - English hero pill: "Rent local" (was "Support local").
+- Help section ("Brug for hjælp?" / "Need help?"), both languages: the heading now sits on top, with three cards below it: email, live chat and a new phone card ("Ring til os" / "Call us", +45 42 90 90 48, the number on hejoscar.dk/oscar-kundeservice). Three columns from 1024px, stacked on smaller screens.
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.

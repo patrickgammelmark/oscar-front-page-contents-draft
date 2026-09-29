@@ -2187,3 +2187,16 @@ html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
 .store-badges { gap: 0.5rem; }
 .store-badges__link img { height: 2.25rem; }
 @media (min-width: 1024px) { .store-badges__link img { height: 2.5rem; } }
+
+/* "Brug for hjælp?": the heading sits on top, with three cards below it (email, live chat, phone).
+   Three columns from tablet up, stacked on phones. Phone number from hejoscar.dk/oscar-kundeservice. */
+.contact__panel { gap: 1.5rem; }
+@media (min-width: 640px) { .contact__cards { grid-template-columns: 1fr; } }
+@media (min-width: 768px) { .contact__cards { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) {
+  .contact__panel { grid-template-columns: 1fr; align-items: start; gap: 2rem; }
+}
+/* Three contact columns only from 1024px (on tablets they were too narrow); buttons and opening hours never wrap */
+@media (min-width: 768px) and (max-width: 1023px) { .contact__cards { grid-template-columns: 1fr; } }
+@media (min-width: 1024px) { .contact__cards { grid-template-columns: repeat(3, 1fr); } }
+.contact__cta, .contact__hours dd { white-space: nowrap; }
