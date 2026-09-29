@@ -2117,3 +2117,55 @@ h2.h2-big { font-size: 1.8rem; line-height: 1.15; }
     left: calc(24% - 0.625rem);
   }
 }
+
+/* Language switcher (flag in the menu bar): Dansk / English. The English page is en.html. */
+.lang-menu__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 10rem;
+  padding: 0.5rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.1);
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px -10px rgba(var(--oscar-blue-800), 0.35);
+}
+.lang-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: 0.5rem;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.lang-menu__item:hover { background: var(--oscar-blue-tint); }
+.lang-menu__item[aria-current="page"] { font-weight: 700; }
+.lang-menu__item[aria-current="page"]::after {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  margin-left: auto;
+  background: var(--oscar-orange);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* English page (en.html): "Rent a car near you" is about 15% wider than "Lej en bil nær dig", so it shrinks a little sooner */
+html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
+@media (max-width: 379px) { html[lang="en"] .hero-curve + div h1 { font-size: min(2.2rem, 9.8cqi); } }
+@media (min-width: 768px) { html[lang="en"] .hero-curve + div h1 { font-size: min(4.05rem, 9.8cqi); } }
+@media (min-width: 1024px) { html[lang="en"] .hero-curve + div h1 { font-size: min(5.1rem, 9.8cqi); } }
+/* English car cards: "DKK 249 /day" is wider than "249 kr. /dag", so the button moves below the price (full width) sooner */
+@container (max-width: 17.5rem) {
+  html[lang="en"] .car-card__cta { flex-basis: 100%; }
+}
+/* English page on the narrowest phones (under 360px): the three hero pills are a little smaller, so they stay on one line */
+@media (max-width: 359px) {
+  html[lang="en"] .hero-usps li,
+  html[lang="en"] .hero-usps li:nth-child(n) { padding-right: 6px; font-size: 0.625rem; }
+}
+/* English page on the narrowest phones: the benefit titles may wrap ("4.5/5 from 10,000+ customers" is longer than the Danish) */
+@media (max-width: 359px) {
+  html[lang="en"] .benefits--brush .benefits__title { white-space: normal; }
+}

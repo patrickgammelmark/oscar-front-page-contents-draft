@@ -35,7 +35,8 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 ## What's in the folder
 | Item | What it is |
 |---|---|
-| `index.html` | The page itself (all text and layout) |
+| `index.html` | The page itself, in Danish (all text and layout) |
+| `en.html` | The English version of the page (same layout, English text) |
 | `assets/css/` | The live site's styling |
 | `assets/css/custom.css` | Our own design changes (e.g. the curved bottom of the top section) |
 | `assets/fonts/` | The Inter and Silka fonts from the live site, plus Quicksand (headings) and IBM Plex Sans (body text) |
@@ -78,6 +79,13 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - Step 2 text now ends "... ekstra chauffører, mm."
 - Tighter text under "Lokal biludlejning for alle": new first sentence ("Med Oscar Biludlejning kan du finde gode, billige lejebiler hos lokale virksomheder."), "Det er nemt: Du vælger bil, tid, sted og tilvalg." (was "Idéen er enkel: ... og dine tilvalg."), and "Vi sørger for, at nøglerne ligger klar til dig."
 - The city list heading is now "Find en lejebil i din by" (was "Populære byer i Danmark").
+
+## English version
+The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
+- Everything on the page is translated, including image descriptions and text only screen readers see. Names, cities (except "Copenhagen"), the company name in the footer and prices in DKK are kept. Pictures with Danish text (step screenshots, the app screenshot, the sign in the partner photo) are not translated.
+- The two pages are separate files. A change to the Danish page is **not** copied to the English one automatically: make the same change in `en.html` too (or ask Claude to).
+- The English texts are a good first version, but should be checked by a native speaker before anything goes into production.
+- A few layout tweaks apply only to the English page, because some English texts are longer: the hero headline shrinks a little sooner, the car card buttons move below the price sooner, and on the narrowest phones the hero pills are slightly smaller and the benefit titles may wrap.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
