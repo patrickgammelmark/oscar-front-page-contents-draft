@@ -117,7 +117,7 @@ It starts from a 1:1 copy of hejoscar.dk/afdelinger/aarhus-n (taken 29 September
 - **Location card** beside the cars (below them on smaller screens): light blue panel with orange icon boxes for opening status, address, phone and email, the map with an orange pin, the Google rating and a "Find vej" button.
 - **"Din lokale biludlejning i Aarhus N"** right below the cars: intro text, the partner's quote (Jann Lund) and a large partner photo with the badges "Lokal partner siden 2019" and "Eget værksted".
 - **"Når du lejer hos Oscar, får du altid":** four benefits in the front page's benefits style.
-- **FAQ** in the front page's style, a dark **call to action** ("Klar til at leje bil i Aarhus N?") and, at the bottom, the **SEO text** in its own quiet grey section: grey text, all headings the same size, two columns on desktop.
+- Below the benefits comes the **SEO text** in its own quiet grey section (grey text, all headings the same size, two columns on desktop), then the **FAQ** in the front page's style, and at the end a dark **call to action** ("Klar til at leje bil i Aarhus N?").
 - The detailed opening hours per weekday are not on the live page's first load, so the card only shows "Åben nu · lukker kl. 18.00".
 
 ## "Om Oscar": earlier design proposals (hidden)
