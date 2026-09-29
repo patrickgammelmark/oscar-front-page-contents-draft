@@ -2204,3 +2204,304 @@ html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
 @media (max-width: 767px) {
   .benefits--stacked li:not(:has(.benefits__text)) { align-items: center; }
 }
+
+/* ===================================================================================================
+   LOCATION PAGE (aarhus-n.html / en-aarhus-n.html) – revised design in the front page's style
+   =================================================================================================== */
+/* Hero: branch photo with the same brand-blue overlay and convex bottom as the front page */
+.loc-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 6.5rem 0 4.5rem;
+  border-radius: 0 0 50% 50% / 0 0 2.5rem 2.5rem;
+  background: rgb(var(--oscar-blue-800));
+  color: #FFFFFF;
+  text-align: center;
+}
+.loc-hero__bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.loc-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.95) 0%, rgba(var(--oscar-blue-800), 0.85) 50%, rgba(var(--oscar-blue-800), 0.6) 100%);
+}
+.loc-hero__inner { display: flex; flex-direction: column; align-items: center; }
+.loc-hero__proof { margin-bottom: 0.75rem; }
+.loc-hero__title { font-size: 2.25rem; font-weight: 600; line-height: 1.08; text-wrap: balance; }
+.loc-hero__place {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  margin-top: 0.625rem;
+  font-size: 0.9375rem;
+  opacity: 0.92;
+}
+.loc-hero__place svg { width: 1.125rem; height: 1.125rem; color: var(--oscar-orange-02); flex-shrink: 0; }
+.loc-hero .hero-usps { justify-content: center; margin-top: 1.25rem; }
+.loc-hero__lead { max-width: 40rem; margin-top: 1.25rem; color: #FFFFFF; font-size: 1.0625rem; line-height: 1.55; }
+.loc-hero__lead strong { font-weight: 700; }
+
+/* Search: only dates and a button ("Se ledige biler"), narrower than on the front page */
+.loc-search {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 44rem;
+  margin-top: 1.75rem;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow:
+    0 0 0 1px rgba(var(--oscar-blue-800), 0.08),
+    0 12px 24px -6px rgba(var(--oscar-blue-800), 0.18),
+    0 32px 64px -16px rgba(var(--oscar-blue-800), 0.22);
+  text-align: left;
+}
+.loc-search__field {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  height: 3.5rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.14);
+  border-radius: 0.5rem;
+  background: #F4F5F8;
+  color: rgba(var(--oscar-blue-800), 0.6);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.loc-search__field:hover { border-color: rgba(var(--oscar-blue-800), 0.32); }
+.loc-search__field svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; color: rgb(var(--oscar-blue-800)); }
+.loc-search__btn,
+.loc-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 3.5rem;
+  padding: 0 1.5rem;
+  border-radius: 0.5rem;
+  background: var(--oscar-orange);
+  color: #FFFFFF;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.loc-search__btn:hover, .loc-cta__btn:hover { background: #E85A05; }
+.loc-search__btn svg, .loc-cta__btn svg { width: 1.25rem; height: 1.25rem; }
+.loc-search__btn { grid-column: 1 / -1; }
+@media (min-width: 640px) {
+  .loc-search { grid-template-columns: 1fr 1fr auto; }
+  .loc-search__btn { grid-column: auto; }
+}
+@media (min-width: 768px) {
+  .loc-hero { padding: 8rem 0 5.5rem; }
+  .loc-hero__title { font-size: 3.5rem; }
+  .loc-hero__place { font-size: 1.0625rem; }
+  .loc-hero__lead { font-size: 1.125rem; }
+}
+@media (min-width: 1024px) {
+  .loc-hero { padding: 9.5rem 0 6.5rem; border-radius: 0 0 50% 50% / 0 0 5rem 5rem; text-align: left; }
+  .loc-hero__inner { align-items: flex-start; }
+  .loc-hero__place, .loc-hero .hero-usps { justify-content: flex-start; }
+  .loc-hero__title { font-size: 4.5rem; }
+  .loc-search { margin-top: 2rem; padding: 1.25rem; }
+}
+
+/* Location card beside the cars: light blue panel with orange icon boxes (like the help section) */
+@media (min-width: 1280px) { .loc-cars { align-items: flex-start; } }
+/* The car grid sits in a container inside a container: drop the inner side padding so it lines up with the rest */
+.loc-cars .container { padding-left: 0; padding-right: 0; }
+/* FAQ uses the site's "md:container": give it the same 30px desktop side padding as the other sections */
+@media (min-width: 1024px) { .loc-faq { padding-left: 30px; padding-right: 30px; } }
+.loc-card {
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+  color: rgb(var(--oscar-blue-800));
+}
+@media (min-width: 1280px) {
+  .loc-card { position: sticky; top: 1rem; width: 350px; flex-shrink: 0; }
+}
+.loc-eyebrow,
+.loc-card__eyebrow {
+  color: var(--oscar-orange);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.loc-card__title { margin-top: 0.25rem; font-size: 1.5rem; font-weight: 600; line-height: 1.15; }
+.loc-card__partner { margin-top: 0.25rem; color: rgba(var(--oscar-blue-800), 0.7); font-size: 0.9375rem; }
+.loc-card__facts { display: grid; gap: 0.625rem; margin-top: 1.25rem; font-size: 0.9375rem; }
+.loc-card__facts li { display: flex; align-items: center; gap: 0.75rem; }
+.loc-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  background: var(--oscar-orange-02);
+  box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3);
+  color: #FFFFFF;
+}
+.loc-card__icon svg { width: 1rem; height: 1rem; }
+.loc-card__open { color: #1F7A45; font-weight: 700; }
+.loc-card__map {
+  position: relative;
+  display: block;
+  height: 12rem;
+  margin-top: 1.25rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgba(var(--oscar-blue-800), 0.06), 0 8px 20px -10px rgba(var(--oscar-blue-800), 0.3);
+}
+.loc-card__map img { width: 100%; height: 100%; object-fit: cover; }
+.loc-card__pin {
+  position: absolute;
+  top: 43%; /* on top of the map image's own marker */
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 3px solid #FFFFFF;
+  border-radius: 50%;
+  background: var(--oscar-orange);
+  box-shadow: 0 4px 12px -2px rgba(var(--oscar-blue-800), 0.4);
+  color: #FFFFFF;
+  translate: -50% -50%;
+}
+.loc-card__pin svg { width: 1.25rem; height: 1.25rem; }
+.loc-card__rating { margin-top: 1rem; }
+.loc-card__rating .hero-rating__count { color: rgb(var(--oscar-blue-800)); font-weight: 600; }
+.loc-card__cta { margin-top: 1.25rem; background: #FFFFFF; }
+
+/* "Din lokale biludlejning i Aarhus N": text and partner quote on the left, partner photo on the right */
+.loc-meet__grid { display: grid; gap: 2.5rem; align-items: center; }
+.loc-meet__heading { margin-top: 0.5rem; color: rgb(var(--oscar-blue-800)); }
+.loc-meet__intro { max-width: 34rem; margin-top: 1rem; color: rgba(var(--oscar-blue-800), 0.75); font-size: 1.0625rem; line-height: 1.6; }
+.loc-meet__quote {
+  position: relative;
+  margin-top: 2.25rem;
+  padding: 1.75rem 1.5rem 1.25rem;
+  border-radius: 1rem;
+  background: var(--oscar-blue-tint);
+}
+.loc-meet__quote::before {
+  content: "\201C";
+  position: absolute;
+  top: -1.75rem;
+  left: 1.25rem;
+  color: var(--oscar-orange);
+  font-family: var(--heading-font);
+  font-size: 5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.loc-meet__quote blockquote {
+  color: rgb(var(--oscar-blue-800));
+  font-family: var(--heading-font);
+  font-size: 1.1875rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.loc-meet__quote figcaption { margin-top: 1rem; color: rgba(var(--oscar-blue-800), 0.7); font-size: 0.9375rem; }
+.loc-meet__quote figcaption strong { display: block; color: rgb(var(--oscar-blue-800)); }
+.loc-meet__photo { position: relative; order: -1; margin: 0 0 1.5rem; }
+.loc-meet__photo img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 24px 48px -20px rgba(var(--oscar-blue-800), 0.35);
+}
+.loc-meet__badges {
+  position: absolute;
+  left: 1rem;
+  bottom: -1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  max-width: calc(100% - 2rem);
+  padding: 0.375rem;
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  box-shadow: 0 10px 28px -10px rgba(var(--oscar-blue-800), 0.35);
+}
+.loc-meet__badges li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.loc-meet__badges svg { width: 1.125rem; height: 1.125rem; color: var(--oscar-orange); }
+@media (min-width: 1024px) {
+  .loc-meet__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 4rem; }
+  .loc-meet__photo { order: 0; margin-bottom: 0; }
+}
+
+/* "Når du lejer hos Oscar, får du altid": the front page benefits row */
+.loc-always__heading { margin-bottom: 2rem; color: rgb(var(--oscar-blue-800)); }
+
+/* Call to action before the SEO text: the dark app-section colours */
+.loc-cta__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, #0F1525 0%, #1A2131 100%);
+  color: #FFFFFF;
+}
+.loc-cta__panel h2 { color: #FFFFFF; }
+.loc-cta__panel p { margin-top: 0.5rem; font-size: 1.0625rem; opacity: 0.85; }
+@media (min-width: 768px) {
+  .loc-cta__panel { flex-direction: row; align-items: center; justify-content: space-between; padding: 3rem; }
+}
+
+/* SEO text: its own quiet grey section (Background Grey #F7F7F9 from the brand guide); greyish text;
+   every heading the same modest size */
+.loc-seo { margin-top: 2.5rem; padding: 3rem 0; background: #F7F7F9; }
+.loc-seo__cols { column-gap: 3.5rem; }
+.loc-seo__block { break-inside: avoid; margin-bottom: 2.25rem; }
+.loc-seo__block:last-child { margin-bottom: 0; }
+.loc-seo h2,
+.loc-seo h3 {
+  margin-bottom: 0.5rem;
+  color: rgba(var(--oscar-blue-800), 0.72);
+  font-family: var(--heading-font);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.loc-seo h3 { margin-top: 1.25rem; }
+.loc-seo p { color: #6B7080; font-size: 0.9375rem; line-height: 1.65; }
+.loc-seo p + p { margin-top: 0.75rem; }
+@media (min-width: 1024px) {
+  .loc-seo { padding: 4rem 0; }
+  .loc-seo__cols { columns: 2; }
+}
+/* No gap between the SEO section and the footer */
+main:has(> .loc-seo:last-child) { padding-bottom: 0; }
+/* Map: keep the image's own proportions (8:3, at least 12rem tall), so its marker is always in the same place
+   and the orange pin always covers it */
+.loc-card__map { width: 100%; height: auto; aspect-ratio: 8 / 3; min-height: 12rem; }
+.loc-card__pin { top: 45%; }
+/* The map's own marker grows with the map, so the orange pin does too (cqi = 1% of the map's width) */
+.loc-card__map { container-type: inline-size; }
+.loc-card__pin { top: 43%; width: clamp(2.75rem, 6.2cqi, 3.75rem); height: clamp(2.75rem, 6.2cqi, 3.75rem); }
+.loc-card__pin svg { width: 45%; height: 45%; }

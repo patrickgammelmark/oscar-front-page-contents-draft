@@ -37,6 +37,9 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 |---|---|
 | `index.html` | The page itself, in Danish (all text and layout) |
 | `en.html` | The English version of the page (same layout, English text) |
+| `aarhus-n.html` | Example location page (Aarhus N – Randersvej), redesigned in the front page's style, in Danish |
+| `en-aarhus-n.html` | The English version of the location page |
+| `assets/img/loc/` | Images for the location page (branch photo, partner photo, map, car photos) |
 | `assets/css/` | The live site's styling |
 | `assets/css/custom.css` | Our own design changes (e.g. the curved bottom of the top section) |
 | `assets/fonts/` | The Inter and Silka fonts from the live site, plus Quicksand (headings) and IBM Plex Sans (body text) |
@@ -103,6 +106,19 @@ The flag in the menu bar opens a language menu (Dansk / English). English opens 
 - The two pages are separate files. A change to the Danish page is **not** copied to the English one automatically: make the same change in `en.html` too (or ask Claude to).
 - The English texts are a good first version, but should be checked by a native speaker before anything goes into production.
 - A few layout tweaks apply only to the English page, because some English texts are longer: the hero headline shrinks a little sooner, the car card buttons move below the price sooner, and on the narrowest phones the hero pills are slightly smaller and the benefit titles may wrap.
+
+## Location page (example: Aarhus N – Randersvej)
+Open it from the menu: **Afdelinger → Lokationsside** (English: **Locations → Location page**), or directly:
+**https://patrickgammelmark.github.io/oscar-front-page-contents-draft/aarhus-n.html** (English: `en-aarhus-n.html`). The language menu switches between the two location pages.
+It starts from a 1:1 copy of hejoscar.dk/afdelinger/aarhus-n (taken 29 September 2026) and is redesigned to match the new front page:
+- **Hero:** the branch photo with the front page's blue overlay and curved bottom; the location's Google rating (4,7), the headline "Biludlejning i Aarhus N", the address, the three USP pills and a short local text with the lowest price (fra 329 kr./dag).
+- **Search:** only "Fra" and "Til" dates and a button "Se ledige biler" (the location is already chosen), narrower than on the front page.
+- **Car cards:** unchanged. On phones the cars now come before the location card.
+- **Location card** beside the cars (below them on smaller screens): light blue panel with orange icon boxes for opening status, address, phone and email, the map with an orange pin, the Google rating and a "Find vej" button.
+- **"Din lokale biludlejning i Aarhus N"** right below the cars: intro text, the partner's quote (Jann Lund) and a large partner photo with the badges "Lokal partner siden 2019" and "Eget værksted".
+- **"Når du lejer hos Oscar, får du altid":** four benefits in the front page's benefits style.
+- **FAQ** in the front page's style, a dark **call to action** ("Klar til at leje bil i Aarhus N?") and, at the bottom, the **SEO text** in its own quiet grey section: grey text, all headings the same size, two columns on desktop.
+- The detailed opening hours per weekday are not on the live page's first load, so the card only shows "Åben nu · lukker kl. 18.00".
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
