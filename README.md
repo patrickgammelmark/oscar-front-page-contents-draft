@@ -83,6 +83,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English car section heading: "You’ve got things to do. We’ve got the car."
 - The "Kendt fra" logo row under the hero is replaced by App Store and Google Play download badges (Danish badges "Hent i …" on the Danish page, English "Download on the App Store" / "Get it on Google Play" on the English page). They are 36px tall on phones and 40px on desktop (the badges' standard size).
 - English hero text starts "Plan a weekend away, tackle a move or get things from A to B."
+- English benefits: "Rated 4.5/5 by 10,000+ customers", "Free cancellation up to 7 days before pickup.", "Help whenever you need it, at no extra cost." and "See the full price before you book." English car card texts: "Cars for city trips, weekends and everyday driving.", "… ideal for tools, equipment and smaller loads.", "… for private trips and business travel." (all four card texts now end with a full stop).
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.

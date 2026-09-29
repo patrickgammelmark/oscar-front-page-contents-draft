@@ -2166,8 +2166,9 @@ html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
   html[lang="en"] .hero-usps li:nth-child(n) { padding-right: 6px; font-size: 0.625rem; }
 }
 /* English page on the narrowest phones: the benefit titles may wrap ("4.5/5 from 10,000+ customers" is longer than the Danish) */
-@media (max-width: 359px) {
+@media (max-width: 379px) {
   html[lang="en"] .benefits--brush .benefits__title { white-space: normal; }
+  /* (up to 379px: "Rated 4.5/5 by 10,000+ customers" doesn't fit on one line on 360px phones) */
 }
 
 /* Under the hero: App Store and Google Play badges (replace the "Kendt fra" logo row) */
