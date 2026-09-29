@@ -91,6 +91,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English steps: "Find a car", "Choose extras", "Pay securely" and "Start driving", with shorter texts.
 - English app section: heading "Save more with the Oscar app" and a shorter text about app-only discounts and saved kilometres.
 - FAQ: the short text under the heading is removed (both languages).
+- English help section: "Email us", "We reply within 2–4 business hours." and "Start live chat".
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
