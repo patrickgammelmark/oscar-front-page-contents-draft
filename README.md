@@ -82,6 +82,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - The link "Brug for vejhjælp?" ("Need roadside assistance?" on the English page) under "Vejhjælp 24/7" is removed.
 - English car section heading: "You’ve got things to do. We’ve got the car."
 - The "Kendt fra" logo row under the hero is replaced by App Store and Google Play download badges (Danish badges "Hent i …" on the Danish page, English "Download on the App Store" / "Get it on Google Play" on the English page). They are 36px tall on phones and 40px on desktop (the badges' standard size).
+- English hero text starts "Plan a weekend away, tackle a move or get things from A to B."
 
 ## English version
 The flag in the menu bar opens a language menu (Dansk / English). English opens `en.html`: **https://patrickgammelmark.github.io/oscar-front-page-contents-draft/en.html**.
