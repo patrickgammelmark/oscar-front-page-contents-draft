@@ -2182,3 +2182,7 @@ html[lang="en"] .hero-curve + div h1 { font-size: min(2.5rem, 9.8cqi); }
 .store-badges__link:hover { transform: translateY(-2px); }
 .store-badges__link img { display: block; width: auto; height: 2.75rem; }
 @media (min-width: 1024px) { .store-badges__link img { height: 3rem; } }
+/* Store badges under the search box: smaller (36px phones, 40px desktop – the badges' standard size) */
+.store-badges { gap: 0.5rem; }
+.store-badges__link img { height: 2.25rem; }
+@media (min-width: 1024px) { .store-badges__link img { height: 2.5rem; } }
