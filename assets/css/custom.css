@@ -2615,3 +2615,5 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-hero__proof .loc-hero__place svg circle { fill: #FFFFFF; stroke: none; }
 /* The hole in the location pin shows the hero's dark blue instead of white */
 .loc-hero__proof .loc-hero__place svg circle { fill: rgb(var(--oscar-blue-800)); }
+/* Partner photo badges: the partner's name comes first, in bold */
+.loc-meet__badges .loc-meet__name { font-weight: 700; }
