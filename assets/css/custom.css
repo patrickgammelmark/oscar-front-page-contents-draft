@@ -2697,3 +2697,14 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
     mask-image: linear-gradient(to right, transparent 0%, #000 30%);
   }
 }
+/* Location H1 may wrap again (it got too small on phones): fixed sizes per screen, lines kept even */
+.loc-hero__title { white-space: normal; text-wrap: balance; font-size: 2.125rem; line-height: 1.1; }
+@media (min-width: 768px) { .loc-hero__title { font-size: 3rem; } }
+@media (min-width: 1024px) { .loc-hero__title { font-size: min(4rem, 5.4cqi); white-space: nowrap; } }
+/* At most one line break, at the dash ("Lej en bil i Aarhus N" / "- Randersvej"); each line always fits */
+@media (max-width: 1023px) {
+  .loc-hero__title { font-size: min(2.125rem, 8.6cqi); }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .loc-hero__title { font-size: min(3rem, 8.6cqi); }
+}
