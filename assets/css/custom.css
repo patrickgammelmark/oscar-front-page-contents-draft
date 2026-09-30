@@ -2869,3 +2869,9 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-hero { padding-top: calc(6.5rem - 10px); }
 @media (min-width: 768px) { .loc-hero { padding-top: calc(8rem - 10px); } }
 @media (min-width: 1024px) { .loc-hero { padding-top: calc(9.5rem - 10px); } }
+/* Location hero, tablet and desktop: the USP pills under the headline, like on the front page
+   (on phones they sit below the search box instead) */
+.loc-hero__usps .hero-usps { margin-top: 1.25rem; }
+@media (min-width: 1024px) { .loc-hero__usps .hero-usps { justify-content: flex-start; } }
+@media (max-width: 767px) { .loc-hero__usps { display: none; } }
+.loc-hero__usps + .loc-hero__lead { margin-top: 1.25rem; }
