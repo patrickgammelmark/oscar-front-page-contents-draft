@@ -2865,3 +2865,7 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 }
 /* Front page: the pills lost the form's own 16px spacing (an earlier rule set their bottom margin to 0) */
 .front-types { margin-bottom: 1rem !important; }
+/* Location hero: content 10px higher (10px less space at the top) */
+.loc-hero { padding-top: calc(6.5rem - 10px); }
+@media (min-width: 768px) { .loc-hero { padding-top: calc(8rem - 10px); } }
+@media (min-width: 1024px) { .loc-hero { padding-top: calc(9.5rem - 10px); } }
