@@ -2918,3 +2918,30 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
       linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.95) 0%, rgba(var(--oscar-blue-800), 0.85) 50%, rgba(var(--oscar-blue-800), 0.6) 100%);
   }
 }
+
+/* Location search, like the front page: "Fra" and "Til" are joined into one box (rounded outer corners,
+   a thin line between them, one shared edge), and the box has the front page form's padding
+   (16px on phones, 24px/16px on tablets, 28px/32px on desktop) */
+.loc-search { padding: 1rem; }
+@media (min-width: 768px) { .loc-search { padding: 1.5rem 1rem; } }
+@media (min-width: 1024px) { .loc-search { padding: 1.75rem 2rem; } }
+.loc-search__dates {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.14);
+  border-radius: 0.5rem;
+  background: #F4F5F8;
+  transition: border-color 0.15s ease;
+}
+.loc-search__dates:hover { border-color: rgba(var(--oscar-blue-800), 0.32); }
+.loc-search__dates .loc-search__field { flex: 1 1 0; min-width: 0; height: calc(3.5rem - 2px); border: 0; border-radius: 0; background: transparent; }
+.loc-search__sep { width: 1px; flex-shrink: 0; background: #CDD1DA; }
+@media (min-width: 640px) {
+  .loc-search { grid-template-columns: minmax(0, 1fr) auto; }
+  .loc-search__dates { grid-column: 1; }
+}
+@media (min-width: 1024px) {
+  .loc-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) auto; }
+  .loc-search__dates { grid-column: auto; }
+}
