@@ -88,6 +88,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English hero text starts "Plan a weekend away, tackle a move or get things from A to B."
 - English benefits: "Rated 4.5/5 by 10,000+ customers", "When you cancel at least 7 days before pickup." (and "Try it and see why." removed), "Help whenever you need it, at no extra cost." and "See the full price before you book." English car card texts: "Cars for city trips, weekends and everyday driving.", "… ideal for tools, equipment and smaller loads.", "Minibuses for private trips and business travel." (all four card texts now end with a full stop).
 - English benefit title "24/7 road assistance" (was "24/7 roadside assistance").
+- "Lej en bil på 3 minutter" / "Rent a car in 3 minutes" (both languages): the pictures of step 1 and step 4 were the wrong way round. Step 1 now shows the list of available cars, step 4 the single confirmed booking. The picture descriptions (for screen readers) are in the page's own language.
 - English review heading: "See what our customers say".
 - English app text: "…renting a car from Oscar is even easier and more affordable."
 - English search placeholder: "Where do you need a rental car?"
