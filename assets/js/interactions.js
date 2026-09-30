@@ -161,7 +161,8 @@ document.querySelectorAll('[data-rv-track]').forEach(function (track) {
   });
 })();
 
-// Location page gallery: tap a thumbnail to show it as the big photo (quick, soft fade)
+// Location page gallery: tap a thumbnail to show it as the big photo. The new photo fades in on top of the old one
+// (a soft crossfade, the old photo never disappears first), then replaces it.
 document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
   var main = gallery.querySelector('[data-gallery-main]');
   var thumbs = gallery.querySelectorAll('[data-gallery-src]');
@@ -171,12 +172,23 @@ document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     thumb.addEventListener('click', function () {
       if (thumb.getAttribute('aria-current') === 'true') return;
       thumbs.forEach(function (t) { t.setAttribute('aria-current', t === thumb ? 'true' : 'false'); });
-      main.classList.add('is-fading');
-      setTimeout(function () {
-        main.src = thumb.getAttribute('data-gallery-src');
-        main.alt = thumb.getAttribute('data-gallery-alt');
-        main.classList.remove('is-fading');
-      }, 180);
+      var src = thumb.getAttribute('data-gallery-src');
+      var alt = thumb.getAttribute('data-gallery-alt');
+      var layer = main.cloneNode(false);
+      layer.removeAttribute('data-gallery-main');
+      layer.classList.add('gallery-layer');
+      layer.alt = '';
+      layer.src = src;
+      main.parentNode.insertBefore(layer, main.nextSibling);
+      function show() {
+        requestAnimationFrame(function () { layer.classList.add('is-visible'); });
+        setTimeout(function () {
+          main.src = src;
+          main.alt = alt;
+          layer.remove();
+        }, 360);
+      }
+      if (layer.complete) show(); else layer.addEventListener('load', show, { once: true });
     });
   });
 });
