@@ -116,7 +116,7 @@ It starts from a 1:1 copy of hejoscar.dk/afdelinger/aarhus-n (taken 29 September
 - **Car cards:** unchanged; the heading above them is now "Se lejebiler i Aarhus N – Randersvej" (English: "All our rental cars in Aarhus N – Randersvej"). On phones the cars now come before the location card.
 - **Location card** beside the cars (below them on smaller screens): light blue panel with orange icon boxes for opening status, address, phone and email, the map with an orange pin, the Google rating and a "Find vej" button.
 - **"Din lokale biludlejning i Aarhus N"** right below the cars: intro text, the partner's quote (Jann Lund) and a large partner photo with the badges "Jann Lund, ejer" (the partner's name first, in bold; English "Jann Lund, owner"), "Lokal partner siden 2019" and "Eget værksted". Under the big photo is a row of three thumbnails (example pictures: Jann Lund, the branch and a generic Oscar photo); tap or click one to show it big, with a quick soft fade.
-- **"Det får du, når du lejer hos Oscar":** four benefits in the front page's benefits style.
+- **"Det får du, når du lejer hos Oscar"** (centred heading): four benefits in the front page's benefits style.
 - Below the benefits comes the **SEO text** in its own quiet grey section (grey text, all headings the same size, two columns on desktop), then the **FAQ** in the front page's style, and at the end a dark **call to action** ("Klar til at leje bil i Aarhus N?").
 - The detailed opening hours per weekday are not on the live page's first load, so the card only shows "Åben nu · lukker kl. 18.00".
 

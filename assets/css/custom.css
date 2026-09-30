@@ -2708,3 +2708,5 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (min-width: 768px) and (max-width: 1023px) {
   .loc-hero__title { font-size: min(3rem, 8.6cqi); }
 }
+/* "Det får du, når du lejer hos Oscar": centred heading */
+.loc-always__heading { text-align: center; text-wrap: balance; }
