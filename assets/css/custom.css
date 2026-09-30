@@ -2841,3 +2841,25 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 }
 /* Same gap between the car type pills and the location field as between the location field and the dates */
 .loc-search__types { margin-bottom: 0; }
+
+/* Location page, phones (below 768px), like the front page: the blue continues down behind the search box,
+   the USP pills and the rating sit below the box (still on blue), and the curve moves to the bottom of that area.
+   The rating is no longer shown above the headline on phones. */
+@media (max-width: 767px) {
+  .loc-hero { clip-path: none; padding-bottom: 1.5rem; }
+  .loc-hero::before { background: linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.9) 0%, rgb(var(--oscar-blue-800)) 100%); }
+  .loc-hero__proof { display: none; }
+  .loc-hero__after {
+    margin-top: -1px;
+    padding-bottom: 3.5rem;
+    background: rgb(var(--oscar-blue-800));
+    clip-path: ellipse(150% 420px at 50% calc(100% - 420px));
+  }
+  .loc-hero__below { margin-top: 0; }
+  .loc-hero__after .hero-usps-below .hero-usps { margin-top: 1.5rem; }
+  .loc-hero__after .hero-usps-below .hero-usps li,
+  .loc-hero__after .hero-usps-below .hero-usps li:nth-child(n) { background: rgba(255, 255, 255, 0.8); color: rgb(var(--oscar-blue-800)); }
+}
+@media (min-width: 768px) {
+  .loc-hero__after .hero-usps-below, .loc-hero__after .hero-rating-below { display: none; }
+}
