@@ -2863,3 +2863,5 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (min-width: 768px) {
   .loc-hero__after .hero-usps-below, .loc-hero__after .hero-rating-below { display: none; }
 }
+/* Front page: the pills lost the form's own 16px spacing (an earlier rule set their bottom margin to 0) */
+.front-types { margin-bottom: 1rem !important; }
