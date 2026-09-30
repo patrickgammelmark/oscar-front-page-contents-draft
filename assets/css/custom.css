@@ -2875,3 +2875,14 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (min-width: 1024px) { .loc-hero__usps .hero-usps { justify-content: flex-start; } }
 @media (max-width: 767px) { .loc-hero__usps { display: none; } }
 .loc-hero__usps + .loc-hero__lead { margin-top: 1.25rem; }
+/* Location card, 768–1279px (full width under the cars): text on the left, map on the right in the full height
+   of the card. The map image keeps its full height (only the sides are cropped), so the orange pin stays on the spot. */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .loc-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 2rem; align-items: start; padding: 2rem; }
+  .loc-card > * { grid-column: 1; }
+  .loc-card > .loc-card__map { grid-column: 2; grid-row: 1 / span 7; align-self: stretch; margin-top: 0; aspect-ratio: auto; min-height: 14rem; }
+  .loc-card > .loc-card__cta { justify-self: start; }
+}
+@media (min-width: 768px) and (max-width: 1279px) {
+  .loc-card > .loc-card__map .loc-card__pin { top: 40%; width: 3.25rem; height: 3.25rem; }
+}
