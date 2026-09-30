@@ -180,3 +180,13 @@ document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
     });
   });
 });
+
+// Location search: car type pills, one selected at a time
+document.querySelectorAll('[data-pill-group]').forEach(function (group) {
+  var pills = group.querySelectorAll('button');
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      pills.forEach(function (p) { p.setAttribute('aria-pressed', p === pill ? 'true' : 'false'); });
+    });
+  });
+});
