@@ -2886,3 +2886,7 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (min-width: 768px) and (max-width: 1279px) {
   .loc-card > .loc-card__map .loc-card__pin { top: 40%; width: 3.25rem; height: 3.25rem; }
 }
+/* New hero photo (the branch seen from above, with the vans in front): cropped around the building and the vans */
+.loc-hero__bg { object-position: 72% 62%; }
+/* Location card: the rating sits right under "Drives af …" */
+.loc-card__rating { margin-top: 0.75rem; }
