@@ -2775,3 +2775,11 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (max-width: 359px) {
   .loc-search__type { height: auto; min-height: 2.5rem; white-space: normal; line-height: 1.1; text-align: center; }
 }
+/* Location search, round 4: car type pills with the same 4px corners as the page's other car type pills;
+   no question above; the pick-up location sits in small type inside the button, under "Se ledige biler" */
+.loc-search__type { border-radius: 4px; }
+.loc-search__btn { flex-direction: column; gap: 0.125rem; height: auto; min-height: 3.5rem; padding-top: 0.5rem; padding-bottom: 0.5rem; line-height: 1.2; }
+.loc-search__btn-main { display: inline-flex; align-items: center; gap: 0.5rem; }
+.loc-search__btn-sub { font-size: 0.75rem; font-weight: 500; opacity: 0.9; }
+.loc-search { padding-top: 1rem; }
+@media (min-width: 1024px) { .loc-search { padding-top: 1.25rem; } }
