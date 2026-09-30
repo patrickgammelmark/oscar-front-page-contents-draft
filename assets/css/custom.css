@@ -2967,3 +2967,8 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-card__hours-list dt { color: rgba(var(--oscar-blue-800), 0.7); }
 .loc-card__hours-list dd { color: rgb(var(--oscar-blue-800)); font-weight: 600; font-variant-numeric: tabular-nums; }
 .loc-card__hours-note { margin-top: 0.625rem; color: rgba(var(--oscar-blue-800), 0.65); font-size: 0.8125rem; }
+/* "Din afdeling" card: plain icons in brand blue (brand-blue-600), no orange box – orange boxes are kept for
+   USP icons, buttons and other highlights */
+.loc-card__icon { background: none; box-shadow: none; color: var(--oscar-blue-600); width: 1.5rem; height: 2rem; }
+.loc-card__icon svg { width: 1.25rem; height: 1.25rem; }
+.loc-card__facts li { gap: 0.625rem; }
