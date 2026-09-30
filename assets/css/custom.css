@@ -2832,3 +2832,12 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .loc-search { max-width: 60rem; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) auto; }
   .loc-search__where { grid-column: auto; }
 }
+/* Phones: car type pills keep their icons and natural width; if they don't fit, the row scrolls sideways (no wrapping) */
+@media (max-width: 639px) {
+  .loc-search__types { gap: 0.5rem; overflow-x: auto; margin-left: -1rem; margin-right: -1rem; padding: 0 1rem; scroll-padding: 0 1rem; }
+  .loc-search__type,
+  .loc-search__type:nth-child(n) { flex: 0 0 auto; height: 2.5rem; min-height: 0; padding: 0 0.75rem; font-size: 0.875rem; white-space: nowrap; line-height: 1; }
+  .loc-search__type-icon { display: block; width: 1.125rem; height: 1.125rem; }
+}
+/* Same gap between the car type pills and the location field as between the location field and the dates */
+.loc-search__types { margin-bottom: 0; }
