@@ -2890,3 +2890,31 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-hero__bg { object-position: 72% 62%; }
 /* Location card: the rating sits right under "Drives af …" */
 .loc-card__rating { margin-top: 0.75rem; }
+/* Location hero overlay, like the front page (desktop): a longer, more gradual fade from the solid blue on the left
+   into the photo, plus a light blue shade along the top behind the menu. The photo is a bit bigger (65% wide). */
+@media (min-width: 1024px) {
+  .loc-hero__bg {
+    width: 65%;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 20%, rgba(0,0,0,0.75) 38%, #000 55%);
+    mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 20%, rgba(0,0,0,0.75) 38%, #000 55%);
+  }
+  .loc-hero::before {
+    background:
+      linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.72) 0%, rgba(var(--oscar-blue-800), 0) 25%),
+      linear-gradient(90deg,
+        rgb(var(--oscar-blue-800)) 0%,
+        rgb(var(--oscar-blue-800)) 35%,
+        rgba(var(--oscar-blue-800), 0.8) 48%,
+        rgba(var(--oscar-blue-800), 0.5) 60%,
+        rgba(var(--oscar-blue-800), 0.22) 75%,
+        rgba(var(--oscar-blue-800), 0) 90%);
+  }
+}
+/* Tablet (768–1023px): the same shade along the top */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .loc-hero::before {
+    background:
+      linear-gradient(180deg, rgba(var(--oscar-blue-800), 0.72) 0%, rgba(var(--oscar-blue-800), 0) 25%),
+      linear-gradient(90deg, rgba(var(--oscar-blue-800), 0.95) 0%, rgba(var(--oscar-blue-800), 0.85) 50%, rgba(var(--oscar-blue-800), 0.6) 100%);
+  }
+}
