@@ -3017,3 +3017,27 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search__types.fade-right { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); }
 .loc-search__types.fade-left { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); }
 .loc-search__types.fade-left.fade-right { -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }
+
+/* "Klar til at leje bil i Aarhus N?": the button is replaced by a mini version of the search box
+   (car type pills, the joined Fra/Til box and "Se ledige biler"). Text on the left, box on the right on desktop. */
+.loc-cta__panel { gap: 1.75rem; }
+.loc-search--mini { max-width: none; margin: 0; padding: 1rem; box-shadow: none; }
+.loc-search--mini .loc-search__types { margin-bottom: 0; }
+@media (min-width: 640px) {
+  .loc-search--mini { grid-template-columns: minmax(0, 1fr) auto; }
+  .loc-search--mini .loc-search__types { grid-column: 1 / -1; }
+}
+@media (min-width: 768px) {
+  .loc-cta__panel { flex-direction: column; align-items: stretch; }
+}
+@media (min-width: 1024px) {
+  .loc-cta__panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); align-items: center; gap: 3rem; }
+  .loc-search--mini { padding: 1.25rem; }
+}
+/* "Derfor elsker vores kunder denne partner", revised: no boxes (no border, no background) – each benefit
+   has an orange check icon, like the check marks in the USP pills */
+.loc-perks__grid { gap: 0.75rem 1.5rem; }
+.loc-perks__grid li { padding: 0; border: 0; border-radius: 0; background: none; font-size: 0.9375rem; }
+.loc-perks__icon { width: 1.5rem; height: 1.5rem; background: var(--oscar-orange-02); color: #FFFFFF; box-shadow: 0 2px 6px -2px rgba(var(--oscar-blue-800), 0.35); }
+.loc-perks__icon svg { width: 0.875rem; height: 0.875rem; stroke-width: 3; }
+@media (max-width: 479px) { .loc-perks__grid { gap: 0.625rem; } }
