@@ -3064,3 +3064,8 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   pointer-events: none;
 }
 .loc-meet__photo .gallery-layer.is-visible { opacity: 1; }
+/* Closing call to action: unselected car type pills are solid and greyed out (gray-100 background, gray-600 text,
+   from the brand guide); the selected pill stays white */
+.loc-search--mini .loc-search__type { border-color: #DFE1E8; background: #DFE1E8; color: #646B80; }
+.loc-search--mini .loc-search__type:hover { border-color: #FFFFFF; background: #ECEEF4; color: rgb(var(--oscar-blue-800)); }
+.loc-search--mini .loc-search__type[aria-pressed="true"] { border-color: #FFFFFF; background: #FFFFFF; color: rgb(var(--oscar-blue-800)); }
