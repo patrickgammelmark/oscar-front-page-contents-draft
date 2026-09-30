@@ -2945,3 +2945,11 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .loc-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) auto; }
   .loc-search__dates { grid-column: auto; }
 }
+
+/* Location hero: the blue overlay and background use brand-blue-700 (#122C81) instead of brand-blue-800.
+   Only inside the hero, so the rest of the page keeps brand-blue-800. */
+:root { --oscar-blue-700: 18, 44, 129; }
+.loc-hero { --oscar-blue-800: var(--oscar-blue-700); }
+@media (max-width: 767px) {
+  .loc-hero__after { background: rgb(var(--oscar-blue-700)); }
+}
