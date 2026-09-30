@@ -199,3 +199,14 @@ document.querySelectorAll('.loc-search__clear').forEach(function (btn) {
     input.focus();
   });
 });
+
+// Location card: show/hide the full list of opening hours
+document.querySelectorAll('.loc-card__hours-toggle').forEach(function (btn) {
+  var panel = document.getElementById(btn.getAttribute('aria-controls'));
+  if (!panel) return;
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', open);
+    panel.hidden = !open;
+  });
+});

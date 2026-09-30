@@ -122,7 +122,7 @@ It starts from a 1:1 copy of hejoscar.dk/afdelinger/aarhus-n (taken 29 September
 - **"Din lokale biludlejning i Aarhus N"** right below the cars: intro text, the partner's quote (Jann Lund) and a large partner photo with the badges "Jann Lund, ejer" (the partner's name first, in bold; English "Jann Lund, owner"), "Lokal partner siden 2019" and "Eget værksted". Under the big photo is a row of three thumbnails (example pictures: Jann Lund, the branch and a generic Oscar photo); tap or click one to show it big, with a quick soft fade.
 - **"Det får du, når du lejer hos Oscar"** (centred heading): four benefits in the front page's benefits style.
 - Below the benefits comes the **SEO text** in its own quiet grey section (grey text, all headings the same size, two columns on desktop), then the **FAQ** in the front page's style, and at the end a dark **call to action** ("Klar til at leje bil i Aarhus N?").
-- The detailed opening hours per weekday are not on the live page's first load, so the card only shows "Åben nu · lukker kl. 18.00".
+- **Opening hours:** the line "Åben nu · lukker kl. 18.00" has a small arrow; tap it to show the full list per weekday and public holidays (taken from the live page on 30 September 2026), plus "* Accepterer aflevering uden for åbningstiden." Tap again to hide it.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.

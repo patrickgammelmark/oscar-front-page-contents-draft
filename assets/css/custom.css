@@ -2945,3 +2945,25 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .loc-search { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) auto; }
   .loc-search__dates { grid-column: auto; }
 }
+
+/* Location card: tap the opening-hours line (with a chevron) to show the full list of opening hours */
+.loc-card__facts li.loc-card__hours { align-items: flex-start; }
+.loc-card__hours-body { flex: 1; min-width: 0; }
+.loc-card__hours-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 2rem;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.loc-card__hours-toggle svg { width: 1.125rem; height: 1.125rem; flex-shrink: 0; transition: transform 0.2s ease; }
+.loc-card__hours-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.loc-card__hours-panel { margin-top: 0.5rem; }
+.loc-card__hours-list { display: grid; gap: 0.375rem; font-size: 0.875rem; }
+.loc-card__hours-list div { display: flex; justify-content: space-between; gap: 1rem; }
+.loc-card__hours-list dt { color: rgba(var(--oscar-blue-800), 0.7); }
+.loc-card__hours-list dd { color: rgb(var(--oscar-blue-800)); font-weight: 600; font-variant-numeric: tabular-nums; }
+.loc-card__hours-note { margin-top: 0.625rem; color: rgba(var(--oscar-blue-800), 0.65); font-size: 0.8125rem; }
