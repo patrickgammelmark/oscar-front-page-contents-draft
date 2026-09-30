@@ -2710,3 +2710,6 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 }
 /* "Det får du, når du lejer hos Oscar": centred heading */
 .loc-always__heading { text-align: center; text-wrap: balance; }
+/* "Lej en bil på 3 minutter", step 4: the booking card has a lot of empty space around it in the picture,
+   so it is zoomed in (the box itself keeps its size and crops the empty edge) */
+.steps-list img[src$="dk-1-74362d.png"] { transform: scale(1.5); }
