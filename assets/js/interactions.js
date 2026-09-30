@@ -190,3 +190,12 @@ document.querySelectorAll('[data-pill-group]').forEach(function (group) {
     });
   });
 });
+
+// Location search: the round "x" clears the location field
+document.querySelectorAll('.loc-search__clear').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var input = btn.parentElement.querySelector('input');
+    input.value = '';
+    input.focus();
+  });
+});

@@ -2797,3 +2797,38 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search { padding-top: 0.875rem; }
 @media (min-width: 1024px) { .loc-search { padding-top: 1rem; } }
 .loc-search__btn { min-height: 3.5rem; padding-top: 0; padding-bottom: 0; }
+/* Location search, round 6: the location field is back (pre-filled with this location, can be cleared/changed).
+   Phones: pills, then location, then the two dates, then the button. Desktop: pills, then one row with
+   location | from | to | button, so the box is a bit wider again. */
+.loc-search__where { grid-column: 1 / -1; cursor: text; }
+.loc-search__where input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.9375rem;
+  font-weight: 500;
+  outline: none;
+}
+.loc-search__where input::placeholder { color: rgba(var(--oscar-blue-800), 0.6); font-weight: 400; }
+.loc-search__where:focus-within { border-color: var(--oscar-orange); box-shadow: 0 0 0 1px var(--oscar-orange); }
+.loc-search__clear {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(var(--oscar-blue-800), 0.08);
+  color: rgb(var(--oscar-blue-800));
+  cursor: pointer;
+}
+.loc-search__clear:hover { background: rgba(var(--oscar-blue-800), 0.16); }
+.loc-search__clear svg { width: 0.875rem; height: 0.875rem; }
+.loc-search__where:has(input:placeholder-shown) .loc-search__clear { display: none; }
+@media (min-width: 1024px) {
+  .loc-search { max-width: 60rem; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) auto; }
+  .loc-search__where { grid-column: auto; }
+}
