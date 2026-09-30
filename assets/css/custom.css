@@ -2972,3 +2972,48 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-card__icon { background: none; box-shadow: none; color: var(--oscar-blue-600); width: 1.5rem; height: 2rem; }
 .loc-card__icon svg { width: 1.25rem; height: 1.25rem; }
 .loc-card__facts li { gap: 0.625rem; }
+
+/* "Derfor elsker vores kunder denne partner": a small 2×2 grid of this location's extra benefits under the
+   partner quote. Plain brand-blue icons in a white circle (orange boxes are kept for the main USPs).
+   The idea: later an AI agent fills this from the location's good reviews. */
+.loc-perks { margin-top: 2rem; }
+.loc-perks__title {
+  color: rgb(var(--oscar-blue-800));
+  font-family: var(--heading-font);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+.loc-perks__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.875rem; }
+.loc-perks__grid li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(var(--oscar-blue-800), 0.1);
+  border-radius: 0.75rem;
+  background: #FFFFFF;
+  color: rgb(var(--oscar-blue-800));
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+.loc-perks__icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--oscar-blue-tint);
+  color: var(--oscar-blue-600);
+}
+.loc-perks__icon svg { width: 1.125rem; height: 1.125rem; }
+@media (max-width: 359px) { .loc-perks__grid { grid-template-columns: 1fr; } }
+/* Phones: the partner benefits in one column (two columns made the texts wrap on 3–4 lines) */
+@media (max-width: 479px) { .loc-perks__grid { grid-template-columns: 1fr; gap: 0.5rem; } }
+
+/* Car type pills (front page and location page): when the row is wider than the box, a soft fade shows on the
+   side(s) where more pills are hidden. The classes are set by interactions.js while scrolling. */
+.loc-search__types.fade-right { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent); }
+.loc-search__types.fade-left { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 3rem), transparent); }
+.loc-search__types.fade-left.fade-right { -webkit-mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(to right, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }

@@ -210,3 +210,15 @@ document.querySelectorAll('.loc-card__hours-toggle').forEach(function (btn) {
     panel.hidden = !open;
   });
 });
+
+// Car type pills: fade the edge(s) of the row where pills are hidden (only when the row overflows)
+document.querySelectorAll('.loc-search__types').forEach(function (row) {
+  function update() {
+    var max = row.scrollWidth - row.clientWidth;
+    row.classList.toggle('fade-left', max > 1 && row.scrollLeft > 1);
+    row.classList.toggle('fade-right', max > 1 && row.scrollLeft < max - 1);
+  }
+  row.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+});
