@@ -90,6 +90,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 - English benefit title "24/7 road assistance" (was "24/7 roadside assistance").
 - "Lej en bil på 3 minutter" / "Rent a car in 3 minutes" (both languages): the pictures of step 1 and step 4 were the wrong way round. Step 1 now shows the list of available cars, step 4 the single confirmed booking. The step 4 picture is zoomed in 1.5×, because the booking card had a lot of empty space around it. The picture descriptions (for screen readers) are in the page's own language.
 - Front page search box (both languages, phones and desktop): car type pills at the top (Personbil, Varevogn, Flyttebil, Minibus – one can be selected), in the same style as on the location page, with the same 16px gap below them as between the other fields. On phones the row scrolls sideways if it does not fit, with a soft fade on the side(s) where more pills are hidden (also on the location page). The English placeholder on phones is now also "Where do you need a rental car?".
+- Help section (both languages): a small status badge next to "Livechat", like on hejoscar.dk – green "ÅBEN" / "OPEN" during the live chat opening hours (Mon–Fri 08–18, Sat–Sun 08–13, Danish time) and grey "LUKKET" / "CLOSED" outside them. It updates by itself every minute. Public holidays are not taken into account.
 - English review heading: "See what our customers say".
 - English app text: "…renting a car from Oscar is even easier and more affordable."
 - English search placeholder: "Where do you need a rental car?"

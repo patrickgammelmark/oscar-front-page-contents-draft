@@ -234,3 +234,23 @@ document.querySelectorAll('.loc-search__types').forEach(function (row) {
   window.addEventListener('resize', update);
   update();
 });
+
+// Live chat status badge: open Mon–Fri 08–18 and Sat–Sun 08–13, Danish time
+(function () {
+  var badges = document.querySelectorAll('[data-chat-status]');
+  if (!badges.length) return;
+  function update() {
+    var parts = {};
+    new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Copenhagen', weekday: 'short', hour: '2-digit', minute: '2-digit', hour12: false })
+      .formatToParts(new Date()).forEach(function (p) { parts[p.type] = p.value; });
+    var minutes = parseInt(parts.hour, 10) % 24 * 60 + parseInt(parts.minute, 10);
+    var weekend = parts.weekday === 'Sat' || parts.weekday === 'Sun';
+    var open = minutes >= 8 * 60 && minutes < (weekend ? 13 : 18) * 60;
+    badges.forEach(function (b) {
+      b.textContent = b.getAttribute(open ? 'data-open-label' : 'data-closed-label');
+      b.classList.toggle('is-closed', !open);
+    });
+  }
+  update();
+  setInterval(update, 60000);
+})();
