@@ -3069,3 +3069,9 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search--mini .loc-search__type { border-color: #DFE1E8; background: #DFE1E8; color: #646B80; }
 .loc-search--mini .loc-search__type:hover { border-color: #FFFFFF; background: #ECEEF4; color: rgb(var(--oscar-blue-800)); }
 .loc-search--mini .loc-search__type[aria-pressed="true"] { border-color: #FFFFFF; background: #FFFFFF; color: rgb(var(--oscar-blue-800)); }
+/* Closing call to action: unselected pills even more subdued – solid dark grey (gray-800) with muted text (gray-400),
+   so the white selected pill clearly stands out */
+.loc-search--mini .loc-search__type { border-color: #484D5B; background: #484D5B; color: #A6ABBA; }
+.loc-search--mini .loc-search__type:hover { border-color: #525767; background: #525767; color: #DFE1E8; }
+.loc-search--mini .loc-search__type[aria-pressed="true"],
+.loc-search--mini .loc-search__type[aria-pressed="true"]:hover { border-color: #FFFFFF; background: #FFFFFF; color: rgb(var(--oscar-blue-800)); }
