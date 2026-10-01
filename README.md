@@ -133,8 +133,8 @@ Four copies of the front page hero under each other, each with an orange label s
 1. **Current search bar** – car type pills on top, then location, dates and "Søg".
 2. **Without vehicle type** – only location, dates and "Søg".
 3. **Vehicle type as a field on the same line** – a "Biltype" dropdown to the left of the location field; on desktop everything is on one line, on phones it stacks.
-4. **Vehicle type and age above the fields** – "Biltype" and "Alder" dropdowns side by side above location and dates. Age options are taken from the live site: 25 eller ældre (pre-selected), 24, 23, 22, 21, 20, 19, 18.
-The dropdowns can be opened and a value picked. The vehicle types in the dropdown are the eight from the live site. The front page itself is unchanged.
+4. **Vehicle type and age above the fields** – "Biltype" and "Chaufførens alder" (English "Driver's Age") dropdowns side by side above location and dates. Age options are taken from the live site: 25 eller ældre (pre-selected), 24, 23, 22, 21, 20, 19, 18.
+The dropdowns can be opened and a value picked, and they are exactly as tall as the other fields. The vehicle types in the dropdown are the eight from the live site, each with its own icon – in the list and in the field. The front page itself is unchanged.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.

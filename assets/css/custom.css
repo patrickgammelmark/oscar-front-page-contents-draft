@@ -3185,3 +3185,15 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .sb-selects .sb-select__value { font-size: 0.875rem; }
   .sb-selects .sb-select:last-child .sb-select__menu { left: auto; right: 0; }
 }
+/* Search bar test page, round 2: the dropdowns are exactly as tall as the other fields (58px on phones, 54px from
+   768px), and each vehicle type shows its own icon – in the list and in the field */
+.sb-select__btn { height: 3.625rem; }
+@media (min-width: 768px) { .sb-select__btn { height: 3.375rem; } }
+.sb-select__label { font-size: 0.6875rem; }
+.sb-select__icon { display: grid; place-items: center; flex-shrink: 0; }
+.sb-type-icon { width: 1.375rem; height: 1.375rem; flex-shrink: 0; background: currentColor; -webkit-mask-size: contain; mask-size: contain; -webkit-mask-position: center; mask-position: center; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.sb-select__menu li { display: flex; align-items: center; gap: 0.625rem; }
+.sb-select__menu li .sb-type-icon { width: 1.25rem; height: 1.25rem; color: rgba(var(--oscar-blue-800), 0.75); }
+@media (max-width: 639px) {
+  .sb-selects .sb-select__icon { display: none; }
+}

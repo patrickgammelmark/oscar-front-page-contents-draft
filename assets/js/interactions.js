@@ -274,6 +274,8 @@ document.querySelectorAll('.loc-search__types').forEach(function (row) {
         e.stopPropagation();
         menu.querySelectorAll('[role="option"]').forEach(function (o) { o.setAttribute('aria-selected', o === opt ? 'true' : 'false'); });
         s.querySelector('.sb-select__value').textContent = opt.textContent;
+        var icon = opt.querySelector('.sb-type-icon'), slot = s.querySelector('.sb-select__icon');
+        if (icon && slot) slot.innerHTML = icon.outerHTML; // show the chosen vehicle type's icon in the field
         close(s);
       });
     });
