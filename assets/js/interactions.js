@@ -254,3 +254,30 @@ document.querySelectorAll('.loc-search__types').forEach(function (row) {
   update();
   setInterval(update, 60000);
 })();
+
+// Search bar test page: dropdown fields (vehicle type, age) – one open at a time, pick a value, close outside/Escape
+(function () {
+  var selects = document.querySelectorAll('[data-sb-select]');
+  if (!selects.length) return;
+  function close(s) { s.querySelector('.sb-select__btn').setAttribute('aria-expanded', 'false'); s.querySelector('.sb-select__menu').hidden = true; }
+  selects.forEach(function (s) {
+    var btn = s.querySelector('.sb-select__btn');
+    var menu = s.querySelector('.sb-select__menu');
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = btn.getAttribute('aria-expanded') !== 'true';
+      selects.forEach(close);
+      if (open) { btn.setAttribute('aria-expanded', 'true'); menu.hidden = false; }
+    });
+    menu.querySelectorAll('[role="option"]').forEach(function (opt) {
+      opt.addEventListener('click', function (e) {
+        e.stopPropagation();
+        menu.querySelectorAll('[role="option"]').forEach(function (o) { o.setAttribute('aria-selected', o === opt ? 'true' : 'false'); });
+        s.querySelector('.sb-select__value').textContent = opt.textContent;
+        close(s);
+      });
+    });
+  });
+  document.addEventListener('click', function () { selects.forEach(close); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') selects.forEach(close); });
+})();

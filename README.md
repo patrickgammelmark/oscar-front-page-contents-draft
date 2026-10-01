@@ -39,6 +39,7 @@ Tip: keep a copy of the untouched folder (for example `Hejoscar.dk original`), s
 | `en.html` | The English version of the page (same layout, English text) |
 | `aarhus-n.html` | Example location page (Aarhus N – Randersvej), redesigned in the front page's style, in Danish |
 | `en-aarhus-n.html` | The English version of the location page |
+| `search-bars.html` / `en-search-bars.html` | Test page with four search bar variants (Danish / English) |
 | `assets/img/loc/` | Images for the location page (branch photo, partner photo, map, car photos) |
 | `assets/css/` | The live site's styling |
 | `assets/css/custom.css` | Our own design changes (e.g. the curved bottom of the top section) |
@@ -124,6 +125,16 @@ It starts from a 1:1 copy of hejoscar.dk/afdelinger/aarhus-n (taken 29 September
 - **"Det får du altid, når du lejer hos Oscar"** (centred heading): four benefits in the front page's benefits style.
 - Below the benefits comes the **SEO text** in its own quiet grey section (grey text, all headings the same size, two columns on desktop), then the **FAQ** in the front page's style, and at the end a dark **call to action** ("Klar til at leje bil i Aarhus N?") with a mini version of the search box (car type pills, the joined Fra/Til box and "Se ledige biler") sitting directly on the dark panel, without a white box. Unselected pills there are solid dark grey with muted text (gray-800 / gray-400 from the brand guide); the selected pill is white.
 - **Opening hours:** the line "Åben nu · lukker kl. 18.00" has a small arrow; tap it to show the full list per weekday and public holidays (taken from the live page on 30 September 2026), plus "* Accepterer aflevering uden for åbningstiden." Tap again to hide it.
+
+## Search bar test page
+Open it from the menu: **Om Oscar → Søgebarer** (English: **About Oscar → Search Bars**), or directly:
+**https://patrickgammelmark.github.io/oscar-front-page-contents-draft/search-bars.html** (English: `en-search-bars.html`). The language menu switches between the two.
+Four copies of the front page hero under each other, each with an orange label saying which variant it is:
+1. **Current search bar** – car type pills on top, then location, dates and "Søg".
+2. **Without vehicle type** – only location, dates and "Søg".
+3. **Vehicle type as a field on the same line** – a "Biltype" dropdown to the left of the location field; on desktop everything is on one line, on phones it stacks.
+4. **Vehicle type and age above the fields** – "Biltype" and "Alder" dropdowns side by side above location and dates. Age options are taken from the live site: 25 eller ældre (pre-selected), 24, 23, 22, 21, 20, 19, 18.
+The dropdowns can be opened and a value picked. The vehicle types in the dropdown are the eight from the live site. The front page itself is unchanged.
 
 ## "Om Oscar": earlier design proposals (hidden)
 Earlier proposals for the "Om Oscar" section are commented out in `index.html`.
