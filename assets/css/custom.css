@@ -3337,3 +3337,12 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-meet__quote blockquote { color: #FFFFFF; }
 .loc-meet__quote figcaption { color: rgba(255, 255, 255, 0.7); }
 .loc-meet__quote figcaption strong { color: #FFFFFF; }
+/* "Det får du hos Oscar i Aarhus N" on desktop: both columns start at the top, and the right column gets the dark
+   box's top padding, so "Altid inkluderet hos Oscar" lines up with "Ekstra i Aarhus N" */
+.usp-v4__light .usp-v4__eyebrow { margin-bottom: 1.5rem; }
+@media (min-width: 1024px) {
+  .usp-v4__grid { align-items: start; }
+  .usp-v4__light { padding: 2.5rem 0 0; }
+}
+.usp-v4__oscar { margin-top: 0 !important; }
+.usp-v4__oscar { padding-top: 0 !important; }
