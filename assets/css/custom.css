@@ -3292,3 +3292,48 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 /* Variant 4 chosen: no "Jann gør det lidt nemmere" heading or photo in the dark box, so the eyebrow
    ("Ekstra i Aarhus N") sits directly above the list */
 .usp-v4__dark .usp-v4__eyebrow { margin-bottom: 1.5rem; }
+
+/* ===== Closing call to action: four proposals with a light visual touch (one is to be chosen) ===== */
+.loc-cta .sb-label { display: block; margin-left: auto; margin-right: auto; }
+.loc-cta__panel { position: relative; overflow: hidden; isolation: isolate; }
+.loc-cta__panel > :not(.cta-deco) { position: relative; z-index: 1; }
+.cta-deco { position: absolute; pointer-events: none; user-select: none; }
+
+/* Variant 1: the round Oscar mark, very large and dimmed, cut off at the right edge */
+.cta-deco--logo { right: -6rem; top: 50%; width: 26rem; height: 26rem; transform: translateY(-50%) rotate(-12deg); color: #FFFFFF; opacity: 0.06; }
+@media (max-width: 767px) { .cta-deco--logo { right: -8rem; width: 18rem; height: 18rem; } }
+
+/* Variant 2: the branch photo across the whole box, dimmed by a dark blue layer (darkest in the middle, behind the text) */
+.cta-deco--bg { inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 60%; z-index: -2; }
+.loc-cta--v2 .loc-cta__panel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(ellipse at center, rgba(15, 21, 37, 0.92) 0%, rgba(15, 21, 37, 0.8) 55%, rgba(15, 21, 37, 0.62) 100%); }
+
+/* Variant 3: a car and a van parked on the bottom corners, rising above the box (desktop only, where there is room) */
+.loc-cta--v3 .loc-cta__panel { overflow: visible; }
+.loc-cta--v3 { padding-top: 3rem; }
+.cta-deco--car-l, .cta-deco--car-r { display: none; }
+@media (min-width: 1100px) {
+  .cta-deco--car-l, .cta-deco--car-r { display: block; bottom: -1.25rem; filter: drop-shadow(0 18px 18px rgba(0, 0, 0, 0.35)); }
+  .cta-deco--car-l { left: -2.5rem; width: 17rem; }
+  .cta-deco--car-r { right: -2.5rem; width: 16rem; transform: scaleX(-1); }
+}
+
+/* Variant 4: the branch photo fills the right part of the box and fades softly into the dark; the text and search
+   are centred in the remaining space. On phones the photo sits on top and fades downwards. */
+.cta-deco--side { top: 0; right: 0; width: 100%; height: 11rem; object-fit: cover; object-position: center 55%; z-index: -1;
+  -webkit-mask-image: linear-gradient(to bottom, #000 30%, transparent); mask-image: linear-gradient(to bottom, #000 30%, transparent); opacity: 0.85; }
+.loc-cta--v4 .loc-cta__panel { padding-top: 9rem; }
+@media (min-width: 1024px) {
+  .cta-deco--side { width: 46%; height: 100%; -webkit-mask-image: linear-gradient(to right, transparent, #000 45%); mask-image: linear-gradient(to right, transparent, #000 45%); opacity: 1; }
+  .loc-cta--v4 .loc-cta__panel { padding-top: 3rem; padding-right: 44%; }
+}
+/* Variant 3: the van keeps its own direction (mirroring it turned the OSCAR lettering backwards) */
+@media (min-width: 1100px) { .cta-deco--car-r { transform: none; } }
+/* Variant 2 on phones: the text covers most of the box, so the photo is dimmed evenly and a little more */
+@media (max-width: 767px) { .loc-cta--v2 .loc-cta__panel::before { background: rgba(15, 21, 37, 0.85); } }
+
+/* Partner quote in "Mød din lokale partner": dark blue, like the "Ekstra i Aarhus N" box */
+.loc-meet__quote { background: linear-gradient(135deg, rgb(var(--oscar-blue-800)) 0%, #22357A 100%); }
+.loc-meet__quote::before { color: var(--oscar-orange-02); }
+.loc-meet__quote blockquote { color: #FFFFFF; }
+.loc-meet__quote figcaption { color: rgba(255, 255, 255, 0.7); }
+.loc-meet__quote figcaption strong { color: #FFFFFF; }
