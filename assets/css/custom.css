@@ -3209,3 +3209,7 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .loc-search--mini .loc-search__dates .loc-search__field { color: #FFFFFF; font-weight: 500; }
 .loc-search--mini .loc-search__field svg { color: #FFFFFF; }
 .loc-search--mini .loc-search__sep { background: rgba(255, 255, 255, 0.2); }
+/* Closing call to action, centred: no body text, the heading centred, and the mini search centred as one block.
+   Inside it the car type pills stay left-aligned, so their left edge lines up with the Fra/Til box. */
+.loc-cta__panel h2 { text-align: center; }
+.loc-cta__panel .loc-search--mini { align-self: center; margin-left: auto; margin-right: auto; }
