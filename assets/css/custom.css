@@ -3213,3 +3213,14 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
    Inside it the car type pills stay left-aligned, so their left edge lines up with the Fra/Til box. */
 .loc-cta__panel h2 { text-align: center; }
 .loc-cta__panel .loc-search--mini { align-self: center; margin-left: auto; margin-right: auto; }
+
+/* Location page: Google reviews of the partner, under "Mød din lokale partner". Same panel and carousel as the
+   front page, without the featured review. Reviewers have no photos, so each gets a round initial, Google style. */
+.rv-avatar--initial {
+  display: grid;
+  place-items: center;
+  background: rgb(var(--oscar-blue-800));
+  color: #FFFFFF;
+  font-weight: 600;
+  font-size: 1rem;
+}
