@@ -3368,3 +3368,9 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .usp-v4__oscar .benefits__title { font-size: 1.0625rem; line-height: 1.3; }
   .usp-v4__oscar { row-gap: 1.25rem; }
 }
+/* Desktop: Oscar's USPs on the left, the dark blue "Ekstra i Aarhus N" box on the right (phones keep the box on top) */
+@media (min-width: 1024px) {
+  .usp-v4__grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
+  .usp-v4__light { order: 1; }
+  .usp-v4__dark { order: 2; }
+}
