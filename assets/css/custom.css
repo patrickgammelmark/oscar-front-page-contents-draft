@@ -3374,3 +3374,5 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   .usp-v4__light { order: 1; }
   .usp-v4__dark { order: 2; }
 }
+/* Wide screens: the dark blue box keeps a modest width (28rem) and Oscar's USPs get the rest */
+@media (min-width: 1280px) { .usp-v4__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); gap: 4rem; } }
