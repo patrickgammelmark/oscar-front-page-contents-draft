@@ -283,3 +283,80 @@ document.querySelectorAll('.loc-search__types').forEach(function (row) {
   document.addEventListener('click', function () { selects.forEach(close); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') selects.forEach(close); });
 })();
+
+// Mobile menu (the ☰ button, shown below 1024px): a panel that slides in from the right. It is built from the desktop
+// menus, so both always show the same sections and links. Each section opens and closes like an accordion.
+(function () {
+  var burger = document.querySelector('#page-header button[aria-haspopup="dialog"]');
+  var mainNav = document.querySelector('#page-header nav[aria-label="Main"]');
+  if (!burger || !mainNav) return;
+  var en = (document.documentElement.lang || '').indexOf('en') === 0;
+  var chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+  var cross = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>';
+
+  var overlay = document.createElement('div');
+  overlay.className = 'm-menu';
+  overlay.id = 'mobile-menu';
+  overlay.hidden = true;
+  overlay.innerHTML = '<div class="m-menu__backdrop" data-m-close></div>' +
+    '<div class="m-menu__panel" role="dialog" aria-modal="true" aria-label="' + (en ? 'Menu' : 'Menu') + '">' +
+    '<div class="m-menu__head"><span class="m-menu__title">Menu</span>' +
+    '<button type="button" class="m-menu__close" data-m-close aria-label="' + (en ? 'Close menu' : 'Luk menu') + '">' + cross + '</button></div>' +
+    '<ul class="m-menu__list"></ul></div>';
+  var list = overlay.querySelector('.m-menu__list');
+
+  mainNav.querySelectorAll(':scope ul > li').forEach(function (li, i) {
+    var trigger = li.querySelector('button');
+    var menu = li.querySelector('[data-nav-menu]');
+    if (!trigger || !menu) return;
+    var item = document.createElement('li');
+    var id = 'm-menu-sec-' + i;
+    item.innerHTML = '<button type="button" class="m-menu__sec" aria-expanded="false" aria-controls="' + id + '"><span></span>' + chevron + '</button>' +
+      '<div class="m-menu__links" id="' + id + '" hidden></div>';
+    item.querySelector('.m-menu__sec span').textContent = trigger.textContent.trim();
+    var links = item.querySelector('.m-menu__links');
+    menu.querySelectorAll('a, [data-font-toggle]').forEach(function (src) {
+      if (src.matches('[data-font-toggle]')) {
+        // The font switch: a copy that presses the real button, so the choice and its label stay in one place
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'm-menu__link';
+        var sync = function () { b.textContent = Array.prototype.map.call(src.children, function (c) { return c.textContent.trim(); }).join(' · '); };
+        sync();
+        b.addEventListener('click', function (e) { e.stopPropagation(); src.click(); sync(); });
+        links.appendChild(b);
+        return;
+      }
+      var a = document.createElement('a');
+      a.href = src.getAttribute('href');
+      a.className = 'm-menu__link';
+      a.textContent = src.textContent.trim();
+      if (a.getAttribute('href') === '#') a.addEventListener('click', function (e) { e.preventDefault(); });
+      links.appendChild(a);
+    });
+    var sec = item.querySelector('.m-menu__sec');
+    sec.addEventListener('click', function () {
+      var open = sec.getAttribute('aria-expanded') !== 'true';
+      sec.setAttribute('aria-expanded', open);
+      links.hidden = !open;
+    });
+    list.appendChild(item);
+  });
+  document.body.appendChild(overlay);
+  burger.setAttribute('aria-controls', 'mobile-menu');
+
+  function setOpen(open) {
+    if (open) overlay.hidden = false;
+    requestAnimationFrame(function () { overlay.classList.toggle('is-open', open); });
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('data-state', open ? 'open' : 'closed');
+    document.documentElement.classList.toggle('m-menu-lock', open);
+    if (open) overlay.querySelector('.m-menu__close').focus();
+    else { setTimeout(function () { if (!overlay.classList.contains('is-open')) overlay.hidden = true; }, 250); burger.focus(); }
+  }
+  burger.addEventListener('click', function (e) { e.stopPropagation(); setOpen(true); });
+  overlay.querySelectorAll('[data-m-close]').forEach(function (el) { el.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) setOpen(false); });
+  // Close when the screen becomes wide enough for the desktop menu
+  window.addEventListener('resize', function () { if (window.innerWidth >= 1024 && overlay.classList.contains('is-open')) setOpen(false); });
+})();

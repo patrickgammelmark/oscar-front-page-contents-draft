@@ -8,6 +8,7 @@ A copy of the front page of https://hejoscar.dk as it looked on 23 September 202
 - The page does not connect to anything. Search, login, the car carousel and the language menu are just for show.
 - These parts work when you click them:
   - The menus in the top bar (Biludlejning, Afdelinger …) open as dropdowns. Their content is copied from the live site.
+  - On phones and tablets (below 1024px wide) the ☰ button opens a menu that slides in from the right, on every page. It has the same sections and links as the desktop menu (Biludlejning, Afdelinger …); tap a section to open it. Close it with the ✕, by tapping the dimmed page, or with Escape. "Skift skrifttype" works there too.
   - The arrow buttons in the review section scroll through the reviews.
   - "Skift skrifttype" at the bottom of the "Kontakt & FAQ" menu switches between Silka + Inter and Quicksand + IBM Plex Sans.
   - The FAQ questions open and close, and on phones so do the steps in "Lej en bil på 3 minutter".

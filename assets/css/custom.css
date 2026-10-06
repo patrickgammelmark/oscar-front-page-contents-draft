@@ -3376,3 +3376,30 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 }
 /* Wide screens: the dark blue box keeps a modest width (28rem) and Oscar's USPs get the rest */
 @media (min-width: 1280px) { .usp-v4__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 28rem); gap: 4rem; } }
+
+/* Mobile menu (built by interactions.js from the desktop menus): a white panel sliding in from the right over a dimmed
+   page. Sections open like the FAQ. Only used below 1024px, where the ☰ button is shown. */
+.m-menu { position: fixed; inset: 0; z-index: 1000; }
+.m-menu__backdrop { position: absolute; inset: 0; background: rgba(15, 21, 37, 0.5); opacity: 0; transition: opacity 0.25s ease; }
+.m-menu__panel {
+  position: absolute; top: 0; right: 0; bottom: 0; width: min(24rem, 88vw); overflow-y: auto;
+  padding: 0 1.25rem 2rem; background: #FFFFFF; color: rgb(var(--oscar-blue-800));
+  box-shadow: -12px 0 32px -12px rgba(15, 21, 37, 0.35); transform: translateX(100%); transition: transform 0.25s ease;
+}
+.m-menu.is-open .m-menu__backdrop { opacity: 1; }
+.m-menu.is-open .m-menu__panel { transform: none; }
+.m-menu__head { position: sticky; top: 0; display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; background: #FFFFFF; border-bottom: 1px solid rgba(var(--oscar-blue-800), 0.08); }
+.m-menu__title { font-family: var(--heading-font); font-size: 1.25rem; font-weight: 700; }
+.m-menu__close { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; margin-right: -0.5rem; border-radius: 9999px; cursor: pointer; }
+.m-menu__close:hover { background: var(--oscar-blue-tint); }
+.m-menu__close svg { width: 1.5rem; height: 1.5rem; }
+.m-menu__list > li { border-bottom: 1px solid rgba(var(--oscar-blue-800), 0.08); }
+.m-menu__sec { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 1rem 0; font-size: 1.0625rem; font-weight: 600; text-align: left; cursor: pointer; }
+.m-menu__sec svg { width: 1.25rem; height: 1.25rem; transition: transform 0.2s ease; }
+.m-menu__sec[aria-expanded="true"] svg { transform: rotate(180deg); }
+.m-menu__links { display: flex; flex-direction: column; padding: 0 0 0.75rem; }
+.m-menu__links[hidden] { display: none; }
+.m-menu__link { display: block; width: 100%; padding: 0.625rem 0.75rem; border-radius: 0.5rem; color: rgba(var(--oscar-blue-800), 0.75); font-size: 0.9375rem; text-align: left; cursor: pointer; }
+.m-menu__link:hover { background: var(--oscar-blue-tint); color: rgb(var(--oscar-blue-800)); }
+html.m-menu-lock, html.m-menu-lock body { overflow: hidden; }
+@media (min-width: 1024px) { .m-menu { display: none; } }
