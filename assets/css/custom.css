@@ -3224,3 +3224,68 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
   font-weight: 600;
   font-size: 1rem;
 }
+
+/* ===== Location page: four USP variants that combine the partner's own perks (formerly "Derfor elsker vores
+   kunder denne partner" in the partner section) with Oscar's general USPs. One is to be chosen. ===== */
+.usp-v1 .sb-label, .usp-v2 .sb-label, .usp-v3 .sb-label, .usp-v4 .sb-label { display: block; margin-left: auto; margin-right: auto; }
+.usp-avatar { width: 3rem; height: 3rem; flex-shrink: 0; border-radius: 9999px; object-fit: cover; object-position: 28% 30%; border: 2px solid #FFFFFF; box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.35); }
+.usp-logo { display: grid; place-items: center; width: 3rem; height: 3rem; flex-shrink: 0; border-radius: 9999px; background: rgb(var(--oscar-blue-800)); color: #FFFFFF; font-family: var(--heading-font); font-weight: 700; font-size: 1.25rem; }
+/* Shared vertical list: small orange icon box on the left, title + text on the right */
+.usp-list { display: grid; gap: 1.25rem; }
+.usp-list li { display: flex; align-items: flex-start; gap: 0.875rem; }
+.usp-list svg { box-sizing: content-box; width: 1.125rem; height: 1.125rem; flex-shrink: 0; padding: 0.625rem; border-radius: 0.625rem; background: var(--oscar-orange-02); color: #FFFFFF; stroke-width: 2; box-shadow: 0 2px 8px -2px rgba(var(--oscar-blue-800), 0.3); }
+.usp-list .benefits__title { margin-top: 0; font-family: var(--heading-font); font-size: 1.0625rem; font-weight: 700; line-height: 1.3; color: rgb(var(--oscar-blue-800)); }
+.usp-list .benefits__text { margin-top: 0.25rem; font-size: 0.9375rem; line-height: 1.5; color: rgba(var(--oscar-blue-800), 0.6); }
+
+/* Variant 1: two cards side by side – the partner's (light orange) and Oscar's (light blue) */
+.usp-v1__grid { display: grid; gap: 1rem; }
+.usp-v1__card { padding: 1.75rem 1.5rem; border-radius: 1rem; }
+.usp-v1__card--partner { background: #FFF3EC; }
+.usp-v1__card--oscar { background: var(--oscar-blue-tint); }
+.usp-v1__eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; color: rgb(var(--oscar-blue-800)); font-family: var(--heading-font); font-size: 1.25rem; font-weight: 700; }
+@media (min-width: 1024px) { .usp-v1__grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; } .usp-v1__card { padding: 2.5rem; } }
+
+/* Variant 2: all eight in one grid (partner first); the partner's carry a small "Kun i Aarhus N" tag */
+.usp-v2__grid { gap: 2rem 1.5rem; }
+@media (min-width: 640px) { .usp-v2__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .usp-v2__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.usp-v2__grid .benefits__title { white-space: normal; }
+.usp-tag { display: inline-flex; align-items: center; gap: 0.25rem; margin-bottom: 0.5rem; padding: 0.125rem 0.5rem; border-radius: 9999px; background: #FFF3EC; color: var(--oscar-orange); font-size: 0.75rem; font-weight: 600; }
+.usp-v2__grid .usp-tag svg { width: 0.75rem; height: 0.75rem; padding: 0; border-radius: 0; background: none; box-shadow: none; color: currentColor; stroke-width: 3; }
+
+/* Variant 3: Oscar's four USPs as today, then a light orange band with the partner's extras as pills */
+.usp-v3__row { gap: 2rem 1.5rem; }
+@media (min-width: 640px) { .usp-v3__row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) { .usp-v3__row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.usp-v3__row .benefits__title { white-space: normal; }
+.usp-v3__band { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.25rem; margin-top: 2.5rem; padding: 1.5rem; border-radius: 1rem; background: #FFF3EC; }
+.usp-v3__band-title { color: rgb(var(--oscar-blue-800)); font-family: var(--heading-font); font-size: 1.25rem; font-weight: 700; }
+.usp-v3__band-sub { color: rgba(var(--oscar-blue-800), 0.6); font-size: 0.9375rem; }
+.usp-v3__pills { display: flex; flex-wrap: wrap; gap: 0.5rem; flex-basis: 100%; }
+.usp-v3__pills li { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.875rem; border-radius: 9999px; background: #FFFFFF; color: rgb(var(--oscar-blue-800)); font-size: 0.9375rem; font-weight: 500; box-shadow: 0 1px 2px rgba(var(--oscar-blue-800), 0.06); }
+.usp-v3__pills svg { width: 1.125rem; height: 1.125rem; color: var(--oscar-orange); }
+@media (min-width: 1024px) { .usp-v3__band { padding: 1.75rem 2rem; } .usp-v3__pills { flex-basis: auto; margin-left: auto; justify-content: flex-end; } }
+
+/* Variant 4: a dark blue box with the partner's extras next to Oscar's USPs in a 2×2 grid */
+.usp-v4__grid { display: grid; gap: 1.5rem; }
+.usp-v4__dark { padding: 2rem 1.5rem; border-radius: 1rem; background: linear-gradient(135deg, rgb(var(--oscar-blue-800)) 0%, #22357A 100%); }
+.usp-v4__eyebrow { margin-bottom: 0.75rem; color: var(--oscar-orange-02); font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.usp-v4__eyebrow--blue { color: var(--oscar-blue-600); }
+.usp-v4__who { display: flex; align-items: center; gap: 0.875rem; margin-bottom: 1.75rem; }
+.usp-v4__title { color: #FFFFFF; font-family: var(--heading-font); font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+.usp-list--dark .benefits__title { color: #FFFFFF; }
+.usp-list--dark .benefits__text { color: rgba(255, 255, 255, 0.7); }
+.usp-v4__light { padding: 0.5rem 0; }
+.usp-v4__oscar { gap: 2rem 1.5rem; }
+.usp-v4__oscar .benefits__title { white-space: normal; }
+@media (min-width: 640px) { .usp-v4__oscar { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1024px) {
+  .usp-v4__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 3rem; align-items: center; }
+  .usp-v4__dark { padding: 2.5rem; }
+}
+/* USP variants, fixes: the avatar is a tight crop of Jann's face from the partner photo (the photo is wide, so a
+   plain round crop showed mostly the map behind him); the tag's check mark must not get the icon-box style */
+.usp-avatar { display: inline-block; background: url("../img/loc/local-hero-jann-lund-d5acff.jpg") no-repeat 34% 24% / 420% auto; }
+.benefits--brush .usp-tag svg,
+.benefits--brush li:nth-child(n) .usp-tag svg { width: 0.75rem; height: 0.75rem; padding: 0; border-radius: 0; background: none; box-shadow: none; color: currentColor; stroke-width: 3; }
+.usp-avatar { background-position: 6% 31%; background-size: 470% auto; }
