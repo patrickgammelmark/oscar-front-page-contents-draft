@@ -3197,3 +3197,15 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 @media (max-width: 639px) {
   .sb-selects .sb-select__icon { display: none; }
 }
+
+/* Closing call to action, stacked: heading on top, text below it, then the mini search – on every screen size.
+   The date box takes the footer newsletter field's style: solid dark grey (gray-800 #484D5B) with white text,
+   no border, 8px corners. */
+.loc-cta__panel { display: flex; flex-direction: column; align-items: stretch; gap: 1.75rem; }
+@media (min-width: 1024px) { .loc-cta__panel { display: flex; grid-template-columns: none; gap: 2rem; } }
+.loc-cta__panel .loc-search--mini { width: 100%; max-width: 44rem; }
+.loc-search--mini .loc-search__dates,
+.loc-search--mini .loc-search__dates:hover { border-color: transparent; background: #484D5B; }
+.loc-search--mini .loc-search__dates .loc-search__field { color: #FFFFFF; font-weight: 500; }
+.loc-search--mini .loc-search__field svg { color: #FFFFFF; }
+.loc-search--mini .loc-search__sep { background: rgba(255, 255, 255, 0.2); }
