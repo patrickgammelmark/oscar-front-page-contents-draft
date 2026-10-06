@@ -3289,3 +3289,6 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 .benefits--brush .usp-tag svg,
 .benefits--brush li:nth-child(n) .usp-tag svg { width: 0.75rem; height: 0.75rem; padding: 0; border-radius: 0; background: none; box-shadow: none; color: currentColor; stroke-width: 3; }
 .usp-avatar { background-position: 6% 31%; background-size: 470% auto; }
+/* Variant 4 chosen: no "Jann gør det lidt nemmere" heading or photo in the dark box, so the eyebrow
+   ("Ekstra i Aarhus N") sits directly above the list */
+.usp-v4__dark .usp-v4__eyebrow { margin-bottom: 1.5rem; }
