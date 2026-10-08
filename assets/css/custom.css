@@ -3404,7 +3404,7 @@ main:has(> .loc-seo:last-child) { padding-bottom: 0; }
 html.m-menu-lock, html.m-menu-lock body { overflow: hidden; }
 @media (min-width: 1024px) { .m-menu { display: none; } }
 
-/* ===== Front page: B2B section ("Oscar Erhverv") under the app section – proposal 3 of 4 was chosen ===== */
+/* ===== Front page: B2B section ("Oscar Erhverv") above the app section – proposal 3 of 4 was chosen ===== */
 .b2b__eyebrow { color: var(--oscar-orange); font-size: 0.875rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .b2b__heading { margin-top: 0.5rem; color: rgb(var(--oscar-blue-800)); }
 .b2b__lead { max-width: 32rem; margin-top: 1rem; color: rgba(var(--oscar-blue-800), 0.75); font-size: 1.0625rem; line-height: 1.55; }
