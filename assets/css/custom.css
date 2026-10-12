@@ -3441,3 +3441,10 @@ html.m-menu-lock, html.m-menu-lock body { overflow: hidden; }
 
 /* B2B: the columns line up at the top */
 .b2b3__cols li { align-content: start; }
+
+/* Location H1 rules (DA + EN Aarhus N, Marshfield): at most one line break, and only at the dash.
+   Phones/tablets: two lines; desktop: one line. Each line never wraps by itself. The font size is set in vw by
+   interactions.js so the longest line fills the text column; the sizes above stay as a fallback without the script. */
+.loc-hero__title { white-space: nowrap; text-wrap: nowrap; }
+.loc-hero__title .h2-line { white-space: nowrap; }
+@media (max-width: 1023px) { .loc-hero__title .h2-line { display: block; } }

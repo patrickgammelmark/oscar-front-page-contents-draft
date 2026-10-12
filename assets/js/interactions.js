@@ -360,3 +360,23 @@ document.querySelectorAll('.loc-search__types').forEach(function (row) {
   // Close when the screen becomes wide enough for the desktop menu
   window.addEventListener('resize', function () { if (window.innerWidth >= 1024 && overlay.classList.contains('is-open')) setOpen(false); });
 })();
+
+// Location page H1: as large as possible, set in vw. Phones/tablets: two lines, breaking only at the dash
+// ("Lej en bil i Aarhus N" / "- Randersvej"); desktop: one line. The longest line fills the text column.
+(function () {
+  var h1 = document.querySelector('.loc-hero__title');
+  if (!h1 || !h1.querySelector('.h2-line')) return;
+  var desktop = window.matchMedia('(min-width: 1024px)');
+  function fit() {
+    h1.style.fontSize = '100px';
+    var avail = h1.clientWidth;
+    var need = desktop.matches
+      ? h1.scrollWidth
+      : Math.max.apply(null, Array.prototype.map.call(h1.querySelectorAll('.h2-line'), function (l) { return l.scrollWidth; }));
+    var px = 100 * avail / need * 0.98; // small margin so the line never touches the edge
+    h1.style.fontSize = (px / window.innerWidth * 100).toFixed(3) + 'vw';
+  }
+  fit();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  window.addEventListener('resize', fit);
+})();
