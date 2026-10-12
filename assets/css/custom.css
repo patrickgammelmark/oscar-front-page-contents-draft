@@ -3448,3 +3448,8 @@ html.m-menu-lock, html.m-menu-lock body { overflow: hidden; }
 .loc-hero__title { white-space: nowrap; text-wrap: nowrap; }
 .loc-hero__title .h2-line { white-space: nowrap; }
 @media (max-width: 1023px) { .loc-hero__title .h2-line { display: block; } }
+/* Location H1 size: clamp(min, the vw size that fills the width, max). The script sets --h1-fit.
+   Max per screen size: phones 36px, tablets 48px, desktop 72px. Min 28px everywhere. */
+.loc-hero__title { --h1-min: 1.75rem; --h1-max: 2.25rem; font-size: clamp(var(--h1-min), var(--h1-fit, 5vw), var(--h1-max)); }
+@media (min-width: 768px) { .loc-hero__title { --h1-max: 3rem; } }
+@media (min-width: 1024px) { .loc-hero__title { --h1-max: 4.5rem; } }
